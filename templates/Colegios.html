@@ -38,6 +38,31 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
+        /* --- (NUEVO) FONDO PARA LA SECCIÓN MAIN --- */
+        .main-content-bg {
+            background-image: url('https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
+        }
+        
+        /* (NUEVO) Ajustes de legibilidad para el fondo oscuro */
+        .main-content-bg h1 {
+            color: #FFFFFF; /* Título principal blanco */
+        }
+        .main-content-bg > .max-w-3xl > p {
+             color: #e5e7eb; /* Texto de párrafo (subtítulo) blanco-gris */
+        }
+        .main-content-bg #initial-message {
+            color: #d1d5db; /* Texto "Por favor, selecciona..." más suave */
+            background-color: rgba(0, 0, 0, 0.1); /* Fondo semitransparente para el mensaje */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+        /* --- FIN DE BLOQUE NUEVO --- */
+
+
+
         /* --- ESTILO CORREGIDO DEL DROPBOX CON BÚSQUEDA (Z-INDEX ALTO) --- */
         .custom-dropdown-menu { 
             max-height: 250px; 
@@ -877,10 +902,9 @@
                 document.getElementById('card-imagen').src = school.IMAGEN || 'https://sbooks.com.co/wp-content/uploads/2024/12/no-image.png'; // Fallback
                 
                 // 2. Llenar Resumen del Encabezado (Ciudad y Mapa)
-                packageDetailsSummary.innerHTML = `
-                    <p><span class="font-semibold">Ciudad:</span> <span id="card-ciudad">${school.CIUDAD || 'N/A'}</span></p>
-                    <p><a href="${school.UBICACION || '#'}" id="card-ubicacion" target="_blank" class="text-brand-primary font-semibold hover:underline">Ver en Mapa</a></p>
-                `;
+                // --- MODIFICACIÓN: Se elimina el contenido de Ciudad y Mapa ---
+                packageDetailsSummary.innerHTML = '';
+                // --- FIN DE LA MODIFICACIÓN ---
 
                 // 3. Llenar Cuerpo (Itemización de Kits)
                 packageDetailsKits.innerHTML = ''; // Limpiar
