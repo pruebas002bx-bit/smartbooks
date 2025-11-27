@@ -1,279 +1,197 @@
 import os
 import sys
-from flask import Flask, render_template, jsonify, request, abort
-import psycopg2 
-from datetime import datetime
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
 
-# =================================================================
-# 0. CONFIGURACIÓN INICIAL Y AMBIENTE
-# =================================================================
-
-# Cargar variables de entorno desde el archivo .env (solo para desarrollo local)
+# Cargar variables
 load_dotenv()
 
-# Inicialización de la aplicación Flask
-# Flask buscará los archivos HTML en la carpeta 'templates' por defecto
 app = Flask(__name__)
-
-# Configuración del Puerto (Render inyecta la variable PORT automáticamente)
+app.secret_key = os.environ.get('SECRET_KEY', 'super_secret_key_smartbooks') # Necesario para sesiones
 PORT = int(os.environ.get('PORT', 5000))
 
-# =================================================================
-# 1. UTILIDADES Y CONEXIÓN A LA BASE DE DATOS
-# =================================================================
-
+# --- CONEXIÓN BASE DE DATOS ---
 def get_db_connection():
-    """
-    Establece la conexión a la base de datos PostgreSQL.
-    Prioriza la variable DATABASE_URL que provee Render automáticamente.
-    """
-    # 1. Intento de conexión automática para Render (Estándar de Producción)
     database_url = os.environ.get("DATABASE_URL")
-    
-    # 2. Variables individuales (Fallback para desarrollo local con .env)
-    db_host = os.environ.get("DB_HOST")
-    db_name = os.environ.get("DB_NAME")
-    db_user = os.environ.get("DB_USER")
-    db_pass = os.environ.get("DB_PASS")
-
     try:
-        if database_url:
-            # Conexión usando la URL completa (Render)
-            conn = psycopg2.connect(database_url, sslmode='require')
-            # print("INFO: Conexión establecida usando DATABASE_URL (Render).")
-            return conn
-        
-        elif all([db_host, db_name, db_user, db_pass]):
-            # Conexión usando variables individuales (Local)
-            conn = psycopg2.connect(
-                host=db_host,
-                database=db_name,
-                user=db_user,
-                password=db_pass,
-                port=os.environ.get("DB_PORT", 5432),
-                sslmode='require' if db_host != 'localhost' else 'allow',
-                connect_timeout=10
-            )
-            # print("INFO: Conexión establecida usando variables individuales.")
-            return conn
-        else:
-            print("ADVERTENCIA: No se encontraron credenciales de base de datos.", file=sys.stderr)
-            return None
-
-    except psycopg2.OperationalError as e:
-        print(f"ERROR: Fallo operacional al conectar a PostgreSQL: {e}", file=sys.stderr)
-        return None
+        conn = psycopg2.connect(database_url, sslmode='require')
+        return conn
     except Exception as e:
-        print(f"ERROR: Error desconocido al conectar a DB: {e}", file=sys.stderr)
+        print(f"Error DB: {e}", file=sys.stderr)
         return None
 
-def format_price(price):
-    """Formatea números a formato moneda (ej: 15000 -> $15.000)"""
-    if price is None or price == 0:
-        return "$0"
-    try:
-        price_int = int(price)
-        return f"${price_int:,}".replace(",", ".")
-    except (ValueError, TypeError):
-        return "$0"
-
-# =================================================================
-# 2. DATOS DE FALLBACK (SIMULACIÓN POR SI FALLA LA DB)
-# =================================================================
-
-FALLBACK_CONFIG_URLS = {
-    "url_editorial1": "https://placehold.co/150x50/3498db/ffffff?text=Editorial+1",
-    "url_editorial2": "https://placehold.co/150x50/2ecc71/ffffff?text=Editorial+2",
-    "url_editorial3": "https://placehold.co/150x50/f1c40f/ffffff?text=Editorial+3",
-    "url_editorial4": "https://placehold.co/150x50/e74c3c/ffffff?text=Editorial+4",
-    "url_editorial5": "https://placehold.co/150x50/9b59b6/ffffff?text=Editorial+5",
-    "url_banner1": "https://placehold.co/1920x600/163D6A/ffffff?text=BANNER+1", 
-    "url_banner2": "https://placehold.co/1920x600/2C5E8C/ffffff?text=BANNER+2",
-    "url_banner3": "https://placehold.co/1920x600/447FAD/ffffff?text=BANNER+3",
-    "url_banner4": "https://placehold.co/1920x600/5BA0CD/ffffff?text=BANNER+4",
-    "url_banner5": "https://placehold.co/1920x600/73C1EE/ffffff?text=BANNER+5",
-    "url_banner6": "https://placehold.co/1920x600/8BD3FF/ffffff?text=BANNER+6",
-    "url_recuadro1": "https://placehold.co/400x300/F39C12/ffffff?text=Recuadro+1",
-    "url_recuadro2": "https://placehold.co/400x300/C0392B/ffffff?text=Recuadro+2",
-    "url_recuadro3": "https://placehold.co/400x300/8E44AD/ffffff?text=Recuadro+3",
-}
-
-SIMULATED_SCHOOLS = [
-    {"ID_COLEGIO": 1, "COLEGIO": "Colegio Demo Render", "CIUDAD": "Bogotá", "IMAGEN": "", "UBICACION": "", "PREJARDIN": "Kit Demo"},
-    {"ID_COLEGIO": 2, "COLEGIO": "Liceo Prueba", "CIUDAD": "Medellín", "IMAGEN": "", "UBICACION": "", "PREJARDIN": "0"}
-]
-
-def get_simulated_featured_products(count=8):
-    """Genera productos falsos para que el diseño no se rompa"""
-    base = {"titulo": "Producto Demo", "descripcion_corta": "Descripción de prueba", "url_imagen": "https://placehold.co/300x400", "rating": 5, "precio": 50000, "categoria": "General"}
-    return [ {**base, "precio_formateado": "$50.000"} for _ in range(count) ]
-
-def simulate_package_data(school_id, grade_name):
-    """Simula un paquete de libros"""
-    return {
-        "package_id": f"PK-{school_id}",
-        "school_id": school_id,
-        "grade": grade_name,
-        "price_total": 250000, 
-        "price_formateado": "$250.000",
-        "books_count": 4,
-        "books_list": [
-            {"name": "Matemáticas Demo", "author": "Autor X"},
-            {"name": "Inglés Demo", "author": "Autor Y"}
-        ],
-        "available": True
-    }
-
-# =================================================================
-# 3. FUNCIONES DE CONSULTA A DB
-# =================================================================
-
-def get_config_urls_from_db(conn):
-    config_urls = {}
-    if conn is None: return config_urls
-    try:
-        with conn.cursor() as cur:
-            cur.execute('SELECT clave, valor FROM configuracion_web;')
-            for clave, valor in cur.fetchall():
-                # Reemplazamos guiones por guiones bajos para compatibilidad con Jinja2
-                config_urls[clave.replace('-', '_')] = valor 
-            return config_urls
-    except Exception as e:
-        print(f"Error DB config: {e}")
-        return {}
-
-def get_featured_products_from_db(conn):
-    productos = []
-    if conn is None: return productos
-    try:
-        with conn.cursor() as cur:
-            # Asegúrate de que los nombres de columna coincidan con tu tabla real
-            sql_query = """
-            SELECT titulo, a2_titulo, url_imagen, precio, editorial
-            FROM productos_escolares ORDER BY id_producto DESC LIMIT 8; 
-            """
-            cur.execute(sql_query)
-            for row in cur.fetchall():
-                productos.append({
-                    "titulo": row[0],
-                    "descripcion_corta": row[1] if row[1] else "Sin descripción",
-                    "url_imagen": row[2], 
-                    "rating": 5, # Rating simulado ya que no está en DB
-                    "precio": row[3],
-                    "precio_formateado": format_price(row[3]),
-                    "categoria": row[4] if row[4] else "General" 
-                })
-        return productos
-    except Exception as e:
-        print(f"Error DB productos: {e}")
-        return []
-
-def get_schools_from_db(conn):
-    data = []
-    if conn is None: return data
-    try:
-        with conn.cursor() as cur:
-            cur.execute('SELECT * FROM colegios ORDER BY "COLEGIO";')
-            colnames = [desc[0] for desc in cur.description]
-            for row in cur.fetchall():
-                school = dict(zip(colnames, row))
-                # Limpiar valores None para evitar errores en el JSON
-                for k, v in school.items():
-                    if v is None: school[k] = "0" if k not in ["COLEGIO", "CIUDAD"] else ""
-                data.append(school)
-        return data
-    except Exception as e:
-        print(f"Error DB colegios: {e}")
-        return []
-
-# =================================================================
-# 4. RUTAS (VIEWS)
-# =================================================================
-
+# --- RUTAS PÚBLICAS ---
 @app.route('/')
 def index():
-    """
-    Ruta raíz: Carga el esqueleto (index.html) con los datos del Home.
-    """
-    conn = None
-    config_urls = {}
-    destacados = []
+    return render_template('index.html')
 
-    try:
-        conn = get_db_connection()
-        if conn:
-            config_urls = get_config_urls_from_db(conn)
-            destacados = get_featured_products_from_db(conn)
-        
-        # Aplicar fallbacks si la DB no devolvió datos
-        if not config_urls: config_urls = FALLBACK_CONFIG_URLS
-        if not destacados: destacados = get_simulated_featured_products()
-
-        return render_template('index.html', **config_urls, productos_destacados=destacados)
-    except Exception as e:
-        print(f"Error FATAL en index: {e}")
-        # Renderiza con puros datos simulados para que no salga Error 500
-        return render_template('index.html', **FALLBACK_CONFIG_URLS, productos_destacados=get_simulated_featured_products())
-    finally:
-        if conn: conn.close()
-
-# ---------------------------------------------------------------
-# RUTA DINÁMICA PARA LA SPA (IMPORTANTE)
-# ---------------------------------------------------------------
-# Esta ruta captura cualquier petición que termine en .html
-# Ejemplo: si el JS pide /QuienesSomos.html, esta función lo maneja.
 @app.route('/<page_name>.html')
 def serve_html_pages(page_name):
-    """
-    Sirve los fragmentos HTML (templates) solicitados por el JavaScript loadPage().
-    Busca el archivo {page_name}.html dentro de la carpeta /templates.
-    """
-    try:
-        # Flask busca automáticamente en la carpeta 'templates'
-        return render_template(f'{page_name}.html')
-    except Exception as e:
-        print(f"Error sirviendo {page_name}.html: {e}")
-        abort(404) # Devuelve error 404 si el archivo no existe
+    # Protege la ruta admin si no está logueado
+    if page_name == 'admin' and not session.get('logged_in'):
+        return render_template('admin.html', show_login=True)
+    return render_template(f'{page_name}.html')
 
-# ---------------------------------------------------------------
-# RUTAS DE API (JSON)
-# ---------------------------------------------------------------
-
-@app.route('/api/colegios', methods=['GET'])
-def api_colegios():
-    """API que devuelve la lista de colegios en formato JSON"""
+# --- API ADMINISTRADOR (Login) ---
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    data = request.json
+    password = data.get('password')
+    
+    # En un entorno real, usa hash (bcrypt). Aquí comparamos directo según tu requerimiento.
+    # Si deseas cambiar la clave, actualiza la tabla admin_users
     conn = get_db_connection()
-    if conn:
-        data = get_schools_from_db(conn)
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT * FROM admin_users WHERE username = 'admin'")
+    user = cur.fetchone()
+    conn.close()
+
+    if user and user['password_hash'] == password:
+        session['logged_in'] = True
+        return jsonify({"success": True})
+    
+    return jsonify({"success": False, "message": "Contraseña incorrecta"}), 401
+
+@app.route('/api/admin/logout', methods=['POST'])
+def admin_logout():
+    session.clear()
+    return jsonify({"success": True})
+
+@app.route('/api/admin/change-password', methods=['POST'])
+def change_password():
+    if not session.get('logged_in'): return jsonify({"error": "Unauthorized"}), 401
+    
+    data = request.json
+    new_password = data.get('new_password')
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE admin_users SET password_hash = %s WHERE username = 'admin'", (new_password,))
+    conn.commit()
+    conn.close()
+    return jsonify({"success": True})
+
+# --- API PRODUCTOS (Tienda y Bestsellers) ---
+@app.route('/api/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def manage_products():
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    
+    if request.method == 'GET':
+        cur.execute("SELECT * FROM products ORDER BY id DESC")
+        data = cur.fetchall()
         conn.close()
-        if data:
-            return jsonify(data)
+        return jsonify(data)
     
-    # Si falla la DB, devolvemos simulación
-    return jsonify(SIMULATED_SCHOOLS)
+    if not session.get('logged_in'): return jsonify({"error": "Unauthorized"}), 401
 
-@app.route('/api/paquete', methods=['GET'])
-def api_paquete():
-    """API para buscar un kit específico (Simulado por ahora)"""
-    school_id = request.args.get('school_id')
-    grade_name = request.args.get('grade_name')
+    if request.method == 'POST': # Crear
+        d = request.json
+        cur.execute("INSERT INTO products (title, editorial, price, image_url, description, is_bestseller) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (d['title'], d['editorial'], d['price'], d['image_url'], d['description'], d['is_bestseller']))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
+
+    if request.method == 'PUT': # Editar
+        d = request.json
+        cur.execute("UPDATE products SET title=%s, editorial=%s, price=%s, image_url=%s, description=%s, is_bestseller=%s WHERE id=%s",
+                    (d['title'], d['editorial'], d['price'], d['image_url'], d['description'], d['is_bestseller'], d['id']))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
+
+    if request.method == 'DELETE': # Borrar
+        id = request.args.get('id')
+        cur.execute("DELETE FROM products WHERE id = %s", (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
+
+# --- API COLEGIOS Y KITS ---
+@app.route('/api/schools', methods=['GET', 'POST', 'DELETE'])
+def manage_schools():
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     
-    if not school_id or not grade_name:
-        return jsonify({"error": "Faltan parámetros"}), 400
+    if request.method == 'GET':
+        # Obtener colegios con sus kits anidados (JSON structure)
+        cur.execute("""
+            SELECT s.id, s.name, s.city, s.logo_url as img, 
+            COALESCE(json_agg(k.*) FILTER (WHERE k.id IS NOT NULL), '[]') as kits
+            FROM schools s
+            LEFT JOIN kits k ON s.id = k.school_id
+            GROUP BY s.id
+        """)
+        data = cur.fetchall()
+        conn.close()
+        return jsonify(data)
+
+    if not session.get('logged_in'): return jsonify({"error": "Unauthorized"}), 401
+
+    if request.method == 'POST':
+        d = request.json
+        cur.execute("INSERT INTO schools (name, city, logo_url) VALUES (%s, %s, %s)", (d['name'], d['city'], d['img']))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
         
-    # Aquí iría la consulta real a la DB para armar el kit
-    # Por ahora usamos la simulación
-    data = simulate_package_data(school_id, grade_name)
-    return jsonify(data)
+    if request.method == 'DELETE':
+        id = request.args.get('id')
+        cur.execute("DELETE FROM schools WHERE id = %s", (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
 
-# =================================================================
-# 5. CONFIGURACIÓN DE EJECUCIÓN
-# =================================================================
+@app.route('/api/kits', methods=['POST', 'DELETE'])
+def manage_kits():
+    if not session.get('logged_in'): return jsonify({"error": "Unauthorized"}), 401
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    if request.method == 'POST':
+        d = request.json
+        cur.execute("INSERT INTO kits (school_id, grade_name, kit_name, price, book_count, description) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (d['school_id'], d['grade_name'], d['kit_name'], d['price'], d['book_count'], d['description']))
+        conn.commit()
+    
+    if request.method == 'DELETE':
+        id = request.args.get('id')
+        cur.execute("DELETE FROM kits WHERE id = %s", (id,))
+        conn.commit()
+        
+    conn.close()
+    return jsonify({"success": True})
+
+# --- API EDITORIALES ---
+@app.route('/api/editorials', methods=['GET', 'POST', 'DELETE'])
+def manage_editorials():
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    
+    if request.method == 'GET':
+        cur.execute("SELECT * FROM editorials")
+        data = cur.fetchall()
+        conn.close()
+        return jsonify(data)
+
+    if not session.get('logged_in'): return jsonify({"error": "Unauthorized"}), 401
+    
+    if request.method == 'POST':
+        d = request.json
+        cur.execute("INSERT INTO editorials (name, logo_url) VALUES (%s, %s)", (d['name'], d['logo_url']))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
+
+    if request.method == 'DELETE':
+        id = request.args.get('id')
+        cur.execute("DELETE FROM editorials WHERE id = %s", (id,))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True})
 
 if __name__ == '__main__':
-    # Esto solo se ejecuta en local. En Render, Gunicorn toma el control.
-    # El modo debug se activa solo si la variable FLASK_ENV es 'development'
-    debug_mode = os.environ.get('FLASK_ENV') == 'development'
-    print(f"--- Iniciando Servidor Local en puerto {PORT} ---")
-    app.run(host='0.0.0.0', port=PORT, debug=debug_mode)
+    app.run(host='0.0.0.0', port=PORT, debug=True)

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Smart Books</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-instrument { font-family: 'Instrument Sans', sans-serif; }
+        .bg-brand { background-color: #143c6c; }
+    </style>
+</head>
+<body class="bg-gray-100 font-instrument h-screen overflow-hidden">
+
+    <div id="login-modal" class="fixed inset-0 z-50 bg-[#143c6c] flex items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center animate-fade-in">
+            <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="h-16 mx-auto mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 font-outfit mb-2">Acceso Administrativo</h2>
+            <p class="text-gray-500 text-sm mb-6">Ingresa tu contraseña maestra</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" id="admin-pass" placeholder="Contraseña" class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-[#143c6c]">
+                <button type="submit" class="w-full bg-[#143c6c] text-white font-bold py-3 rounded-lg hover:bg-blue-900 transition">Ingresar</button>
+                <p id="login-error" class="text-red-500 text-xs mt-3 hidden">Contraseña incorrecta.</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="hidden flex h-full">
+        
+        <aside class="w-64 bg-[#143c6c] text-white flex flex-col">
+            <div class="p-6 border-b border-blue-800">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" class="h-10 opacity-90">
+                <p class="text-xs text-blue-200 mt-2">Panel de Control v1.0</p>
+            </div>
+            <nav class="flex-grow p-4 space-y-2">
+                <button onclick="switchTab('products')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn active" id="btn-products">
+                    <i class="fas fa-book"></i> Productos & Tienda
+                </button>
+                <button onclick="switchTab('schools')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-schools">
+                    <i class="fas fa-school"></i> Colegios & Kits
+                </button>
+                <button onclick="switchTab('editorials')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-editorials">
+                    <i class="fas fa-star"></i> Editoriales Aliadas
+                </button>
+                <button onclick="switchTab('settings')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-settings">
+                    <i class="fas fa-cog"></i> Configuración
+                </button>
+            </nav>
+            <div class="p-4 border-t border-blue-800">
+                <button onclick="handleLogout()" class="w-full bg-red-500 hover:bg-red-600 py-2 rounded text-sm font-bold transition">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="flex-grow bg-gray-50 p-8 overflow-y-auto">
+            
+            <div id="tab-products" class="content-section">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 font-outfit">Gestión de Productos</h2>
+                    <button onclick="openProductModal()" class="bg-green-500 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-green-600 transition"><i class="fas fa-plus mr-2"></i> Nuevo Producto</button>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                            <tr>
+                                <th class="p-4">Producto</th>
+                                <th class="p-4">Editorial</th>
+                                <th class="p-4">Precio</th>
+                                <th class="p-4 text-center">Bestseller</th>
+                                <th class="p-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table" class="text-sm">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-schools" class="content-section hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 font-outfit">Colegios y Kits</h2>
+                    <button onclick="openSchoolModal()" class="bg-[#143c6c] text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-blue-900 transition"><i class="fas fa-plus mr-2"></i> Nuevo Colegio</button>
+                </div>
+                <div id="schools-grid" class="grid grid-cols-1 gap-6">
+                    </div>
+            </div>
+
+            <div id="tab-editorials" class="content-section hidden">
+                <h2 class="text-3xl font-bold text-gray-800 font-outfit mb-8">Editoriales Aliadas (Marquee)</h2>
+                <div class="flex gap-4 mb-6">
+                    <input type="text" id="edit-name" placeholder="Nombre Editorial" class="border p-2 rounded w-1/3">
+                    <input type="text" id="edit-logo" placeholder="URL Logo" class="border p-2 rounded w-1/3">
+                    <button onclick="addEditorial()" class="bg-green-500 text-white px-4 rounded font-bold">Agregar</button>
+                </div>
+                <div id="editorials-list" class="grid grid-cols-4 gap-4">
+                    </div>
+            </div>
+
+            <div id="tab-settings" class="content-section hidden">
+                <h2 class="text-3xl font-bold text-gray-800 font-outfit mb-8">Seguridad</h2>
+                <div class="bg-white p-8 rounded-xl shadow max-w-md">
+                    <h3 class="font-bold mb-4">Cambiar Contraseña de Acceso</h3>
+                    <input type="password" id="new-pass" placeholder="Nueva Contraseña" class="w-full p-3 border rounded mb-4">
+                    <button onclick="changePassword()" class="w-full bg-[#143c6c] text-white py-2 rounded font-bold">Actualizar Clave</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="product-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl p-8 w-[600px] shadow-2xl">
+            <h3 class="text-xl font-bold mb-4" id="modal-p-title">Agregar Producto</h3>
+            <form onsubmit="saveProduct(event)" class="space-y-4">
+                <input type="hidden" id="p-id">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="p-title" placeholder="Título del Libro" class="border p-2 rounded w-full" required>
+                    <input type="text" id="p-price" placeholder="Precio (ej: $50.000)" class="border p-2 rounded w-full" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="p-editorial" placeholder="Editorial" class="border p-2 rounded w-full">
+                    <label class="flex items-center space-x-2 border p-2 rounded cursor-pointer">
+                        <input type="checkbox" id="p-bestseller"> <span>Es "Más Vendido"</span>
+                    </label>
+                </div>
+                <input type="text" id="p-img" placeholder="URL Imagen" class="border p-2 rounded w-full">
+                <textarea id="p-desc" placeholder="Descripción..." class="border p-2 rounded w-full h-24"></textarea>
+                
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeModals()" class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded">Cancelar</button>
+                    <button type="submit" class="px-6 py-2 bg-green-500 text-white rounded font-bold hover:bg-green-600">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="kit-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl p-8 w-[500px] shadow-2xl">
+            <h3 class="text-xl font-bold mb-4">Agregar Kit Escolar</h3>
+            <form onsubmit="saveKit(event)" class="space-y-4">
+                <input type="hidden" id="k-school-id">
+                <input type="text" id="k-grade" placeholder="Grado (Ej: PRIMERO)" class="border p-2 rounded w-full uppercase" required>
+                <input type="text" id="k-name" placeholder="Nombre del Kit (Ej: Kit Cosmo 1)" class="border p-2 rounded w-full" required>
+                <input type="text" id="k-price" placeholder="Precio" class="border p-2 rounded w-full" required>
+                <input type="number" id="k-count" placeholder="Cantidad de libros" class="border p-2 rounded w-full">
+                <textarea id="k-desc" placeholder="Detalles del contenido..." class="border p-2 rounded w-full h-20"></textarea>
+                
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeModals()" class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded">Cancelar</button>
+                    <button type="submit" class="px-6 py-2 bg-[#143c6c] text-white rounded font-bold">Agregar Kit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DEL ADMIN ---
+
+        // 1. LOGIN
+        async function handleLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin-pass').value;
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({password: pass})
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('login-modal').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                loadProducts();
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            fetch('/api/admin/logout', {method: 'POST'}).then(() => location.reload());
+        }
+
+        // 2. NAVEGACIÓN TABS
+        function switchTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-white/10', 'font-bold'));
+            document.getElementById(`btn-${tabName}`).classList.add('bg-white/10', 'font-bold');
+
+            if(tabName === 'products') loadProducts();
+            if(tabName === 'schools') loadSchools();
+            if(tabName === 'editorials') loadEditorials();
+        }
+
+        // 3. GESTIÓN PRODUCTOS
+        async function loadProducts() {
+            const res = await fetch('/api/products');
+            const products = await res.json();
+            const tbody = document.getElementById('products-table');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-4 flex items-center gap-3">
+                            <img src="${p.image_url}" class="w-10 h-10 object-contain rounded border">
+                            <span class="font-bold text-gray-700">${p.title}</span>
+                        </td>
+                        <td class="p-4 text-gray-500">${p.editorial}</td>
+                        <td class="p-4 font-bold text-[#143c6c]">${p.price}</td>
+                        <td class="p-4 text-center">${p.is_bestseller ? '<span class="text-green-500"><i class="fas fa-check"></i></span>' : '<span class="text-gray-300">-</span>'}</td>
+                        <td class="p-4 text-right">
+                            <button onclick='editProduct(${JSON.stringify(p)})' class="text-blue-500 hover:text-blue-700 mr-2"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteProduct(${p.id})" class="text-red-400 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openProductModal(product = null) {
+            document.getElementById('product-modal').classList.remove('hidden');
+            if (product) {
+                document.getElementById('modal-p-title').innerText = "Editar Producto";
+                document.getElementById('p-id').value = product.id;
+                document.getElementById('p-title').value = product.title;
+                document.getElementById('p-price').value = product.price;
+                document.getElementById('p-editorial').value = product.editorial;
+                document.getElementById('p-img').value = product.image_url;
+                document.getElementById('p-desc').value = product.description;
+                document.getElementById('p-bestseller').checked = product.is_bestseller;
+            } else {
+                document.getElementById('modal-p-title').innerText = "Nuevo Producto";
+                document.querySelector('#product-modal form').reset();
+                document.getElementById('p-id').value = '';
+            }
+        }
+
+        async function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('p-id').value;
+            const method = id ? 'PUT' : 'POST';
+            const body = {
+                id: id,
+                title: document.getElementById('p-title').value,
+                price: document.getElementById('p-price').value,
+                editorial: document.getElementById('p-editorial').value,
+                image_url: document.getElementById('p-img').value,
+                description: document.getElementById('p-desc').value,
+                is_bestseller: document.getElementById('p-bestseller').checked
+            };
+
+            await fetch('/api/products', {
+                method: method,
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            });
+            closeModals();
+            loadProducts();
+        }
+
+        async function deleteProduct(id) {
+            if(confirm('¿Eliminar producto?')) {
+                await fetch(`/api/products?id=${id}`, {method: 'DELETE'});
+                loadProducts();
+            }
+        }
+
+        // 4. GESTIÓN COLEGIOS
+        async function loadSchools() {
+            const res = await fetch('/api/schools');
+            const schools = await res.json();
+            const grid = document.getElementById('schools-grid');
+            grid.innerHTML = '';
+
+            schools.forEach(s => {
+                let kitsHtml = '';
+                s.kits.forEach(k => {
+                    kitsHtml += `
+                        <div class="flex justify-between items-center bg-gray-50 p-2 rounded mb-1 text-sm">
+                            <span><b>${k.grade_name}</b>: ${k.kit_name} (${k.price})</span>
+                            <button onclick="deleteKit(${k.id})" class="text-red-400 hover:text-red-600"><i class="fas fa-times"></i></button>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML += `
+                    <div class="bg-white p-6 rounded-xl shadow border border-gray-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-4">
+                                <img src="${s.img}" class="w-12 h-12 object-contain">
+                                <div>
+                                    <h3 class="font-bold text-lg text-[#143c6c]">${s.name}</h3>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">${s.city}</span>
+                                </div>
+                            </div>
+                            <button onclick="deleteSchool(${s.id})" class="text-red-400 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="mb-4 border-t border-b border-gray-100 py-2 space-y-1">
+                            ${kitsHtml || '<p class="text-xs text-gray-400 italic">Sin kits asignados</p>'}
+                        </div>
+                        <button onclick="openKitModal(${s.id})" class="text-sm text-[#143c6c] font-bold hover:underline">+ Agregar Kit</button>
+                    </div>
+                `;
+            });
+        }
+
+        async function openSchoolModal() {
+            const name = prompt("Nombre del Colegio:");
+            if(!name) return;
+            const city = prompt("Ciudad:");
+            const img = prompt("URL Logo:");
+            
+            await fetch('/api/schools', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, city, img})
+            });
+            loadSchools();
+        }
+
+        async function deleteSchool(id) {
+            if(confirm('¿Borrar colegio y todos sus kits?')) {
+                await fetch(`/api/schools?id=${id}`, {method: 'DELETE'});
+                loadSchools();
+            }
+        }
+
+        function openKitModal(schoolId) {
+            document.getElementById('kit-modal').classList.remove('hidden');
+            document.getElementById('k-school-id').value = schoolId;
+        }
+
+        async function saveKit(e) {
+            e.preventDefault();
+            const body = {
+                school_id: document.getElementById('k-school-id').value,
+                grade_name: document.getElementById('k-grade').value,
+                kit_name: document.getElementById('k-name').value,
+                price: document.getElementById('k-price').value,
+                book_count: document.getElementById('k-count').value,
+                description: document.getElementById('k-desc').value
+            };
+            await fetch('/api/kits', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+            });
+            closeModals();
+            loadSchools();
+        }
+
+        async function deleteKit(id) {
+            if(confirm('¿Borrar kit?')) {
+                await fetch(`/api/kits?id=${id}`, {method: 'DELETE'});
+                loadSchools();
+            }
+        }
+
+        // 5. EDITORALES
+        async function loadEditorials() {
+            const res = await fetch('/api/editorials');
+            const data = await res.json();
+            const list = document.getElementById('editorials-list');
+            list.innerHTML = '';
+            data.forEach(ed => {
+                list.innerHTML += `
+                    <div class="bg-white p-4 rounded border flex flex-col items-center relative group">
+                        <img src="${ed.logo_url}" class="h-12 object-contain mb-2">
+                        <span class="text-xs font-bold">${ed.name}</span>
+                        <button onclick="deleteEditorial(${ed.id})" class="absolute top-1 right-1 text-red-400 hidden group-hover:block"><i class="fas fa-times-circle"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        async function addEditorial() {
+            const name = document.getElementById('edit-name').value;
+            const logo = document.getElementById('edit-logo').value;
+            if(!name) return;
+            await fetch('/api/editorials', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, logo_url: logo})
+            });
+            loadEditorials();
+        }
+
+        async function deleteEditorial(id) {
+            await fetch(`/api/editorials?id=${id}`, {method: 'DELETE'});
+            loadEditorials();
+        }
+
+        // 6. CONFIGURACIÓN
+        async function changePassword() {
+            const newPass = document.getElementById('new-pass').value;
+            if(!newPass) return alert('Ingresa una contraseña');
+            await fetch('/api/admin/change-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({new_password: newPass})
+            });
+            alert('Contraseña actualizada');
+            document.getElementById('new-pass').value = '';
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.fixed').forEach(el => {
+                if(el.id !== 'login-modal') el.classList.add('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
