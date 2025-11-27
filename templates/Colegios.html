@@ -34,7 +34,7 @@
                     </div>
                     
                     <div id="school-dropdown-container" class="relative group">
-                        <button id="school-select-button" class="w-full bg-white border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between transition-all duration-300 hover:border-[#143c6c] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-50 group-hover:-translate-y-0.5">
+                        <button id="school-select-button" class="w-full bg-white border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between transition-all duration-300 hover:border-[#143c6c] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-50 group-hover:-translate-y-0.5 relative z-20">
                             <span class="text-gray-500 font-medium text-lg truncate flex items-center gap-2">
                                 <i class="fas fa-search text-gray-300"></i> Buscar colegio...
                             </span>
@@ -43,7 +43,7 @@
                             </div>
                         </button>
 
-                        <div id="school-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-3 overflow-hidden transform origin-top transition-all duration-200 z-50 ring-1 ring-black/5">
+                        <div id="school-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-2 overflow-hidden transform origin-top transition-all duration-200 z-[60] ring-1 ring-black/5">
                             <div class="p-3 bg-gray-50 border-b border-gray-100">
                                 <input type="text" id="school-search-input" placeholder="Escribe para filtrar..." class="w-full bg-white border border-gray-200 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c]">
                             </div>
@@ -61,8 +61,8 @@
                         <span class="bg-gray-100 text-gray-400 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 transition-colors" id="badge-status-2">PENDIENTE</span>
                     </div>
 
-                    <div id="course-dropdown-container" class="relative opacity-50 pointer-events-none transition-all duration-300 grayscale">
-                        <button id="course-select-button" class="w-full bg-gray-50 border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between cursor-not-allowed">
+                    <div id="course-dropdown-container" class="relative transition-all duration-300">
+                        <button id="course-select-button" class="w-full bg-gray-50 border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between cursor-not-allowed opacity-60 grayscale relative z-20">
                             <span class="text-gray-400 font-medium text-lg flex items-center gap-2">
                                 <i class="fas fa-layer-group text-gray-300"></i> Selecciona primero el colegio
                             </span>
@@ -71,8 +71,8 @@
                             </div>
                         </button>
 
-                        <div id="course-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-3 overflow-hidden z-50 ring-1 ring-black/5">
-                            <div id="course-list" class="max-h-64 overflow-y-auto custom-scrollbar p-1">
+                        <div id="course-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-2 overflow-hidden z-[60] ring-1 ring-black/5">
+                            <div id="course-list" class="max-h-64 overflow-y-auto custom-scrollbar p-1 bg-white">
                                 </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div id="results-area" class="mt-16 min-h-[300px]">
+        <div id="results-area" class="mt-16 min-h-[300px] relative z-10">
             
             <div id="search-loading" class="hidden flex-col items-center justify-center py-12 animate-pulse">
                 <div class="relative">
@@ -136,7 +136,7 @@
                             </div>
 
                             <div class="space-y-4 mb-8">
-                                <div class="bg-gray-50 rounded-2xl p-5 border border-gray-200 flex items-start gap-4 transition hover:bg-blue-50/50 hover:border-blue-200 group">
+                                <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex items-start gap-4 transition hover:bg-blue-50/30 hover:border-blue-100 group">
                                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#143c6c] text-xl shadow-sm border border-gray-100 group-hover:text-yellow-500 transition-colors">
                                         <i class="fas fa-layer-group"></i>
                                     </div>
@@ -148,29 +148,31 @@
                                     </div>
                                 </div>
                                 
-                                <div class="flex gap-4 opacity-80">
-                                    <div class="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase">
-                                        <i class="fas fa-shield-alt text-[#143c6c]"></i> Garantía
+                                <div class="flex gap-3">
+                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-check-circle text-green-500 text-xl mb-2"></i>
+                                        <span class="text-xs font-bold text-gray-400 uppercase">Original</span>
                                     </div>
-                                    <div class="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase">
-                                        <i class="fas fa-truck text-yellow-500"></i> Envío Nacional
+                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-shield-alt text-[#143c6c] text-xl mb-2"></i>
+                                        <span class="text-xs font-bold text-gray-400 uppercase">Garantía</span>
+                                    </div>
+                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-truck text-yellow-500 text-xl mb-2"></i>
+                                        <span class="text-xs font-bold text-gray-400 uppercase">Envío</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 mt-auto">
-                            <div class="text-center sm:text-left">
-                                <span class="block text-xs text-gray-400 uppercase font-bold tracking-wide mb-1">Precio Total</span>
-                                <span id="card-price" class="text-4xl font-black text-[#143c6c] font-outfit tracking-tight block">$0</span>
-                            </div>
-                            
-                            <button id="add-kit-btn" class="w-full sm:w-auto bg-[#fcd34d] text-[#143c6c] font-black py-4 px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-sm uppercase tracking-wider group">
+                        <div class="mt-auto pt-4 border-t border-gray-100">
+                            <button id="add-kit-btn" class="w-full bg-[#fcd34d] text-[#143c6c] font-black py-4 px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-sm uppercase tracking-wider group">
                                 <span>Añadir al Carrito</span>
                                 <div class="bg-white/20 rounded-full p-1.5 group-hover:bg-white/40 transition">
                                     <i class="fas fa-shopping-bag text-sm"></i>
                                 </div>
                             </button>
+                            <p class="text-center text-xs text-gray-400 mt-3 font-instrument">El precio final se calculará en el carrito de compras.</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +185,7 @@
 <style>
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; border: 2px solid #fff; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     
     .animate-blob { animation: blob 7s infinite; }
@@ -196,16 +198,13 @@
 </style>
 
 <script>
-    // Usamos una función autoejecutable para aislar el scope y evitar conflictos
     (function() {
-        // DATOS DE EJEMPLO AMPLIADOS
         const SCHOOLS_DATA = [
             { 
                 id: '001', name: 'Cosmo Schools', city: 'Medellín', img: 'https://sbooks.com.co/wp-content/uploads/2024/11/LOGO-COLEGIO.png', 
                 kits: { 
                     'PRIMERO': { id: 'K01', name: 'Kit Cosmo 1° - English Path', price: '$245.000', count: 5 }, 
-                    'SEGUNDO': { id: 'K02', name: 'Kit Cosmo 2° - Global', price: '$255.000', count: 6 },
-                    'TERCERO': { id: 'K07', name: 'Kit Cosmo 3° - Discovery', price: '$260.000', count: 6 }
+                    'SEGUNDO': { id: 'K02', name: 'Kit Cosmo 2° - Global', price: '$255.000', count: 6 } 
                 } 
             },
             { 
@@ -224,13 +223,8 @@
             { 
                 id: '004', name: 'Liceo Parroquial San José', city: 'Bogotá', img: 'https://sbooks.com.co/wp-content/uploads/2024/12/2-6.png', 
                 kits: { 
-                    'SEXTO': { id: 'K06', name: 'Kit San José 6°', price: '$220.000', count: 5 },
-                    'SEPTIMO': { id: 'K08', name: 'Kit San José 7°', price: '$230.000', count: 5 }
+                    'SEXTO': { id: 'K06', name: 'Kit San José 6°', price: '$220.000', count: 5 } 
                 } 
-            },
-            { 
-                id: '005', name: 'Gimnasio Moderno', city: 'Bogotá', img: 'https://placehold.co/150x150/143c6c/ffffff?text=GM', 
-                kits: { 'PRIMERO': { id: 'K09', name: 'Kit GM 1° - Full Bilingüe', price: '$350.000', count: 8 } } 
             }
         ];
 
@@ -242,47 +236,41 @@
             'DECIMO': 'Décimo (10°)', 'ONCE': 'Once (11°)'
         };
 
-        // Variables de estado
-        let currentSchool = null;
-        let currentKitData = null;
-
-        // Referencias al DOM (Seguras)
+        const getEl = (id) => document.getElementById(id);
         const els = {
-            schoolBtn: document.getElementById('school-select-button'),
-            schoolMenu: document.getElementById('school-dropdown-menu'),
-            schoolList: document.getElementById('school-list'),
-            schoolSearch: document.getElementById('school-search-input'),
-            schoolContainer: document.getElementById('school-dropdown-container'),
+            schoolBtn: getEl('school-select-button'),
+            schoolMenu: getEl('school-dropdown-menu'),
+            schoolList: getEl('school-list'),
+            schoolSearch: getEl('school-search-input'),
+            schoolContainer: getEl('school-dropdown-container'),
             
-            courseBtn: document.getElementById('course-select-button'),
-            courseMenu: document.getElementById('course-dropdown-menu'),
-            courseList: document.getElementById('course-list'),
-            courseContainer: document.getElementById('course-dropdown-container'),
+            courseBtn: getEl('course-select-button'),
+            courseMenu: getEl('course-dropdown-menu'),
+            courseList: getEl('course-list'),
+            courseContainer: getEl('course-dropdown-container'),
             
-            labelGrade: document.getElementById('label-grade'),
-            badgeGradeNumber: document.getElementById('badge-number-2'),
-            badgeGradeStatus: document.getElementById('badge-status-2'),
+            labelGrade: getEl('label-grade'),
+            badgeGradeNumber: getEl('badge-number-2'),
+            badgeGradeStatus: getEl('badge-status-2'),
             
-            card: document.getElementById('package-card'),
-            loading: document.getElementById('search-loading'),
-            initialState: document.getElementById('initial-state'),
-            addBtn: document.getElementById('add-kit-btn'),
+            card: getEl('package-card'),
+            loading: getEl('search-loading'),
+            initialState: getEl('initial-state'),
+            addBtn: getEl('add-kit-btn'),
             
-            // Campos de la tarjeta (para evitar el error de null)
-            cardColegio: document.getElementById('card-colegio'),
-            cardCity: document.getElementById('card-city'),
-            cardCurso: document.getElementById('card-curso'),
-            cardImagen: document.getElementById('card-imagen'),
-            cardKitName: document.getElementById('card-kit-name'),
-            cardPrice: document.getElementById('card-price'),
-            packageDetails: document.getElementById('package-details')
+            cardColegio: getEl('card-colegio'),
+            cardCity: getEl('card-city'),
+            cardCurso: getEl('card-curso'),
+            cardImagen: getEl('card-imagen'),
+            cardKitName: getEl('card-kit-name'),
+            packageDetails: getEl('package-details')
         };
 
-        // 1. Renderizar Escuelas
+        let currentSchool = null;
+
         function renderSchools(filter = '') {
             if (!els.schoolList) return;
             els.schoolList.innerHTML = '';
-            
             const filtered = SCHOOLS_DATA.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()));
             
             if(filtered.length === 0) { 
@@ -307,11 +295,9 @@
             });
         }
 
-        // 2. Seleccionar Escuela
         function selectSchool(school) {
             currentSchool = school;
             
-            // Actualizar UI del Botón
             els.schoolBtn.innerHTML = `
                 <div class="flex items-center gap-3 overflow-hidden">
                     <img src="${school.img}" class="w-6 h-6 object-contain">
@@ -319,10 +305,10 @@
                 </div>
                 <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm"><i class="fas fa-check text-xs"></i></div>
             `;
-            els.schoolBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all";
+            els.schoolBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
             els.schoolMenu.classList.add('hidden');
 
-            // Habilitar Paso 2
+            // Habilitar Paso 2 (Quitar opacidad y grayscale)
             els.courseContainer.classList.remove('opacity-60', 'pointer-events-none', 'grayscale');
             els.courseBtn.innerHTML = `
                 <span class="text-gray-600 font-bold text-lg flex items-center gap-3">
@@ -332,27 +318,22 @@
                     <i class="fas fa-chevron-down text-xs"></i>
                 </div>
             `;
-            els.courseBtn.className = "w-full bg-white border-2 border-gray-200 text-left py-5 px-6 rounded-2xl flex items-center justify-between hover:border-[#143c6c] hover:shadow-lg transition-all duration-300 cursor-pointer group";
+            els.courseBtn.className = "w-full bg-white border-2 border-gray-200 text-left py-5 px-6 rounded-2xl flex items-center justify-between hover:border-[#143c6c] hover:shadow-lg transition-all duration-300 cursor-pointer group relative z-20";
             
             // Actualizar Badges
             els.labelGrade.classList.remove('text-gray-400');
             els.labelGrade.classList.add('text-[#143c6c]');
-            if(els.badgeGradeNumber) {
-                els.badgeGradeNumber.classList.remove('bg-gray-200', 'text-gray-500');
-                els.badgeGradeNumber.classList.add('bg-[#143c6c]', 'text-white', 'shadow-md');
-            }
-            if(els.badgeGradeStatus) {
-                els.badgeGradeStatus.textContent = "Seleccionar";
-                els.badgeGradeStatus.className = "bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200 uppercase tracking-wide animate-pulse";
-            }
+            els.badgeGradeNumber.classList.remove('bg-gray-200', 'text-gray-500');
+            els.badgeGradeNumber.classList.add('bg-[#143c6c]', 'text-white', 'shadow-md');
+            
+            els.badgeGradeStatus.textContent = "Seleccionar";
+            els.badgeGradeStatus.className = "bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200 uppercase tracking-wide animate-pulse";
 
-            // Ocultar resultados previos
             els.card.classList.add('hidden');
             els.initialState.classList.remove('hidden');
             renderCourses();
         }
 
-        // 3. Renderizar Cursos
         function renderCourses() {
             if (!els.courseList) return;
             els.courseList.innerHTML = '';
@@ -360,44 +341,39 @@
             const grades = Object.keys(currentSchool.kits);
 
             if (grades.length === 0) {
-                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles para este colegio.</div>';
+                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles.</div>';
                 return;
             }
 
             grades.forEach(gradeKey => {
-                const el = document.createElement('div');
-                el.className = 'p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 font-bold text-gray-600 hover:text-[#143c6c] transition font-outfit flex items-center gap-3 group';
-                el.innerHTML = `
+                const div = document.createElement('div');
+                div.className = 'p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 font-bold text-gray-600 hover:text-[#143c6c] transition font-outfit flex items-center gap-3 group';
+                div.innerHTML = `
                     <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-[#143c6c] group-hover:text-white transition-colors">
                         <i class="fas fa-graduation-cap text-sm"></i>
                     </div>
                     ${GRADES_MAP[gradeKey] || gradeKey}
                 `;
-                el.onclick = (e) => { e.stopPropagation(); selectCourse(gradeKey); };
-                els.courseList.appendChild(el);
+                div.onclick = (e) => { e.stopPropagation(); selectCourse(gradeKey); };
+                els.courseList.appendChild(div);
             });
         }
 
-        // 4. Seleccionar Curso
         function selectCourse(gradeKey) {
             const gradeName = GRADES_MAP[gradeKey] || gradeKey;
             
-            // Update Botón Curso
             els.courseBtn.innerHTML = `
                 <span class="font-bold text-[#143c6c] text-lg flex items-center gap-3">
                     <i class="fas fa-graduation-cap"></i> ${gradeName}
                 </span>
                 <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm"><i class="fas fa-check text-xs"></i></div>
             `;
-            els.courseBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all";
+            els.courseBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
             els.courseMenu.classList.add('hidden');
             
-            if(els.badgeGradeStatus) {
-                els.badgeGradeStatus.textContent = "Completado";
-                els.badgeGradeStatus.className = "bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded border border-green-200 uppercase tracking-wide";
-            }
+            els.badgeGradeStatus.textContent = "Completado";
+            els.badgeGradeStatus.className = "bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded border border-green-200 uppercase tracking-wide";
 
-            // Loading
             els.initialState.classList.add('hidden');
             els.card.classList.add('hidden');
             els.loading.classList.remove('hidden');
@@ -406,31 +382,22 @@
             setTimeout(() => {
                 els.loading.classList.add('hidden');
                 els.loading.classList.remove('flex');
-                currentKitData = currentSchool.kits[gradeKey];
-                showCard(gradeName, currentKitData);
+                const kit = currentSchool.kits[gradeKey];
+                showCard(gradeName, kit);
             }, 800);
         }
 
-        // 5. Mostrar Tarjeta (Aquí ocurría el error)
         function showCard(gradeName, kit) {
-            // Validaciones de seguridad
-            if (!els.card || !els.cardColegio || !els.cardKitName) {
-                console.error("Elementos del DOM de la tarjeta no encontrados.");
-                return;
-            }
-
-            // Asignar valores
-            els.cardColegio.textContent = currentSchool.name;
-            if(els.cardCity) els.cardCity.textContent = currentSchool.city;
-            if(els.cardCurso) els.cardCurso.textContent = gradeName;
-            if(els.cardImagen) els.cardImagen.src = currentSchool.img;
+            // Verificar elementos antes de asignar para evitar errores
+            if (els.cardColegio) els.cardColegio.textContent = currentSchool.name;
+            if (els.cardCity) els.cardCity.textContent = currentSchool.city;
+            if (els.cardCurso) els.cardCurso.textContent = gradeName;
+            if (els.cardImagen) els.cardImagen.src = currentSchool.img;
             
-            els.cardKitName.textContent = kit.name || 'Kit Escolar Oficial';
-            if(els.cardPrice) els.cardPrice.textContent = kit.price;
-            if(els.packageDetails) els.packageDetails.textContent = `Kit completo con ${kit.count} libros oficiales, cuadernos y materiales requeridos para el año escolar.`;
+            if (els.cardKitName) els.cardKitName.textContent = kit.name || 'Kit Escolar Oficial';
+            if (els.packageDetails) els.packageDetails.textContent = `Kit completo con ${kit.count} libros oficiales, cuadernos y materiales requeridos para el año escolar.`;
             
-            // Configurar botón
-            if(els.addBtn) {
+            if (els.addBtn) {
                 els.addBtn.onclick = () => {
                     if (window.addToCart) {
                         window.addToCart({
@@ -441,21 +408,20 @@
                             qty: 1
                         });
                     } else {
-                        alert("Función de carrito no disponible en este momento.");
+                        console.error("Función addToCart global no encontrada.");
                     }
                 };
             }
 
-            // Mostrar
             els.card.classList.remove('hidden');
             
-            // Scroll suave
-            const yOffset = -100; 
+            // Scroll suave hacia la tarjeta
+            const yOffset = -50; 
             const y = els.card.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({top: y, behavior: 'smooth'});
         }
 
-        // --- EVENT LISTENERS ---
+        // Event Listeners
         if (els.schoolBtn) {
             els.schoolBtn.onclick = (e) => { 
                 e.stopPropagation(); 
@@ -480,7 +446,6 @@
                 if(els.courseMenu) els.courseMenu.classList.add('hidden'); 
             });
             
-            // Carga inicial
             renderSchools();
         }
     })();
