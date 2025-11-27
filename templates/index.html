@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
         /* --- CONFIGURACIÓN DE COLORES (#143c6c) --- */
@@ -29,7 +29,7 @@
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
         
         .menu-item {
-            padding: 0 1.25rem;
+            padding: 0 1.5rem;
             display: flex;
             align-items: center;
             height: 100%;
@@ -37,6 +37,10 @@
             transition: all 0.2s ease-in-out;
             cursor: pointer;
             color: #4b5563;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
         .menu-item:hover, .menu-item.active {
             color: #143c6c;
@@ -44,17 +48,50 @@
             font-weight: 700;
         }
 
-        /* Buscador Redondo */
-        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #e5e7eb; border-radius: 9999px; outline: none; transition: border-color 0.3s; }
-        .search-input:focus { border-color: #143c6c; ring: 2px solid #143c6c; }
-        
-        .search-button-separate { 
-            width: 50px; height: 50px; margin-left: 10px; 
-            background-color: #143c6c; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.2s;
+        /* Buscador Mejorado */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
         }
-        .search-button-separate:hover { transform: scale(1.05); }
-        .icon-white { filter: brightness(0) invert(1); }
+        .search-input { 
+            width: 100%; 
+            padding: 0.85rem 1.5rem; 
+            padding-right: 3.5rem;
+            border: 1px solid #e2e8f0; 
+            border-radius: 9999px; 
+            outline: none; 
+            transition: all 0.3s;
+            font-family: 'Instrument Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .search-input:focus { 
+            border-color: #143c6c; 
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(20, 60, 108, 0.1); 
+        }
+        
+        .search-button { 
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px; 
+            height: 42px; 
+            background-color: #143c6c; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: transform 0.2s, background-color 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .search-button:hover { 
+            transform: translateY(-50%) scale(1.05);
+            background-color: #0f2e52;
+        }
+        .icon-white { filter: brightness(0) invert(1); width: 18px; height: 18px; }
 
         /* Animaciones */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
@@ -65,7 +102,7 @@
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
 
-        /* --- Animación Marquee Editoriales (Sin saltos) --- */
+        /* Marquee */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; padding: 2rem 0; }
         .marquee-track { display: flex; align-items: center; gap: 6rem; animation: scroll 30s linear infinite; width: max-content; }
         .marquee-track:hover { animation-play-state: paused; }
@@ -81,44 +118,48 @@
 
 <body class="font-instrument text-gray-700 bg-white antialiased flex flex-col min-h-screen">
 
-    <div class="bg-gray-100 border-b border-gray-200 hidden sm:block">
-        <div class="max-w-7xl mx-auto px-4 py-2 text-xs font-medium flex justify-between items-center text-gray-500">
-            <span><i class="fas fa-envelope mr-2"></i> contacto@smartbooks.com.co</span>
+    <div class="bg-gray-50 border-b border-gray-200 hidden sm:block">
+        <div class="max-w-7xl mx-auto px-6 py-2 text-xs font-medium flex justify-between items-center text-gray-500">
+            <span><i class="fas fa-envelope mr-2 text-[#143c6c]"></i> contacto@smartbooks.com.co</span>
             <div class="space-x-4">
-                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="hover:text-[#143c6c] transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-[#143c6c] transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-[#143c6c] transition"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
     </div>
 
     <header class="bg-white sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center gap-8">
             <a href="#" onclick="loadHome()" class="flex-shrink-0">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books Logo" class="h-16 w-auto">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books Logo" class="h-14 w-auto">
             </a>
             
-            <div class="hidden lg:flex items-center flex-grow justify-end space-x-8">
-                <div class="flex items-center max-w-md w-full relative">
+            <div class="hidden lg:flex flex-grow justify-center">
+                <div class="search-container">
                     <input type="text" placeholder="Buscar libros, colegios..." class="search-input text-gray-700 text-sm">
-                    <button class="search-button-separate shadow-lg"><img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="w-5 h-5 icon-white"></button>
-                </div>
-                <div class="flex items-center space-x-6 text-xl text-gray-700">
-                    <a href="#" class="relative hover:text-brand-primary transition">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
-                    </a>
-                    <a href="#" class="hover:text-brand-primary transition"><i class="fas fa-user-circle"></i></a>
+                    <button class="search-button">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="icon-white" alt="Buscar">
+                    </button>
                 </div>
             </div>
-            
-            <button class="lg:hidden text-gray-800 text-2xl hover:text-brand-primary">
-                <i class="fas fa-bars"></i>
-            </button>
+
+            <div class="flex items-center space-x-6">
+                <a href="#" class="relative group p-2">
+                    <div class="relative">
+                        <i class="fas fa-shopping-cart text-2xl text-gray-700 group-hover:text-[#143c6c] transition"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">0</span>
+                    </div>
+                </a>
+                
+                <button class="lg:hidden text-gray-800 text-2xl hover:text-[#143c6c]">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
 
-        <div class="bg-white border-t border-gray-100 hidden lg:block h-14 shadow-md z-40 relative">
-            <nav class="flex justify-center space-x-8 font-outfit text-gray-700 font-medium text-sm h-full items-center tracking-wide uppercase">
+        <div class="bg-white border-t border-gray-100 hidden lg:block h-16 shadow-md z-40 relative">
+            <nav class="max-w-7xl mx-auto px-6 flex justify-center space-x-2 font-outfit h-full items-center">
                 <a href="#" onclick="loadHome()" class="menu-item active">Inicio</a>
                 
                 <div class="dropdown relative h-full flex items-center">
@@ -131,31 +172,22 @@
 
                 <a href="#" onclick="loadPage('tienda_productos.html')" class="menu-item">Tienda</a>
                 <a href="#" onclick="loadPage('Colegios.html')" class="menu-item">Colegios</a>
-                <div class="dropdown relative h-full flex items-center">
-                    <span class="menu-item">Aliados <i class="fas fa-chevron-down text-[10px] ml-2 opacity-50"></i></span>
-                    <div class="dropdown-menu absolute bg-white shadow-2xl rounded-b-lg w-48 border-t-4 border-brand-primary top-full left-0 py-2">
-                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">Castillo</a>
-                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">MacMillan</a>
-                    </div>
-                </div>
-                <a href="#" onclick="loadPage('Blog.html')" class="menu-item text-brand-primary font-bold">Blog</a>
+                <a href="#" onclick="loadPage('Blog.html')" class="menu-item">Blog</a>
                 <a href="#" onclick="loadPage('Contacto.html')" class="menu-item">Contáctanos</a>
             </nav>
         </div>
     </header>
 
-    <main id="main-content" class="flex-grow bg-white">
+    <main id="main-content" class="flex-grow bg-white min-h-[500px]">
         </main>
 
     <footer class="bg-[#143c6c] text-white pt-12 pb-8 border-t-4 border-yellow-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="w-full flex justify-center mb-10">
                 <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" alt="Smart Books Logo Blanco" class="h-24 w-auto drop-shadow-md">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm font-instrument">
-                
                 <div>
                     <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Bogotá</h3>
                     <p class="mb-2 text-gray-300">Carrera 58 No 169A-55<br>C.C Punto 170 Local 113<br><span class="italic text-gray-400">(Cerrado Temporalmente)</span></p>
@@ -207,7 +239,6 @@
                         <li><a href="#" class="hover:text-white transition">Preguntas Frecuentes</a></li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </footer>
@@ -249,9 +280,7 @@
                             <img src="https://cdn-icons-png.flaticon.com/512/3206/3206034.png" alt="Propósito" class="w-full h-full object-contain">
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestro Propósito</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                            En Smart Books no solo vendemos libros, utilizamos nuestra pasión por comprender cómo ocurre el aprendizaje para innovar y crear soluciones.
-                        </p>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">En Smart Books no solo vendemos libros, utilizamos nuestra pasión por comprender cómo ocurre el aprendizaje para innovar y crear soluciones.</p>
                         <a href="#" onclick="loadPage('QuienesSomos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
                     </div>
                     <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-100 group">
@@ -259,9 +288,7 @@
                             <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Productos" class="w-full h-full object-contain">
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestros Productos</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                            De la mano de todas nuestras editoriales aliadas, hemos logrado traer la mayor selección de títulos y recursos no solo educativos sino profesionales.
-                        </p>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">De la mano de todas nuestras editoriales aliadas, hemos logrado traer la mayor selección de títulos y recursos no solo educativos sino profesionales.</p>
                         <a href="#" onclick="loadPage('tienda_productos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
                     </div>
                     <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-200 group">
@@ -269,85 +296,16 @@
                             <img src="https://cdn-icons-png.flaticon.com/512/1651/1651639.png" alt="Garantía" class="w-full h-full object-contain">
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestra Garantía</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                            Solo nosotros podemos ofrecerte la verdadera certificación y respaldo de las principales casas editoriales del país e internacionales.
-                        </p>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">Solo nosotros podemos ofrecerte la verdadera certificación y respaldo de las principales casas editoriales del país e internacionales.</p>
                         <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-16 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="flex flex-col animate-scroll-reveal">
-                        <div class="mb-6">
-                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                                ¡La escuela se transforma y la manera de elegir también!
-                            </h2>
-                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                                Conoce y decide es el espacio seguro para revisar y decidir por el proyecto didáctico que apoye a tus alumnos. Desde casa, conoce nuestro catálogo de Plan Lector.
-                            </p>
-                            <a href="#" onclick="loadPage('Contacto.html')" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
-                    </div>
-                    <div class="flex flex-col animate-scroll-reveal delay-100">
-                        <div class="mb-6">
-                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                                ¡Nuevo Programa Académico! para la Educación
-                            </h2>
-                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                                <strong class="text-gray-800">ADVANCING FUTURES</strong> es un programa integral diseñado para introducir los temas de ciudadanía global, sostenibilidad, diversidad, equidad e inclusión.
-                            </p>
-                            <a href="#" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 animate-scroll-reveal">
-                    <h2 class="text-[#143c6c] font-outfit text-4xl font-black">Productos más vendidos</h2>
-                    <div class="w-24 h-1 bg-[#143c6c] mx-auto mt-4"></div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" alt="Ingles Segundo" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 2°</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-100">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg" alt="Ingles Primero" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 1°</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-200">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg" alt="Pan de la guerra" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">El pan de la guerra</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-300">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg" alt="Gaceta Landry" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">La Gaceta de Landry</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="w-full animate-scroll-reveal">
-            <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial" class="w-full h-auto object-cover">
-        </section>
-
         <section class="py-16 bg-white overflow-hidden">
             <div class="max-w-full mx-auto px-4 text-center">
                 <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10 animate-scroll-reveal">Nuestras Editoriales Aliadas</h2>
-                
                 <div class="marquee-container">
                     <div class="marquee-track">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
@@ -355,7 +313,6 @@
                         <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
                         <img src="https://sbooks.com.co/wp-content/uploads/2022/11/logo_castillo.png" class="editorial-logo" alt="Ediciones Castillo">
                         <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="editorial-logo" alt="Smart Books">
-
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
                         <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
@@ -387,6 +344,16 @@
                 main.innerHTML = html;
                 initScrollReveal();
                 window.scrollTo(0, 0);
+                
+                // *** CORRECCIÓN CLAVE ***
+                // Ejecutar scripts encontrados dentro del HTML cargado
+                const scripts = main.getElementsByTagName('script');
+                for (let i = 0; i < scripts.length; i++) {
+                    const script = document.createElement('script');
+                    script.text = scripts[i].text;
+                    main.appendChild(script);
+                }
+
             } catch (error) {
                 console.error(error);
                 main.innerHTML = `<div class="text-center py-32 text-gray-500">Contenido no disponible por el momento.</div>`;
