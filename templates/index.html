@@ -6,10 +6,10 @@
     <title>Smart Books | Expertos en Transformación Educativa</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
         /* --- CONFIGURACIÓN DE COLORES (#143c6c) --- */
@@ -36,7 +36,7 @@
             border-bottom: 3px solid transparent;
             transition: all 0.2s ease-in-out;
             cursor: pointer;
-            color: #4b5563; /* Gris oscuro base */
+            color: #4b5563;
         }
         .menu-item:hover, .menu-item.active {
             color: #143c6c;
@@ -130,51 +130,95 @@
                         <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">MacMillan</a>
                     </div>
                 </div>
-                <a href="#contactanos" class="menu-item">Contáctanos</a>
+                <a href="#" onclick="loadPage('Contacto.html')" class="menu-item">Contáctanos</a>
             </nav>
         </div>
     </header>
 
-    <main id="main-content" class="flex-grow bg-gray-50">
+    <main id="main-content" class="flex-grow bg-white">
         </main>
 
-    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
+    <footer class="bg-[#143c6c] text-white pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books" class="h-12 mb-6">
-                    <p class="text-gray-500 mb-6 max-w-sm">Expertos en acompañar procesos de transformación en la educación con respaldo editorial internacional.</p>
-                </div>
+            <div class="flex justify-center mb-12">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Smart-Books-Blanco.png" alt="Smart Books Blanco" class="h-16 w-auto opacity-90">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
                 <div>
-                    <h4 class="font-outfit font-bold text-gray-900 mb-4">Información</h4>
-                    <ul class="space-y-3 text-sm text-gray-500">
-                        <li><a href="#" onclick="loadPage('QuienesSomos.html')" class="hover:text-brand-primary transition">Quiénes Somos</a></li>
-                        <li><a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="hover:text-brand-primary transition">Términos y Condiciones</a></li>
-                        <li><a href="#" class="hover:text-brand-primary transition">Política de Privacidad</a></li>
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Bogotá</h4>
+                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
+                        <li>Carrera 58 No 169A-55<br>C.C Punto 170 Local 113<br><span class="text-xs italic opacity-75">(Cerrado Temporalmente)</span></li>
+                        <li class="mt-2">Calle 159A # 21A – 39<br>Barrio Magdala – Casa Blanca</li>
+                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29</li>
                     </ul>
                 </div>
+
                 <div>
-                    <h4 class="font-outfit font-bold text-gray-900 mb-4">Contacto</h4>
-                    <ul class="space-y-3 text-sm text-gray-500">
-                        <li><i class="fas fa-map-marker-alt w-5 text-brand-primary"></i> Bogotá, Colombia</li>
-                        <li><i class="fas fa-envelope w-5 text-brand-primary"></i> contacto@smartbooks.com.co</li>
-                        <li><i class="fas fa-phone w-5 text-brand-primary"></i> 333 602 50 29</li>
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Tunja, Boyacá</h4>
+                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
+                        <li>Av Norte No 47a-40<br>C.C Centro Norte Local 091</li>
+                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1108</span></li>
+                        <li class="flex justify-center md:justify-start items-center space-x-2 mt-2">
+                            <i class="fab fa-whatsapp text-green-400"></i>
+                            <span>(+57) 320 300 1510</span>
+                        </li>
+                    </ul>
+                    
+                    <h4 class="font-outfit font-bold text-lg mt-6 mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Floridablanca</h4>
+                     <ul class="space-y-2 text-sm text-gray-300 font-instrument">
+                        <li>Calle 6 #10-36, Plaza Mia<br>Centro Comercial Local 216</li>
+                        <li class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1109</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Medellín, Antioquia</h4>
+                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
+                        <li>Edificio San Sebastian de La 70<br>CQ 2 # 70 – 24 – INT 202<br>LAURELES</li>
+                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1100</span></li>
+                    </ul>
+                </div>
+
+                <div class="text-center">
+                    <h4 class="font-outfit font-bold text-xl mb-6 text-white uppercase">Síguenos</h4>
+                    <div class="flex justify-center space-x-6 mb-8">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                            <i class="fab fa-linkedin-in text-lg"></i>
+                        </a>
+                    </div>
+                    
+                    <h5 class="font-outfit font-bold text-white mb-4">Enlaces Rápidos</h5>
+                    <ul class="text-sm space-y-2 text-gray-400">
+                        <li><a href="#" onclick="loadPage('QuienesSomos.html')" class="hover:text-white transition">Quiénes Somos</a></li>
+                        <li><a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="hover:text-white transition">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover:text-white transition">Preguntas Frecuentes</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
-                <p>&copy; 2024 Smart Books Company SAS. Todos los derechos reservados.</p>
+
+            <div class="border-t border-white/10 pt-8 text-center text-xs text-gray-400 font-instrument">
+                <p>&copy; 2024 Smart Books Company SAS. Todos los derechos reservados. | Diseñado con ❤️</p>
             </div>
         </div>
     </footer>
     
-    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float">
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float shadow-2xl hover:scale-110 transition-transform">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <template id="home-template">
         <section class="relative h-[600px] overflow-hidden bg-gray-900">
-            <div class="absolute inset-0 z-10 bg-gradient-to-r from-[#143c6c]/90 to-[#143c6c]/40"></div>
+            <div class="absolute inset-0 z-10 bg-gradient-to-r from-[#143c6c]/80 to-transparent"></div>
             <div id="banner-carousel" class="absolute inset-0">
                 <div class="carousel-item active w-full h-full">
                     <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover">
@@ -184,15 +228,134 @@
                 </div>
             </div>
             <div class="relative z-20 h-full max-w-7xl mx-auto px-4 flex flex-col justify-center">
-                <h1 class="font-outfit text-5xl md:text-7xl font-black text-white mb-6 leading-tight animate-scroll-reveal">
+                <h1 class="font-outfit text-5xl md:text-7xl font-black text-white mb-6 leading-tight animate-scroll-reveal drop-shadow-lg">
                     Transformamos la <br><span class="text-yellow-400">Educación</span>
                 </h1>
                 <p class="text-white/90 text-xl max-w-xl mb-8 font-light animate-scroll-reveal">
                     Alternativas formativas integrales basadas en servicios exclusivos de contenido pedagógico físico y digital.
                 </p>
                 <div class="flex space-x-4 animate-scroll-reveal">
-                    <a href="#" onclick="loadPage('tienda_productos.html')" class="bg-white text-[#143c6c] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">Ver Tienda</a>
-                    <a href="#" onclick="loadPage('QuienesSomos.html')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition">Conócenos</a>
+                    <a href="#" onclick="loadPage('tienda_productos.html')" class="bg-yellow-400 text-[#143c6c] px-8 py-3 rounded-full font-bold hover:bg-white transition shadow-lg uppercase tracking-wide text-sm">Ver Tienda</a>
+                    <a href="#" onclick="loadPage('QuienesSomos.html')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition uppercase tracking-wide text-sm">Conócenos</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                    
+                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal group">
+                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3206/3206034.png" alt="Propósito" class="w-full h-full object-contain">
+                        </div>
+                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestro Propósito</h3>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                            En Smart Books no solo vendemos libros, utilizamos nuestra pasión por comprender cómo ocurre el aprendizaje para innovar y crear soluciones.
+                        </p>
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
+                    </div>
+
+                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-100 group">
+                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Productos" class="w-full h-full object-contain">
+                        </div>
+                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestros Productos</h3>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                            De la mano de todas nuestras editoriales aliadas, hemos logrado traer la mayor selección de títulos y recursos no solo educativos sino profesionales.
+                        </p>
+                        <a href="#" onclick="loadPage('tienda_productos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
+                    </div>
+
+                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-200 group">
+                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1651/1651639.png" alt="Garantía" class="w-full h-full object-contain">
+                        </div>
+                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestra Garantía</h3>
+                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                            Solo nosotros podemos ofrecerte la verdadera certificación y respaldo de las principales casas editoriales del país e internacionales.
+                        </p>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="flex flex-col animate-scroll-reveal">
+                        <div class="mb-6">
+                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                                ¡La escuela se transforma y la manera de elegir también!
+                            </h2>
+                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                                Conoce y decide es el espacio seguro para revisar y decidir por el proyecto didáctico que apoye a tus alumnos. Desde casa, conoce nuestro catálogo de Plan Lector.
+                            </p>
+                            <a href="#" onclick="loadPage('Contacto.html')" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
+                    </div>
+
+                    <div class="flex flex-col animate-scroll-reveal delay-100">
+                        <div class="mb-6">
+                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                                ¡Nuevo Programa Académico! para la Educación
+                            </h2>
+                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                                <strong class="text-gray-800">ADVANCING FUTURES</strong> es un programa integral diseñado para introducir los temas de ciudadanía global, sostenibilidad, diversidad, equidad e inclusión.
+                            </p>
+                            <a href="#" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-scroll-reveal">
+                    <h2 class="text-[#143c6c] font-outfit text-4xl font-black">Productos más vendidos</h2>
+                    <div class="w-24 h-1 bg-[#143c6c] mx-auto mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" alt="Ingles Segundo" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 2°</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-100">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg" alt="Ingles Primero" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 1°</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-200">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg" alt="Pan de la guerra" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">El pan de la guerra</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-300">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg" alt="Gaceta Landry" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">La Gaceta de Landry</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full">
+            <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial" class="w-full h-auto object-cover">
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10">Nuestras Editoriales</h2>
+                <div class="flex flex-wrap justify-center items-center gap-12 grayscale hover:grayscale-0 transition-all duration-500">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="h-8 md:h-10 object-contain opacity-70 hover:opacity-100 transition">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition">
+                    <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition">
                 </div>
             </div>
         </section>
