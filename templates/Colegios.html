@@ -19,7 +19,7 @@
 <section class="relative bg-gray-50 pb-20 md:pb-24 min-h-[800px]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="relative -mt-28 md:-mt-32 z-30 bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-100 p-6 md:p-12 animate-scroll-reveal delay-100">
+        <div class="relative -mt-24 md:-mt-32 z-30 bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-100 p-6 md:p-12 animate-scroll-reveal delay-100">
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start relative">
                 
@@ -101,14 +101,14 @@
                 <p class="text-sm md:text-base text-gray-400 font-instrument max-w-xs md:max-w-md">Completa los pasos anteriores para visualizar el kit oficial.</p>
             </div>
 
-            <div id="package-card" class="hidden bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl overflow-hidden border border-gray-100 animate-scroll-reveal transform transition-all hover:translate-y-[-5px] max-w-5xl mx-auto ring-1 ring-black/5">
+            <div id="package-card" class="hidden bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl overflow-hidden border border-gray-100 animate-scroll-reveal transform transition-all max-w-5xl mx-auto ring-1 ring-black/5">
                 <div class="flex flex-col md:flex-row h-full">
                     
                     <div class="md:w-5/12 bg-gray-50 p-6 md:p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-200 relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-[#143c6c] opacity-0 group-hover:opacity-10 transition duration-700"></div>
+                        <div class="absolute inset-0 bg-[#143c6c] opacity-0 group-hover:opacity-5 transition duration-700"></div>
                         <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
                         
-                        <div class="relative z-10 w-32 h-32 md:w-44 md:h-44 bg-white rounded-full flex items-center justify-center shadow-xl mb-4 md:mb-6 p-4 border-4 md:border-8 border-white transition transform group-hover:scale-105 duration-500">
+                        <div class="relative z-10 w-32 h-32 md:w-44 md:h-44 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 md:mb-6 p-4 border-4 md:border-8 border-white transition transform group-hover:scale-105 duration-500">
                             <img id="card-imagen" src="" alt="Logo Colegio" class="w-full h-full object-contain">
                         </div>
                         
@@ -116,9 +116,6 @@
                         <div class="relative z-10 inline-flex items-center gap-2 bg-blue-100 text-[#143c6c] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 md:mb-4">
                             <i class="fas fa-certificate text-yellow-500"></i> Aliado Oficial
                         </div>
-                        <p class="relative z-10 text-gray-500 font-medium text-xs md:text-sm font-instrument uppercase tracking-wide flex items-center justify-center gap-2">
-                            <i class="fas fa-map-marker-alt text-red-400"></i> <span id="card-city">Ciudad</span>
-                        </p>
                     </div>
 
                     <div class="md:w-7/12 p-6 md:p-10 flex flex-col justify-between bg-white relative">
@@ -130,7 +127,7 @@
                                     <p class="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1">Kit Seleccionado para</p>
                                     <h4 id="card-curso" class="text-2xl md:text-3xl font-black text-gray-900 font-outfit">Grado</h4>
                                 </div>
-                                <div class="mt-2 sm:mt-0 bg-green-50 text-green-700 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wide flex items-center border border-green-100 shadow-sm w-fit">
+                                <div class="bg-green-50 text-green-700 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wide flex items-center border border-green-100 shadow-sm">
                                     <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div> Disponible
                                 </div>
                             </div>
@@ -148,7 +145,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="grid grid-cols-3 gap-2 md:gap-4 opacity-80">
+                                <div class="grid grid-cols-3 gap-2 md:gap-3 opacity-80">
                                     <div class="bg-gray-50 rounded-lg p-2 md:p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
                                         <i class="fas fa-check-circle text-green-500 text-lg md:text-xl mb-1"></i>
                                         <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase">Original</span>
@@ -165,14 +162,18 @@
                             </div>
                         </div>
 
-                        <div class="mt-auto pt-4 border-t border-gray-100">
-                            <button id="add-kit-btn" class="w-full bg-[#fcd34d] text-[#143c6c] font-black py-3.5 px-8 md:py-4 md:px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-xs md:text-sm uppercase tracking-wider group active:scale-[0.98]">
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 md:pt-4 mt-auto border-t border-gray-50 md:border-none">
+                            <div class="text-center sm:text-left w-full sm:w-auto">
+                                <span class="block text-[10px] md:text-xs text-gray-400 uppercase font-bold tracking-wide mb-1">Precio Total</span>
+                                <span class="text-xl md:text-2xl font-black text-[#143c6c] font-outfit tracking-tight block">Ver en Carrito</span>
+                            </div>
+                            
+                            <button id="add-kit-btn" class="w-full sm:w-auto bg-[#fcd34d] text-[#143c6c] font-black py-3.5 px-8 md:py-4 md:px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-xs md:text-sm uppercase tracking-wider group">
                                 <span>Añadir al Carrito</span>
                                 <div class="bg-white/20 rounded-full p-1.5 group-hover:bg-white/40 transition">
                                     <i class="fas fa-shopping-bag text-sm"></i>
                                 </div>
                             </button>
-                            <p class="text-center text-[10px] md:text-xs text-gray-400 mt-3 font-instrument">El precio final se calculará en el carrito de compras.</p>
                         </div>
                     </div>
                 </div>
@@ -199,12 +200,14 @@
 
 <script>
     (function() {
+        // DATOS DE EJEMPLO REALISTAS
         const SCHOOLS_DATA = [
             { 
                 id: '001', name: 'Cosmo Schools', city: 'Medellín', img: 'https://sbooks.com.co/wp-content/uploads/2024/11/LOGO-COLEGIO.png', 
                 kits: { 
                     'PRIMERO': { id: 'K01', name: 'Kit Cosmo 1° - English Path', price: '$245.000', count: 5 }, 
-                    'SEGUNDO': { id: 'K02', name: 'Kit Cosmo 2° - Global', price: '$255.000', count: 6 } 
+                    'SEGUNDO': { id: 'K02', name: 'Kit Cosmo 2° - Global', price: '$255.000', count: 6 },
+                    'TERCERO': { id: 'K07', name: 'Kit Cosmo 3° - Discovery', price: '$260.000', count: 6 }
                 } 
             },
             { 
@@ -223,7 +226,8 @@
             { 
                 id: '004', name: 'Liceo Parroquial San José', city: 'Bogotá', img: 'https://sbooks.com.co/wp-content/uploads/2024/12/2-6.png', 
                 kits: { 
-                    'SEXTO': { id: 'K06', name: 'Kit San José 6°', price: '$220.000', count: 5 } 
+                    'SEXTO': { id: 'K06', name: 'Kit San José 6°', price: '$220.000', count: 5 },
+                    'SEPTIMO': { id: 'K08', name: 'Kit San José 7°', price: '$230.000', count: 5 }
                 } 
             }
         ];
@@ -236,6 +240,7 @@
             'DECIMO': 'Décimo (10°)', 'ONCE': 'Once (11°)'
         };
 
+        // Helpers seguros
         const getEl = (id) => document.getElementById(id);
         const els = {
             schoolBtn: getEl('school-select-button'),
@@ -243,27 +248,33 @@
             schoolList: getEl('school-list'),
             schoolSearch: getEl('school-search-input'),
             schoolContainer: getEl('school-dropdown-container'),
+            
             courseBtn: getEl('course-select-button'),
             courseMenu: getEl('course-dropdown-menu'),
             courseList: getEl('course-list'),
             courseContainer: getEl('course-dropdown-container'),
+            
             labelGrade: getEl('label-grade'),
             badgeGradeNumber: getEl('badge-number-2'),
             badgeGradeStatus: getEl('badge-status-2'),
+            
             card: getEl('package-card'),
             loading: getEl('search-loading'),
             initialState: getEl('initial-state'),
             addBtn: getEl('add-kit-btn'),
+            
             cardColegio: getEl('card-colegio'),
             cardCity: getEl('card-city'),
             cardCurso: getEl('card-curso'),
             cardImagen: getEl('card-imagen'),
             cardKitName: getEl('card-kit-name'),
+            // Eliminado cardPrice de la vista principal, se maneja internamente
             packageDetails: getEl('package-details')
         };
 
         let currentSchool = null;
 
+        // 1. Renderizar Escuelas
         function renderSchools(filter = '') {
             if (!els.schoolList) return;
             els.schoolList.innerHTML = '';
@@ -291,6 +302,7 @@
             });
         }
 
+        // 2. Seleccionar Escuela
         function selectSchool(school) {
             currentSchool = school;
             
@@ -331,6 +343,7 @@
             renderCourses();
         }
 
+        // 3. Renderizar Cursos
         function renderCourses() {
             if (!els.courseList) return;
             els.courseList.innerHTML = '';
@@ -338,7 +351,7 @@
             const grades = Object.keys(currentSchool.kits);
 
             if (grades.length === 0) {
-                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles para este colegio.</div>';
+                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles.</div>';
                 return;
             }
 
@@ -356,6 +369,7 @@
             });
         }
 
+        // 4. Seleccionar Curso
         function selectCourse(gradeKey) {
             const gradeName = GRADES_MAP[gradeKey] || gradeKey;
             
@@ -386,9 +400,10 @@
             }, 800);
         }
 
+        // 5. Mostrar Tarjeta
         function showCard(gradeName, kit) {
             if (els.cardColegio) els.cardColegio.textContent = currentSchool.name;
-            if (els.cardCity) els.cardCity.textContent = currentSchool.city;
+            // if (els.cardCity) els.cardCity.textContent = currentSchool.city; // Eliminado
             if (els.cardCurso) els.cardCurso.textContent = gradeName;
             if (els.cardImagen) els.cardImagen.src = currentSchool.img;
             
