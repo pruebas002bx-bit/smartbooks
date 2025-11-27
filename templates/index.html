@@ -63,6 +63,14 @@
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* Animación Pulso para el botón del Kit */
+        @keyframes super-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 10px rgba(252, 211, 77, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0); transform: scale(1); }
+        }
+        .animate-super-pulse { animation: super-pulse 2s infinite; }
+
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
@@ -108,6 +116,10 @@
             </div>
 
             <div class="flex items-center space-x-6">
+                <a href="#" onclick="loadPage('Colegios.html')" class="hidden xl:flex items-center justify-center bg-[#fcd34d] text-[#143c6c] font-outfit font-extrabold px-6 py-3 rounded-lg shadow-md hover:bg-[#fbbf24] transition transform duration-300 animate-super-pulse text-sm tracking-wide uppercase">
+                    <i class="fas fa-book-open mr-2"></i> Compra tu Kit Educativo AQUÍ
+                </a>
+
                 <a href="#" class="relative group p-2">
                     <div class="relative">
                         <i class="fas fa-shopping-cart text-2xl text-gray-700 group-hover:text-[#143c6c] transition"></i>
@@ -266,6 +278,72 @@
             </div>
         </section>
 
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="flex flex-col animate-scroll-reveal">
+                        <div class="mb-6">
+                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                                ¡La escuela se transforma y la manera de elegir también!
+                            </h2>
+                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                                Conoce y decide es el espacio seguro para revisar y decidir por el proyecto didáctico que apoye a tus alumnos. Desde casa, conoce nuestro catálogo de Plan Lector.
+                            </p>
+                            <a href="#" onclick="loadPage('Contacto.html')" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
+                    </div>
+                    <div class="flex flex-col animate-scroll-reveal delay-100">
+                        <div class="mb-6">
+                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                                ¡Nuevo Programa Académico! para la Educación
+                            </h2>
+                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
+                                <strong class="text-gray-800">ADVANCING FUTURES</strong> es un programa integral diseñado para introducir los temas de ciudadanía global, sostenibilidad, diversidad, equidad e inclusión.
+                            </p>
+                            <a href="#" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 animate-scroll-reveal">
+                    <h2 class="text-[#143c6c] font-outfit text-4xl font-black">Productos más vendidos</h2>
+                    <div class="w-24 h-1 bg-[#143c6c] mx-auto mt-4"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" alt="Ingles Segundo" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 2°</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-100">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg" alt="Ingles Primero" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 1°</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-200">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg" alt="Pan de la guerra" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">El pan de la guerra</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-300">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg" alt="Gaceta Landry" class="w-full h-64 object-contain mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">La Gaceta de Landry</h3>
+                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full animate-scroll-reveal">
+            <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial" class="w-full h-auto object-cover">
+        </section>
+
         <section class="py-16 bg-white overflow-hidden">
             <div class="max-w-full mx-auto px-4 text-center">
                 <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10 animate-scroll-reveal">Nuestras Editoriales Aliadas</h2>
@@ -308,8 +386,7 @@
                 initScrollReveal();
                 window.scrollTo(0, 0);
                 
-                // --- SOLUCIÓN AL BLOQUEO (CRÍTICO) ---
-                // Convertimos a array para evitar el bucle infinito de live collection
+                // Ejecutar scripts encontrados dentro del HTML cargado
                 const scripts = Array.from(main.getElementsByTagName('script'));
                 for (let i = 0; i < scripts.length; i++) {
                     const script = document.createElement('script');
