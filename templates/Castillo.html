@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Books | {{ titulo_pagina }}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos generales copiados del index y preguntas frecuentes */
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-instrument { font-family: 'Instrument Sans', sans-serif; }
+        .bg-brand-primary { background-color: #4338ca; }
+        .text-brand-primary { color: #4338ca; }
+        .bg-brand-accent { background-color: #4338ca; }
+        .text-brand-accent { color: #4338ca; }
+        .text-active { color: #4338ca; }
+
+        /* Estilos de Nav */
+        .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
+        .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
+        .menu-item { padding: 0 1rem; display: flex; align-items: center; height: 100%; border-bottom: 4px solid transparent; transition: all 0.2s ease-in-out; }
+        .menu-item:hover, .menu-item.active { color: #4338ca; border-bottom-color: #4338ca; }
+
+        /* Estilos de Botón de Producto */
+        .btn-add-to-cart {
+            background-color: #4338ca; /* brand-primary */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .btn-add-to-cart:hover {
+            background-color: #3730a3; /* un poco más oscuro */
+            transform: translateY(-1px);
+        }
+        
+        /* Estilos de WhatsApp Flotante */
+        .whatsapp-float {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+    </style>
+</head>
+
+<body class="font-instrument text-gray-700 bg-white antialiased">
+
+    <div class="bg-gray-100 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-sm flex justify-between items-center">
+            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold text-sm sm:text-base tracking-wider">
+                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares de las mejores casas editoriales
+            </div>
+            <div class="flex space-x-3 items-center text-gray-500 flex-shrink-0">
+                <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-facebook-f text-lg"></i></a>
+                <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary"><i class="fab fa-linkedin-in text-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="/" class="flex-shrink-0">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-14 w-auto">
+            </a>
+            <div class="flex space-x-4 items-center">
+                <div class="hidden xl:flex flex-col items-end text-xs">
+                    <span class="text-gray-500 font-instrument">Llámanos ahora</span>
+                    <span class="font-outfit text-base font-bold text-gray-800">333 602 50 29</span>
+                </div>
+                <div class="flex space-x-3 items-center text-gray-800 text-xl">
+                    <a href="/login" class="p-2 hover:text-brand-primary transition duration-300 flex items-center justify-center" title="Mi Cuenta">
+                        <img src="https://cdn-icons-png.flaticon.com/128/18986/18986944.png" alt="Usuario" class="w-6 h-6">
+                    </a>
+                    <a href="#" class="p-2 hover:text-brand-primary transition duration-300 relative flex items-center justify-center" title="Carrito de Compras">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="Carrito" class="w-6 h-6">
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-brand-accent rounded-full">
+                            0
+                        </span>
+                    </a>
+                </div>
+                <button class="lg:hidden p-2 text-gray-800 hover:text-brand-primary transition duration-300">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-12">
+            <div class="max-w-7xl mx-auto px-4 h-full">
+                <nav class="flex justify-center space-x-8 font-outfit text-gray-800 font-semibold text-base h-full items-center">
+                    
+                    <a href="/" class="menu-item">Inicio</a>
+                    
+                    <div class="dropdown relative h-full flex items-center">
+                        <a href="/quienessomos" class="menu-item flex items-center">
+                            Nosotros <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-accent top-full">
+                            <a href="/quienessomos" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-base">Quienes Somos</a>
+                            <a href="/terminosycondiciones" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-base">Términos y Condiciones</a>
+                            <a href="/preguntasfrecuentes" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-base">Preguntas Frecuentes – FAQ</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative h-full flex items-center">
+                        <a href="#" class="menu-item active flex items-center">
+                            Aliados <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-40 border-t-2 border-brand-accent top-full">
+                            <a href="/aliados/castillo" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-base bg-gray-100 text-active font-bold">Castillo</a>
+                            <a href="#" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-base">MacMillan</a>
+                        </div>
+                    </div>
+
+                    <a href="#tienda" class="menu-item">Tienda</a>
+                    <a href="#colegios" class="menu-item">Colegios</a>
+                    <a href="#contactanos" class="menu-item">Contáctanos</a>
+                    <a href="#intranet" class="menu-item">Intranet</a>
+
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="bg-gray-50 py-16 md:py-20 border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <img src="{{ url_logo_editorial }}" alt="Logo {{ titulo_pagina }}" class="h-16 md:h-20 w-auto mx-auto mb-4 object-contain">
+                <h1 class="font-outfit text-4xl md:text-5xl font-black text-gray-900 leading-tight mb-4">
+                    Catálogo Oficial <span class="text-brand-primary">{{ titulo_pagina }}</span>
+                </h1>
+                <p class="text-lg text-gray-600 max-w-4xl mx-auto font-instrument">
+                    {{ texto_presentacion }}
+                </p>
+                <div class="mt-6 text-sm text-gray-500 font-semibold">
+                    <span class="text-gray-800 font-bold">{{ total_productos }}</span> Productos disponibles en línea.
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="max-w-xl mx-auto mb-10">
+                    <input type="text" placeholder="Buscar libro, grado o asignatura en Ediciones Castillo..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary font-instrument">
+                </div>
+
+                {% if productos %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+                        
+                        {% for producto in productos %}
+                        <div class="bg-white border border-gray-100 rounded-lg shadow-lg hover:shadow-xl transition duration-300 flex flex-col group">
+                            
+                            <div class="relative overflow-hidden p-4">
+                                <img src="{{ producto.url_imagen }}" alt="{{ producto.titulo }}" class="w-full h-64 object-contain transition-transform duration-500 group-hover:scale-105 rounded-md">
+                            </div>
+
+                            <div class="p-4 flex flex-col flex-grow">
+                                <p class="text-xs font-semibold text-brand-primary uppercase tracking-wider mb-1">
+                                    {{ producto.categoria }}
+                                </p>
+                                
+                                <h3 class="font-outfit text-lg font-bold text-gray-900 mb-2 truncate" title="{{ producto.titulo }}">
+                                    {{ producto.titulo }}
+                                </h3>
+
+                                <p class="text-sm text-gray-600 mb-4 flex-grow line-clamp-2">
+                                    {{ producto.descripcion_corta }}
+                                </p>
+
+                                <div class="flex items-center mb-4">
+                                    {% for i in range(producto.rating) %}
+                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    {% endfor %}
+                                    <span class="text-xs text-gray-500 ml-2">(128)</span>
+                                </div>
+
+                                <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                                    <span class="font-outfit text-xl font-extrabold text-gray-900">
+                                        {{ producto.precio_formateado }}
+                                    </span>
+                                    <button class="btn-add-to-cart flex items-center text-sm">
+                                        <i class="fas fa-shopping-cart mr-2"></i>
+                                        Añadir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                {% else %}
+                    <div class="text-center py-20 bg-gray-100 rounded-lg">
+                        <i class="fas fa-book-reader text-6xl text-gray-400 mb-4"></i>
+                        <p class="text-xl font-outfit text-gray-700 font-semibold">
+                            ¡Lo sentimos! No encontramos productos de Ediciones Castillo en este momento.
+                        </p>
+                        <p class="text-gray-500 mt-2">
+                            Por favor, inténtalo más tarde o contacta a nuestro equipo de ventas.
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="flex flex-col items-start">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books" class="h-10 mb-4">
+                <p class="text-sm text-gray-600 mb-2">¿Tienes preguntas? ¡Llámanos!</p>
+                <a href="tel:+573336025029" class="text-brand-accent font-outfit text-2xl font-bold mb-4 hover:text-red-700 transition duration-300">
+                    +57 (333) 602 50 29
+                </a>
+                <div class="flex space-x-4 text-gray-500">
+                    <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-facebook-f text-lg"></i></a>
+                    <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-instagram text-lg"></i></a>
+                    <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-linkedin-in text-lg"></i></a>
+                    <a href="#" class="hover:text-brand-primary transition duration-300"><i class="fab fa-pinterest-p text-lg"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>
+                        <p class="font-semibold text-gray-800">Bogotá:</p>
+                        <p>Carrera 58 No 164A-55, C.C Punto 170 Local 113</p>
+                        <p>(Cerrado Temporalmente)</p>
+                        <p>Calle 159A # 21A – 39 – Barrio Magdalena – Casa Blanca</p>
+                        <p>PBX: 333 602 50 29</p>
+                    </li>
+                    <li>
+                        <p class="font-semibold text-gray-800">Medellín, Antioquia:</p>
+                        <p>Edificio San Sebastian de La 70</p>
+                        <p>DQ 2 # 70 – 24 – INT 202</p>
+                        <p>LAURELES</p>
+                        <p>PBX: 333 602 50 29 EXT: 1100</p>
+                    </li>
+                    <li>
+                        <a href="mailto:contacto@smartbooks.com.co" class="text-brand-primary hover:underline">contacto@smartbooks.com.co</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Explorar</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/quienessomos" class="text-gray-600 hover:text-brand-primary transition duration-300">Quienes Somos</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Nuestros Productos</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Colegios</a></li>
+                    <li><a href="#blog" class="text-gray-600 hover:text-brand-primary transition duration-300">Blog</a></li>
+                    <li><a href="/login" class="text-gray-600 hover:text-brand-primary transition duration-300">Intranet (Iniciar Sesión)</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Nuestro Servicio</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Ayuda y Soporte</a></li>
+                    <li><a href="/preguntasfrecuentes" class="text-gray-600 hover:text-brand-primary transition duration-300">Preguntas Frecuentes – FAQ</a></li>
+                    <li><a href="/terminosycondiciones" class="text-gray-600 hover:text-brand-primary transition duration-300">Términos y Condiciones</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Política de Privacidad</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Servicio al Cliente</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-100 text-sm text-gray-500 text-center">
+            <p>&copy; 2024 Smart Books. Todos los derechos reservados. | Diseñado con ❤️</p>
+        </div>
+    </footer>
+    
+
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>

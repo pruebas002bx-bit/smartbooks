@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Books | Holding Educativo Global</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Definición de las fuentes para el diseño */
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-instrument { font-family: 'Instrument Sans', sans-serif; }
+
+        /* Colores adaptados: Azul de la marca (brand-primary) y Rojo de acento */
+        .bg-brand-primary { background-color: #163D6A; /* Indigo-700, azul oscuro */ }
+        .text-brand-primary { color: #163D6A; }
+        .bg-brand-accent { background-color: #163d6a; /* Red-500, para detalles */ }
+        .text-brand-accent { color: #163D6A; }
+        .text-active { color: #163D6A; /* Azul para la opción seleccionada/hover */ }
+
+        /* Estilos de Submenú (Dropdown) */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        .dropdown-menu {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+            transform: translateY(10px);
+            z-index: 50;
+            min-width: 14rem;
+        }
+
+        /* --- ESTILO DEL BUSCADOR MINIMALISTA --- */
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1.75rem; /* Aumentado un 20% */
+            border: 1px solid #d1d5db; 
+            border-radius: 9999px; /* rounded-full */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus {
+            border-color: #163d6a; 
+        }
+
+        .search-button-separate {
+            width: 52px; /* Aumentado un 20% */
+            height: 52px; /* Aumentado un 20% */
+            margin-left: 12px; /* Espacio entre el campo de búsqueda y el botón */
+            background-color: #163d6a; 
+            border-radius: 50%; /* Botón redondo */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+        }
+        .search-button-separate:hover {
+            background-color: #163D6A; 
+        }
+
+        /* ÍCONOS PNG: Define el filtro de color para convertir a blanco */
+        .icon-white {
+            filter: brightness(0) invert(1); 
+        }
+        /* --- FIN ESTILO BUSCADOR --- */
+        
+        /* --- ESTILO DEL CARRUSEL --- */
+        #banner-carousel {
+            position: relative;
+        }
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 10;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            z-index: 20;
+        }
+        /* Efecto Ken Burns (Zoom lento) para el carrusel */
+        .carousel-item img {
+            transform: scale(1.15); /* Estado inicial (zoom in) */
+            transition: transform 5s linear; /* Duración de la animación (coincide con el slide) */
+        }
+        .carousel-item.active img {
+            transform: scale(1); /* Estado final (zoom out) */
+        }
+        /* --- FIN ESTILO CARRUSEL --- */
+
+
+        /* Estilo para opción activa/hover del menú (con línea azul) */
+        .menu-item {
+            padding: 0 1.25rem; /* Padding aumentado */
+            display: flex;
+            align-items: center;
+            height: 100%;
+            border-bottom: 4px solid transparent; /* Base transparente */
+            transition: all 0.2s ease-in-out;
+        }
+        .menu-item:hover, .menu-item.active {
+            color: #163d6a; /* Texto azul */
+            border-bottom-color: #163D6A; /* Línea azul */
+        }
+
+        /* Estilos de WhatsApp Flotante (sin cambios) */
+        .whatsapp-float {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Animación de desplazamiento al cargar (Scroll Reveal) */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-scroll-reveal {
+            opacity: 0;
+            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+        }
+        /* Estilo para el hover del producto (simula el diseño de la imagen) */
+        .product-card:hover .product-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .product-info {
+            transition: all 0.3s ease;
+        }
+
+        /* --- ESTILO MARQUESINA DE LOGOS --- */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: flex;
+            width: 200%; /* El doble del ancho para el bucle */
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-item {
+            flex-shrink: 0;
+            width: 10%; /* 10 items (5+5) */
+            padding: 0 0.75rem; /* Padding reducido para logos más juntos */
+            box-sizing: content-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+        
+        /* --- ESTILO SLIDER PRODUCTOS (NUEVO) --- */
+        .product-slider-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            /* Efecto de difuminado en los bordes */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+        .product-slider-content {
+            display: flex;
+            width: 200%; /* 4 productos visibles -> 8 productos en total (4+4) */
+            animation: product-marquee 45s linear infinite; /* Animación lenta */
+        }
+        .product-slider-container:hover .product-slider-content {
+            animation-play-state: paused; /* Se detiene al pasar el cursor */
+        }
+        .product-slider-item {
+            flex-shrink: 0;
+            width: 12.5%; /* 100% / 8 items = 12.5% */
+            padding: 0 0.75rem; /* Espacio entre tarjetas (simulando el gap) */
+            box-sizing: border-box;
+        }
+        @keyframes product-marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        /* --- FIN SLIDER PRODUCTOS --- */
+
+
+        /* Animación para Proyectos Destacados */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .animate-subtle-pulse {
+            animation: subtle-pulse 2.5s ease-in-out infinite;
+            display: inline-block; /* Requerido para transform */
+        }
+        
+        /* Animación para botón amarillo "Kit Educativo" - Acentuado */
+        @keyframes super-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 15px rgba(253, 224, 71, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0); transform: scale(1); }
+        }
+        .animate-super-pulse {
+            animation: super-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Animación de zoom en imagen para tarjetas de Proyectos */
+        #recuadros .bg-white img {
+            transition: transform 0.4s ease-out;
+        }
+        #recuadros .bg-white:hover img {
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body class="font-instrument text-gray-700 bg-white antialiased">
+
+    <div class="bg-gray-100 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-sm flex justify-between items-center">
+            
+            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold text-sm sm:text-base tracking-wider">
+                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares de las mejores casas editoriales
+            </div>
+
+            <div class="flex space-x-3 items-center text-gray-500 flex-shrink-0">
+                <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-facebook-f text-lg"></i></a>
+                <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary"><i class="fab fa-linkedin-in text-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            
+            <a href="/" class="flex-shrink-0">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-20 w-auto"> </a>
+
+            <form action="#" class="relative max-w-xl flex-grow mx-10 hidden lg:block">
+                <div class="flex items-center">
+                    <input type="text" placeholder="Buscar por palabra clave..." class="search-input text-gray-700 text-lg"> <button type="submit" class="search-button-separate" title="Buscar">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" alt="Lupa" class="w-7 h-7 icon-white"> </button>
+                </div>
+            </form>
+
+            <div class="flex space-x-6 items-center"> <a href="#" class="hidden xl:flex items-center justify-center bg-yellow-400 text-gray-900 font-outfit font-bold px-5 py-3 rounded-lg shadow-lg hover:bg-yellow-500 transition transform duration-300 animate-super-pulse">
+                    <span class="text-base">Compra tu Kit Educativo AQUÍ</span>
+                </a>
+                
+                <div class="flex space-x-4 items-center text-gray-800 text-xl">
+                    <a href="#" class="p-2 hover:text-brand-primary transition duration-300 relative flex items-center justify-center" title="Carrito de Compras">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="Carrito" class="w-8 h-8"> <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-brand-accent rounded-full">
+                            0
+                        </span>
+                    </a>
+                </div>
+                <button class="lg:hidden p-2 text-gray-800 hover:text-brand-primary transition duration-300">
+                    <i class="fas fa-bars text-2xl"></i> </button>
+            </div>
+        </div>
+
+        <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-14"> <div class="max-w-7xl mx-auto px-4 h-full">
+                <nav class="flex justify-center space-x-10 font-outfit text-gray-800 font-semibold text-base h-full"> <a href="/" class="menu-item active">Inicio</a>
+                    
+                    <div class="dropdown relative h-full">
+                        <a href="#" class="menu-item flex items-center">
+                            Nosotros <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-accent top-full">
+                            <a href="/quienes-somos" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">Quienes Somos</a>
+                            <a href="/terminos-y-condiciones" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">Términos y Condiciones</a>
+                            <a href="/preguntas-frecuentes" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">Preguntas Frecuentes – FAQ</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown relative h-full">
+                        <a href="#" class="menu-item flex items-center">
+                            Aliados <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
+                        </a>
+                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-40 border-t-2 border-brand-accent top-full">
+                            <a href="/aliados/castillo" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">Castillo</a>
+                            <a href="/aliados/macmillan" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">MacMillan</a>
+                        </div>
+                    </div>
+
+                    <a href="/tienda" class="menu-item">Tienda</a>
+                    <a href="/colegios" class="menu-item">Colegios</a>
+                    <a href="/contactanos" class="menu-item">Contáctanos</a>
+                    <a href="/intranet" class="menu-item">Intranet</a>
+
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="max-w-full mx-auto overflow-hidden relative shadow-lg animate-scroll-reveal" style="height: 75vh; min-height: 550px;">
+            <div id="banner-carousel" class="w-full h-full">
+                <div class="carousel-item active w-full h-full">
+                    <img src="{{ url_banner1 }}" alt="Banner Principal 1" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item w-full h-full">
+                    <img src="{{ url_banner2 }}" alt="Banner Principal 2" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item w-full h-full">
+                    <img src="{{ url_banner3 }}" alt="Banner Principal 3" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item active w-full h-full">
+                    <img src="{{ url_banner4 }}" alt="Banner Principal 4" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item w-full h-full">
+                    <img src="{{ url_banner5 }}" alt="Banner Principal 5" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item w-full h-full">
+                    <img src="{{ url_banner6 }}" alt="Banner Principal 6" class="w-full h-full object-cover">
+                </div>
+
+            </div>
+            
+            <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-3 z-30">
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="0"></div>
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="1"></div>
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="2"></div>
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="3"></div>
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="4"></div>
+                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="5"></div>
+            </div>
+        </section>
+        
+        <section class="py-16 md:py-24 text-center">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 animate-scroll-reveal delay-300">
+                <h2 class="text-xs font-outfit uppercase tracking-widest text-brand-accent mb-3">Nuestra Misión</h2>
+                <p class="font-outfit text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-snug mb-6">
+                    Somos un <span class="text-brand-primary">Holding Educativo</span> Global
+                </p>
+                <p class="text-lg text-gray-600 mb-8 font-instrument">
+                    Transformando la educación en América Latina con soluciones pedagógicas integrales, tecnología avanzada y un compromiso inquebrantable con la excelencia.
+                </p>
+                <a href="#recuadros" class="inline-block px-8 py-3 text-base font-medium text-white bg-brand-primary rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+                    Descubre nuestras Soluciones
+                </a>
+            </div>
+        </section>
+        
+        <section id="editoriales" class="py-16 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-outfit text-xl md:text-2xl text-center font-bold text-gray-900 mb-10 animate-scroll-reveal">
+                    Trabajamos con las mejores <span class="text-brand-primary">Editoriales Globales</span>
+                </h2>
+                <div class="marquee-container">
+                    <div class="marquee-content">
+                        <div class="marquee-item"><img src="{{ url_editorial1 }}" alt="Logo Editorial 1" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial2 }}" alt="Logo Editorial 2" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial3 }}" alt="Logo Editorial 3" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial4 }}" alt="Logo Editorial 4" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial5 }}" alt="Logo Editorial 5" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial1 }}" alt="Logo Editorial 1" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial2 }}" alt="Logo Editorial 2" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial3 }}" alt="Logo Editorial 3" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial4 }}" alt="Logo Editorial 4" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                        <div class="marquee-item"><img src="{{ url_editorial5 }}" alt="Logo Editorial 5" class="h-20 max-w-full opacity-70 transition-opacity duration-300 hover:opacity-100"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="productos-vendidos" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex justify-between items-center mb-10 animate-scroll-reveal">
+                    <h2 class="font-outfit text-4xl font-extrabold text-gray-900">
+                        Productos más <span class="text-brand-accent">Vendidos</span>
+                    </h2>
+                    <a href="/tienda" class="inline-block px-6 py-2 text-base font-medium text-white bg-brand-accent rounded-lg hover:bg-red-600 transition-all duration-300 shadow-md hover:translate-x-1">
+                        Ver Todos →
+                    </a>
+                </div>
+
+                <div class="product-slider-container mt-10 animate-scroll-reveal">
+                    <div class="product-slider-content">
+                        
+                        {% for producto in productos_destacados %}
+                        <div class="product-slider-item">
+                            <div class="bg-gray-100 rounded-xl shadow-lg overflow-hidden product-card">
+                                
+                                <div class="relative overflow-hidden h-96">
+                                    <img src="{{ producto.url_imagen }}" alt="{{ producto.titulo }}" 
+                                         class="w-full h-full object-cover object-center absolute inset-0 
+                                                transform transition duration-500 hover:scale-105">
+                                    
+                                    <div class="product-info absolute inset-0 bg-white/90 p-4 flex flex-col justify-end 
+                                                transform translate-y-full opacity-0">
+                                        
+                                        <p class="text-xs font-semibold text-gray-500 mb-1">{{ producto.categoria }}</p>
+                                        <h3 class="font-outfit text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                                            {{ producto.titulo }}
+                                        </h3>
+                                        
+                                        <p class="text-sm text-gray-600 mb-3 line-clamp-3">{{ producto.descripcion_corta }}</p>
+                                        
+                                        <div class="flex items-center text-yellow-500 text-sm mb-4">
+                                            {% for i in range(producto.rating) %}
+                                                <i class="fas fa-star"></i>
+                                            {% endfor %}
+                                            {% for i in range(5 - producto.rating) %}
+                                                <i class="far fa-star text-gray-300"></i>
+                                            {% endfor %}
+                                            <span class="text-xs text-gray-500 ml-2">(42)</span>
+                                        </div>
+
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-outfit text-xl font-black text-brand-primary">{{ producto.precio_formateado }}</span>
+                                            <a href="#" class="px-4 py-2 text-xs font-semibold text-white bg-brand-accent rounded-full hover:bg-red-600 transition duration-300">
+                                                Añadir al carrito
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% for producto in productos_destacados %}
+                        <div class="product-slider-item">
+                            <div class="bg-gray-100 rounded-xl shadow-lg overflow-hidden product-card">
+                                
+                                <div class="relative overflow-hidden h-96">
+                                    <img src="{{ producto.url_imagen }}" alt="{{ producto.titulo }}" 
+                                         class="w-full h-full object-cover object-center absolute inset-0 
+                                                transform transition duration-500 hover:scale-105">
+                                    
+                                    <div class="product-info absolute inset-0 bg-white/90 p-4 flex flex-col justify-end 
+                                                transform translate-y-full opacity-0">
+                                        
+                                        <p class="text-xs font-semibold text-gray-500 mb-1">{{ producto.categoria }}</p>
+                                        <h3 class="font-outfit text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                                            {{ producto.titulo }}
+                                        </h3>
+                                        
+                                        <p class="text-sm text-gray-600 mb-3 line-clamp-3">{{ producto.descripcion_corta }}</p>
+                                        
+                                        <div class="flex items-center text-yellow-500 text-sm mb-4">
+                                            {% for i in range(producto.rating) %}
+                                                <i class="fas fa-star"></i>
+                                            {% endfor %}
+                                            {% for i in range(5 - producto.rating) %}
+                                                <i class="far fa-star text-gray-300"></i>
+                                            {% endfor %}
+                                            <span class="text-xs text-gray-500 ml-2">(42)</span>
+                                        </div>
+
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-outfit text-xl font-black text-brand-primary">{{ producto.precio_formateado }}</span>
+                                            <a href="#" class="px-4 py-2 text-xs font-semibold text-white bg-brand-accent rounded-full hover:bg-red-600 transition duration-300">
+                                                Añadir al carrito
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <section id="recuadros" class="bg-gray-100 py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <h2 class="font-outfit text-3xl md:text-4xl text-center font-extrabold text-gray-900 mb-12 animate-scroll-reveal">
+                    Nuestros Proyectos <span class="text-brand-accent animate-subtle-pulse">Destacados</span> </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden animate-scroll-reveal delay-300
+                                transform transition duration-500 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="overflow-hidden">
+                            <img src="{{ url_recuadro1 }}" alt="Imagen Recuadro 1" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-outfit text-xl font-bold text-gray-800 mb-2">Conoce y decide tu mejor elección</h3>
+                            <p class="text-gray-500 text-sm font-instrument leading-relaxed line-clamp-3">Accede a nuestros recursos pedagógicos y herramientas de diagnóstico para tomar decisiones informadas sobre los textos escolares que necesita tu institución.</p>
+                            <a href="#" class="mt-4 inline-block text-brand-primary font-semibold hover:text-brand-accent transition duration-300">Ver más →</a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden animate-scroll-reveal delay-500
+                                transform transition duration-500 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="overflow-hidden">
+                            <img src="{{ url_recuadro2 }}" alt="Imagen Recuadro 2" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-outfit text-xl font-bold text-gray-800 mb-2">Más que libros, soluciones integrales</h3>
+                            <p class="text-gray-500 text-sm font-instrument leading-relaxed line-clamp-3">Ofrecemos paquetes completos que incluyen textos, plataformas digitales y capacitación docente para una inmersión total en la transformación educativa.</p>
+                            <a href="#" class="mt-4 inline-block text-brand-primary font-semibold hover:text-brand-accent transition duration-300">Ver más →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-xl overflow-hidden animate-scroll-reveal delay-700
+                                transform transition duration-500 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="overflow-hidden">
+                            <img src="{{ url_recuadro3 }}" alt="Imagen Recuadro 3" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-outfit text-xl font-bold text-gray-800 mb-2">Nuevo Programa Académico Bilingüe</h3>
+                            <p class="text-gray-500 text-sm font-instrument leading-relaxed line-clamp-3">Descubre nuestra nueva propuesta bilingüe diseñada para colegios que buscan la certificación internacional con metodologías ágiles y modernas.</p>
+                            <a href="#" class="mt-4 inline-block text-brand-primary font-semibold hover:text-brand-accent transition duration-300">Ver más →</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        </main>
+
+    <footer class="bg-white py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="flex flex-col items-start">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books" class="h-10 mb-4">
+                <p class="text-sm text-gray-600 mb-2">¿Tienes preguntas? ¡Llámanos!</p>
+                <a href="tel:+573336025029" class="text-brand-accent font-outfit text-2xl font-bold mb-4 hover:text-red-700 transition duration-300">
+                    +57 (333) 602 50 29
+                </a>
+                <div class="flex space-x-4 text-gray-500">
+                    <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-facebook-f text-lg"></i></a>
+                    <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-instagram text-lg"></i></a>
+                    <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary transition duration-300"><i class="fab fa-linkedin-in text-lg"></i></a>
+                    <a href="#" class="hover:text-brand-primary transition duration-300"><i class="fab fa-pinterest-p text-lg"></i></a>
+                </div>
+                <a href="/intranet" class="mt-6 text-sm text-gray-700 border border-gray-300 rounded-md px-5 py-2 hover:bg-gray-100 hover:text-brand-primary transition duration-300">
+                    Iniciar Sesión
+                </a>
+            </div>
+
+            <div>
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>
+                        <p class="font-semibold text-gray-800">Bogotá:</p>
+                        <p>Carrera 58 No 164A-55, C.C Punto 170 Local 113</p>
+                        <p>(Cerrado Temporalmente)</p>
+                        <p>Calle 159A # 21A – 39 – Barrio Magdalena – Casa Blanca</p>
+                        <p>PBX: 333 602 50 29</p>
+                    </li>
+                    <li>
+                        <p class="font-semibold text-gray-800">Medellín, Antioquia:</p>
+                        <p>Edificio San Sebastian de La 70</p>
+                        <p>DQ 2 # 70 – 24 – INT 202</p>
+                        <p>LAURELES</p>
+                        <p>PBX: 333 602 50 29 EXT: 1100</p>
+                    </li>
+                    <li>
+                        <a href="mailto:contacto@smartbooks.com.co" class="text-brand-primary hover:underline">contacto@smartbooks.com.co</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Explorar</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/quienes-somos" class="text-gray-600 hover:text-brand-primary transition duration-300">Quienes Somos</a></li>
+                    <li><a href="/tienda" class="text-gray-600 hover:text-brand-primary transition duration-300">Nuestros Productos</a></li>
+                    <li><a href="/colegios" class="text-gray-600 hover:text-brand-primary transition duration-300">Colegios</a></li>
+                    <li><a href="/blog" class="text-gray-600 hover:text-brand-primary transition duration-300">Blog</a></li>
+                    <li><a href="/intranet" class="text-gray-600 hover:text-brand-primary transition duration-300">Intranet (Iniciar Sesión)</a></li>
+                </ul>
+            </div>
+
+            <div class="lg:col-span-1">
+                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Encuéntranos</h4>
+                <div class="w-full rounded-lg overflow-hidden shadow-md">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d618.676350650165!2d-74.05854276815452!3d4.753396005441487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f85a3816c4b63%3A0xbdecd40be274ea2!2sSmart%20Books%20Colombia!5e1!3m2!1ses-419!2sco!4v1760823591513!5m2!1ses-419!2sco" 
+                        width="100%" 
+                        height="200" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="rounded-lg">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-100 text-sm text-gray-500 text-center">
+            <p>© 2024 Smart Books. Todos los derechos reservados. | Diseñado con ❤️</p>
+        </div>
+    </footer>
+    
+
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Script para el Carrusel
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.dot');
+            let currentIndex = 0;
+            const intervalTime = 5000; // Cambia cada 5 segundos
+
+            function showSlide(index) {
+                // Desactiva todos los elementos
+                items.forEach(item => item.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('opacity-100', 'bg-brand-primary'));
+                
+                // Activa el elemento y dot correcto
+                if (items[index]) {
+                    items[index].classList.add('active');
+                    dots[index].classList.add('opacity-100', 'bg-brand-primary'); 
+                    dots[index].classList.remove('opacity-70', 'bg-white'); 
+                }
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % items.length;
+                showSlide(currentIndex);
+            }
+
+            // Inicia el carrusel
+            let slideInterval = setInterval(nextSlide, intervalTime);
+            showSlide(currentIndex);
+
+            // Maneja el clic en los dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(slideInterval); // Resetea el intervalo
+                    currentIndex = index;
+                    showSlide(currentIndex);
+                    slideInterval = setInterval(nextSlide, intervalTime); // Reinicia el intervalo
+                });
+            });
+            
+            // Script para Scroll Reveal (Animaciones al hacer scroll)
+            const revealElements = document.querySelectorAll('.animate-scroll-reveal');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // El retardo de animación se toma del atributo style
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(element => {
+                // Si ya tiene un delay, no lo sobrescribe
+                if (!element.style.animationDelay) {
+                    element.style.animationDelay = '0s'; // Valor por defecto
+                }
+                observer.observe(element);
+            });
+            
+        });
+    </script>
+
+</body>
+</html>

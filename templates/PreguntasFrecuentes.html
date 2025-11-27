@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Books | Preguntas Frecuentes (FAQ)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Definición de las fuentes para el diseño (DE index.html) */
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-instrument { font-family: 'Instrument Sans', sans-serif; }
+
+        /* Colores adaptados: Azul de la marca (brand-primary) y Rojo de acento (DE index.html) */
+        .bg-brand-primary { background-color: #163D6A; /* Indigo-700, azul oscuro */ }
+        .text-brand-primary { color: #163D6A; }
+        .bg-brand-accent { background-color: #163d6a; /* Red-500, para detalles */ }
+        .text-brand-accent { color: #163D6A; }
+        .text-active { color: #163D6A; /* Azul para la opción seleccionada/hover */ }
+
+        /* Estilos de Submenú (Dropdown) (DE index.html) */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        .dropdown-menu {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+            transform: translateY(10px);
+            z-index: 50;
+            min-width: 14rem;
+        }
+
+        /* --- ESTILO DEL BUSCADOR MINIMALISTA (DE index.html) --- */
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1.75rem; /* Aumentado un 20% */
+            border: 1px solid #d1d5db; 
+            border-radius: 9999px; /* rounded-full */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus {
+            border-color: #163d6a; 
+        }
+
+        .search-button-separate {
+            width: 52px; /* Aumentado un 20% */
+            height: 52px; /* Aumentado un 20% */
+            margin-left: 12px; /* Espacio entre el campo de búsqueda y el botón */
+            background-color: #163d6a; 
+            border-radius: 50%; /* Botón redondo */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0; 
+        }
+        .search-button-separate:hover {
+            background-color: #163D6A; 
+        }
+
+        /* ÍCONOS PNG: Define el filtro de color para convertir a blanco (DE index.html) */
+        .icon-white {
+            filter: brightness(0) invert(1); 
+        }
+
+        /* Estilo para opción activa/hover del menú (con línea azul) (DE index.html) */
+        .menu-item {
+            padding: 0 1.25rem; /* Padding aumentado */
+            display: flex;
+            align-items: center;
+            height: 100%;
+            border-bottom: 4px solid transparent; /* Base transparente */
+            transition: all 0.2s ease-in-out;
+        }
+        .menu-item:hover, .menu-item.active {
+            color: #163d6a; /* Texto azul */
+            border-bottom-color: #163D6A; /* Línea azul */
+        }
+
+        /* Estilos de WhatsApp Flotante (DE index.html) */
+        .whatsapp-float {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Animación de desplazamiento al cargar (Scroll Reveal) (DE index.html) */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-scroll-reveal {
+            opacity: 0;
+            animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+        }
+
+        /* Animación para botón amarillo "Kit Educativo" - Acentuado (DE index.html) */
+        @keyframes super-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 15px rgba(253, 224, 71, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0); transform: scale(1); }
+        }
+        .animate-super-pulse {
+            animation: super-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Estilos de Acordeón para FAQ (ORIGINAL DE ESTE ARCHIVO) */
+        .accordion-item {
+            border: 1px solid #e5e7eb; /* gray-200 */
+            margin-bottom: 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .accordion-header {
+            background-color: #f9fafb; /* gray-50 */
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #1f2937; /* gray-900 */
+            transition: background-color 0.2s;
+        }
+        .accordion-header:hover {
+            background-color: #eff6ff; /* blue-50 */
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            background-color: white;
+            color: #4b5563; /* gray-600 */
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Aumentado por si la respuesta es larga */
+            padding: 1.5rem;
+        }
+        .icon-rotate {
+            transition: transform 0.3s ease;
+        }
+        .icon-rotate.active {
+            transform: rotate(180deg);
+        }
+        
+    </style>
+</head>
+
+<body class="font-instrument text-gray-700 bg-white antialiased">
+
+    <div class="bg-gray-100 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-sm flex justify-between items-center">
+            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold text-sm sm:text-base tracking-wider">
+                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares de las mejores casas editoriales
+            </div>
+            <div class="flex space-x-3 items-center text-gray-500 flex-shrink-0">
+                <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-facebook-f text-lg"></i></a>
+                <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-instagram text-lg"></i></a>
+                <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary"><i class="fab fa-linkedin-in text-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex-shrink-0">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-14 w-auto">
+            </a>
+            
+            <form action="#" class="relative max-w-xl flex-grow mx-10 hidden lg:block">
+                <div class="flex items-center">
+                    <input type="text" placeholder="Buscar por palabra clave..." class="search-input text-gray-700 text-base">
+                    <button type="submit" class="search-button-separate" title="Buscar">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" alt="Lupa" class="w-6 h-6 icon-white">
+                    </button>
+                </div>
+            </form>
+
+            <div class="flex space-x-4 items-center">
+                <div class="hidden xl:flex flex-col items-end text-xs">
+                    <span class="text-gray-500 font-instrument">Llámanos ahora</span>
+                    <span class="font-outfit font-bold text-lg text-brand-primary leading-none">311 557 2243</span>
+                </div>
+                
+                <a href="login.html" class="hidden sm:flex items-center space-x-2 text-brand-primary hover:text-brand-accent transition duration-150 group">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                    <span class="text-sm font-semibold font-outfit">Mi Cuenta</span>
+                </a>
+                
+                <a href="checkout.html" class="relative text-brand-primary hover:text-brand-accent transition duration-150">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center font-outfit">0</span>
+                </a>
+
+                <button id="mobile-menu-button" class="lg:hidden text-brand-primary hover:text-brand-accent text-2xl p-2" aria-label="Abrir menú móvil">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4">
+            <a href="index.html" class="block py-2 px-3 rounded-md text-base font-medium text-brand-primary hover:bg-gray-100">Inicio</a>
+            <a href="quienes-somos.html" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Quiénes Somos</a>
+            <div class="relative">
+                <button type="button" class="flex justify-between items-center w-full py-2 px-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100" aria-controls="mobile-catalogo-submenu" aria-expanded="false">
+                    Catálogo
+                    <i class="fas fa-chevron-down text-xs ml-2"></i>
+                </button>
+                <div id="mobile-catalogo-submenu" class="pl-4 hidden">
+                    <a href="catalogo-colegios.html" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Textos Escolares</a>
+                    <a href="catalogo-kit.html" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Kit Educativo</a>
+                    <a href="catalogo-bibliotecas.html" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Bibliotecas Escolares</a>
+                </div>
+            </div>
+            <a href="proyectos-especiales.html" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Proyectos Especiales</a>
+            <a href="blog.html" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Blog</a>
+            <a href="contacto.html" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Contacto</a>
+            <a href="kit-educativo.html" class="mt-4 block py-2 px-3 text-center rounded-md bg-yellow-400 text-brand-primary font-bold hover:bg-yellow-500 transition duration-150">¡Mi Kit Educativo!</a>
+        </div>
+    </header>
+    
+    <nav class="bg-brand-primary hidden lg:block border-t-4 border-brand-accent h-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-start space-x-2 h-full font-outfit font-semibold text-lg text-white">
+                
+                <a href="index.html" class="menu-item">Inicio</a>
+                
+                <a href="quienes-somos.html" class="menu-item">Quiénes Somos</a>
+
+                <div class="relative dropdown h-full">
+                    <a href="#" class="menu-item flex items-center h-full">
+                        Catálogo <i class="fas fa-chevron-down text-xs ml-2 transition-transform duration-200 group-hover:rotate-180"></i>
+                    </a>
+                    <div class="dropdown-menu absolute left-0 mt-0 bg-white shadow-xl rounded-lg py-2 border border-gray-100">
+                        <a href="catalogo-colegios.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Textos Escolares</a>
+                        <a href="catalogo-kit.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Kit Educativo</a>
+                        <a href="catalogo-bibliotecas.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Bibliotecas Escolares</a>
+                    </div>
+                </div>
+
+                <a href="proyectos-especiales.html" class="menu-item">Proyectos Especiales</a>
+                
+                <a href="blog.html" class="menu-item">Blog</a>
+                
+                <a href="contacto.html" class="menu-item">Contacto</a>
+                
+                <a href="kit-educativo.html" class="menu-item bg-yellow-400 text-brand-primary hover:bg-yellow-500 hover:text-brand-primary ml-auto font-black px-4 animate-super-pulse rounded-b-lg">
+                    ¡Mi Kit Educativo!
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+        <h1 class="font-outfit text-4xl lg:text-5xl font-black text-brand-primary mb-10 text-center animate-scroll-reveal">Preguntas Frecuentes</h1>
+        
+        <div id="accordion-container" class="max-w-4xl mx-auto">
+            
+            <div class="accordion-item animate-scroll-reveal" style="animation-delay: 0.1s;">
+                <div class="accordion-header">
+                    <span class="text-lg">¿Cuáles son los métodos de pago aceptados?</span>
+                    <i class="fas fa-chevron-down icon-rotate text-brand-primary"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Aceptamos diversos métodos de pago para tu comodidad:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Tarjeta de crédito (Visa, MasterCard, American Express).</li>
+                        <li>Transferencia bancaria (PSE).</li>
+                        <li>Pago en efectivo en puntos autorizados (Efecty, Baloto).</li>
+                        <li>Crédito directo para instituciones (previa aprobación).</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="accordion-item animate-scroll-reveal" style="animation-delay: 0.2s;">
+                <div class="accordion-header">
+                    <span class="text-lg">¿Cuánto tarda el envío de los pedidos?</span>
+                    <i class="fas fa-chevron-down icon-rotate text-brand-primary"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>El tiempo de envío varía según el destino y la disponibilidad de los productos:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Ciudades principales: 3 a 5 días hábiles.</li>
+                        <li>Otras ciudades y zonas rurales: 5 a 8 días hábiles.</li>
+                    </ul>
+                    <p class="mt-2">Una vez despachado el pedido, recibirás un número de seguimiento por correo electrónico.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item animate-scroll-reveal" style="animation-delay: 0.3s;">
+                <div class="accordion-header">
+                    <span class="text-lg">¿Ofrecen descuentos para compras de volumen o colegios?</span>
+                    <i class="fas fa-chevron-down icon-rotate text-brand-primary"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>¡Sí! Tenemos planes especiales y descuentos significativos para:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Colegios e instituciones educativas.</li>
+                        <li>Compras mayoristas de distribuidores.</li>
+                        <li>Adquisición del 'Kit Educativo' para grupos de estudiantes.</li>
+                    </ul>
+                    <p class="mt-2">Por favor, contáctanos a <a href="mailto:ventas@smartbooksholding.com" class="text-brand-primary hover:underline">ventas@smartbooksholding.com</a> para una cotización personalizada.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item animate-scroll-reveal" style="animation-delay: 0.4s;">
+                <div class="accordion-header">
+                    <span class="text-lg">¿Cómo puedo devolver o cambiar un libro?</span>
+                    <i class="fas fa-chevron-down icon-rotate text-brand-primary"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Nuestro objetivo es que estés 100% satisfecho. Si necesitas un cambio o devolución:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Tienes 30 días calendario a partir de la recepción para solicitar la devolución.</li>
+                        <li>Los productos deben estar sin usar y en su empaque original.</li>
+                        <li>Para iniciar el proceso, envía un correo a <a href="mailto:soporte@smartbooksholding.com" class="text-brand-primary hover:underline">soporte@smartbooksholding.com</a> con el número de pedido y el motivo.</li>
+                    </ul>
+                    <p class="mt-2">Consulta nuestra sección de <a href="TerminosYCondiciones.html" class="text-brand-primary font-semibold hover:underline">Términos y Condiciones</a> para más detalles.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item animate-scroll-reveal" style="animation-delay: 0.5s;">
+                <div class="accordion-header">
+                    <span class="text-lg">¿Cómo puedo contactar a servicio al cliente?</span>
+                    <i class="fas fa-chevron-down icon-rotate text-brand-primary"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Puedes contactarnos a través de los siguientes canales:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Teléfono: 311 557 2243 (Lunes a Viernes, 8:00 am - 5:00 pm).</li>
+                        <li>WhatsApp: Clic en el ícono flotante en la esquina inferior derecha.</li>
+                        <li>Correo electrónico: <a href="mailto:contacto@smartbooksholding.com" class="text-brand-primary hover:underline">contacto@smartbooksholding.com</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white pt-12 pb-6 mt-16 font-instrument">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 border-b border-gray-700 pb-8 mb-6">
+                
+                <div class="col-span-2 lg:col-span-1">
+                    <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Smart-Books-Blanco.png" alt="Smart Books Footer Logo" class="h-10 mb-4">
+                    <p class="text-sm text-gray-400 mb-4">Holding Educativo Global, tu aliado en el proceso de formación.</p>
+                    <div class="space-y-2 text-sm">
+                        <p class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt text-lg text-yellow-400 mt-1 flex-shrink-0"></i>
+                            <span>Sede Principal: Carrera 11a # 94a - 56, Oficina 501, Bogotá, Colombia.</span>
+                        </p>
+                        <p class="flex items-center space-x-2">
+                            <i class="fas fa-phone-alt text-yellow-400"></i>
+                            <a href="tel:+573115572243" class="hover:text-yellow-400">Línea Nacional: 311 557 2243</a>
+                        </p>
+                        <p class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-yellow-400"></i>
+                            <a href="mailto:gerencia@smartbooksholding.com" class="hover:text-yellow-400">gerencia@smartbooksholding.com</a>
+                        </p>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://www.facebook.com/smartbookscol" target="_blank" class="text-gray-400 hover:text-white transition duration-150"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="https://www.instagram.com/smartbookscol" target="_blank" class="text-gray-400 hover:text-white transition duration-150"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="text-gray-400 hover:text-white transition duration-150"><i class="fab fa-linkedin-in text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider">Servicios</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="catalogo-colegios.html" class="text-gray-400 hover:text-white transition duration-150">Textos Escolares</a></li>
+                        <li><a href="catalogo-kit.html" class="text-gray-400 hover:text-white transition duration-150">Kit Educativo</a></li>
+                        <li><a href="proyectos-especiales.html" class="text-gray-400 hover:text-white transition duration-150">Proyectos Especiales</a></li>
+                        <li><a href="catalogo-bibliotecas.html" class="text-gray-400 hover:text-white transition duration-150">Bibliotecas Escolares</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition duration-150">Blog Educativo</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider">Información</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="quienes-somos.html" class="text-gray-400 hover:text-white transition duration-150">Quiénes Somos</a></li>
+                        <li><a href="contacto.html" class="text-gray-400 hover:text-white transition duration-150">Contacto</a></li>
+                        <li><a href="PreguntasFrecuentes.html" class="text-gray-400 hover:text-white transition duration-150">Preguntas Frecuentes</a></li>
+                        <li><a href="TerminosYCondiciones.html" class="text-gray-400 hover:text-white transition duration-150">Términos y Condiciones</a></li>
+                        <li><a href="politica-privacidad.html" class="text-gray-400 hover:text-white transition duration-150">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-span-2 md:col-span-1">
+                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider">Suscríbete</h4>
+                    <p class="text-sm text-gray-400 mb-4">Recibe las últimas noticias y ofertas en tu email.</p>
+                    <form>
+                        <input type="email" placeholder="Tu email" class="w-full p-3 mb-3 text-sm text-gray-900 rounded-lg border-0 focus:ring-yellow-400 focus:border-yellow-400" required>
+                        <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-bold py-3 rounded-lg hover:bg-yellow-500 transition duration-150 font-outfit uppercase">Suscribir</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center text-sm text-gray-400">
+                <p>&copy; 2024 Smart Books. Todos los derechos reservados. | Diseñado con ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Script para Menú Móvil (DE index.html)
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    // Cambiar ícono de hamburguesa a X
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    }
+                });
+                // Lógica para submenú móvil de Catálogo
+                const mobileDropdownButton = mobileMenu.querySelector('[aria-controls="mobile-catalogo-submenu"]');
+                const mobileDropdownMenu = document.getElementById('mobile-catalogo-submenu');
+                
+                if (mobileDropdownButton && mobileDropdownMenu) {
+                    mobileDropdownButton.addEventListener('click', () => {
+                        mobileDropdownMenu.classList.toggle('hidden');
+                        mobileDropdownButton.querySelector('i').classList.toggle('rotate-180');
+                    });
+                }
+            }
+
+            // Script para Acordeón (FAQ) (ORIGINAL DE ESTE ARCHIVO)
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.icon-rotate');
+                    
+                    // Cierra todos los demás acordeones
+                    document.querySelectorAll('.accordion-content.active').forEach(activeContent => {
+                        if (activeContent !== content) {
+                            activeContent.classList.remove('active');
+                            activeContent.style.maxHeight = 0;
+                            activeContent.previousElementSibling.querySelector('.icon-rotate').classList.remove('active');
+                        }
+                    });
+
+                    // Abre o cierra el acordeón actual
+                    content.classList.toggle('active');
+                    icon.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        // Calcula la altura dinámica del contenido, incluyendo el padding
+                        content.style.maxHeight = content.scrollHeight + 30 + "px"; // Añade un extra de 30px por el padding
+                    } else {
+                        content.style.maxHeight = 0;
+                    }
+                });
+            });
+            
+            // Script para Scroll Reveal (Animaciones al hacer scroll) (DE index.html)
+            const revealElements = document.querySelectorAll('.animate-scroll-reveal');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // El retardo de animación se toma del atributo style
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(element => {
+                // Si ya tiene un delay, no lo sobrescribe
+                if (!element.style.animationDelay) {
+                    element.style.animationDelay = '0s'; // Valor por defecto
+                }
+                observer.observe(element);
+            });
+            
+        });
+    </script>
+
+</body>
+</html>

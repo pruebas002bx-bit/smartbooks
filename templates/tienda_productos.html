@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda | Smart Books</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos generales copiados del index */
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-instrument { font-family: 'Instrument Sans', sans-serif; }
+        .bg-brand-primary { background-color: #4338ca; } /* Azul oscuro / Indigo-700 */
+        .text-brand-primary { color: #4338ca; }
+        .bg-brand-accent { background-color: #4338ca; }
+        .text-active { color: #4338ca; }
+
+        /* Estilos para el Menú de Navegación */
+        .menu-item {
+            color: #4b5563; /* Gris */
+            padding: 0.5rem 0.75rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .menu-item:hover, .text-brand-primary.menu-item {
+            color: #4338ca; /* brand-primary en hover o activo */
+        }
+        .menu-item:hover::after, .text-brand-primary.menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background-color: #4338ca; /* brand-primary */
+            border-radius: 2px;
+        }
+        
+        /* Estilos de filtro */
+        .filter-group { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+        .filter-title { 
+            font-size: 1.125rem; font-weight: 700; color: #1f2937; margin-bottom: 0.75rem; font-family: 'Outfit', sans-serif; 
+        }
+        .text-line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body class="font-instrument text-gray-700 bg-white antialiased">
+
+    <div class="bg-gray-100 py-2 border-b border-gray-200 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end space-x-6 text-sm">
+            <a href="mailto:info@smartbooks.com.co" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fas fa-envelope mr-1"></i> info@smartbooks.com.co</a>
+            <a href="tel:+573115572243" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fas fa-phone-alt mr-1"></i> +57 311 557 2243</a>
+        </div>
+    </div>
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-3xl font-outfit font-black text-gray-900 flex items-center">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/08/logo_150x50_blue.png" alt="Smart Books Logo" class="h-10 w-auto mr-2">
+                    </a>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4 h-full">
+                        <a href="/" class="menu-item">Inicio</a>
+                        <a href="/quienessomos" class="menu-item">Quiénes Somos</a>
+                        
+                        <a href="/tienda" class="menu-item text-brand-primary font-bold">Tienda</a> 
+                        
+                        <div class="dropdown relative h-full group flex items-center">
+                            <a href="#" class="menu-item flex items-center">
+                                Aliados <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
+                            </a>
+                            <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-40 border-t-2 border-brand-accent top-full hidden group-hover:block transition duration-300 z-50">
+                                <a href="/aliados/castillo" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">Castillo</a>
+                                <a href="/aliados/macmillan" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm">MacMillan</a>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="menu-item">Blog</a>
+                        <a href="#" class="menu-item">Contacto</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-brand-primary transition duration-300">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="relative text-gray-600 hover:text-brand-primary transition duration-300">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                    </button>
+                    
+                    <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-brand-primary focus:outline-none transition duration-300">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-50 border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200">Inicio</a>
+                <a href="/quienessomos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200">Quiénes Somos</a>
+                <a href="/tienda" class="block px-3 py-2 rounded-md text-base font-medium text-brand-primary bg-gray-100 hover:bg-gray-200">Tienda</a>
+                <a href="/aliados/castillo" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200 ml-4">- Castillo</a>
+                <a href="/aliados/macmillan" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200 ml-4">- MacMillan</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200">Blog</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-200">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+    
+    <header class="bg-gray-100 py-8 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="font-outfit text-4xl font-extrabold text-gray-900 mb-2">{{ titulo_pagina }}</h1>
+            <p class="text-sm text-gray-600">
+                <a href="/" class="hover:text-brand-primary">Inicio</a> / <span class="text-brand-primary">{{ titulo_pagina }}</span>
+            </p>
+        </div>
+    </header>
+
+    <main class="py-12 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+                
+                <aside class="lg:col-span-1">
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 sticky lg:top-8">
+                        <h2 class="font-outfit text-2xl font-bold text-gray-900 mb-6">Filtrar por</h2>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">Editorial</h3>
+                            {% for editorial in editoriales %}
+                            <div class="flex items-center mb-2">
+                                <input id="filter-editorial-{{ editorial|replace(' ', '-') }}" 
+                                       name="editorial" 
+                                       type="checkbox" 
+                                       value="{{ editorial }}"
+                                       class="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary">
+                                <label for="filter-editorial-{{ editorial|replace(' ', '-') }}" 
+                                       class="ml-3 text-sm text-gray-700">{{ editorial }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">Tipo de Texto (Colección)</h3>
+                            {% for tipo in tipos_texto %}
+                            <div class="flex items-center mb-2">
+                                <input id="filter-tipo-{{ loop.index }}" 
+                                       name="tipo_texto" 
+                                       type="checkbox" 
+                                       value="{{ tipo }}"
+                                       class="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary">
+                                <label for="filter-tipo-{{ loop.index }}" 
+                                       class="ml-3 text-sm text-gray-700">{{ tipo }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="filter-group border-b-0">
+                            <h3 class="filter-title">Rango de Precio</h3>
+                            <p class="text-sm text-gray-500">Próximamente</p>
+                            <button class="w-full mt-4 py-2 bg-brand-primary text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300 text-sm">Aplicar Filtros</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="lg:col-span-3">
+                    
+                    <div class="flex justify-between items-center mb-6 border-b pb-4">
+                        <p class="text-gray-600 font-semibold">{{ total_productos }} Productos encontrados</p>
+                        <select class="p-2 border border-gray-300 rounded-lg text-sm text-gray-700">
+                            <option>Ordenar por Relevancia</option>
+                            <option>Ordenar por Precio: Menor a Mayor</option>
+                            <option>Ordenar por Precio: Mayor a Menor</option>
+                            <option>Ordenar por Título (A-Z)</option>
+                        </select>
+                    </div>
+
+                    {% if productos %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                        
+                        {% for producto in productos %}
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col">
+                            
+                            <div class="relative h-64 bg-gray-100 overflow-hidden flex items-center justify-center">
+                                <img src="{{ producto.url_imagen }}" alt="{{ producto.titulo }}" 
+                                     class="max-w-full max-h-full object-contain p-4 transform transition duration-500 hover:scale-105">
+                            </div>
+                            
+                            <div class="p-4 flex flex-col flex-grow">
+                                <p class="text-xs font-semibold text-gray-500 mb-1 uppercase">{{ producto.categoria }}</p>
+                                <h3 class="font-outfit text-lg font-bold text-gray-900 mb-2 text-line-clamp-2 hover:text-brand-primary transition duration-300 flex-grow">
+                                    <a href="#">{{ producto.titulo }}</a>
+                                </h3>
+                                
+                                <div class="flex items-center text-yellow-500 text-sm mb-3">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                                
+                                <div class="flex justify-between items-center pt-3 border-t border-gray-100 mt-auto">
+                                    <span class="font-outfit text-xl font-black text-brand-primary">{{ producto.precio_formateado }}</span>
+                                    
+                                    <a href="#" class="flex items-center px-4 py-2 text-sm font-semibold text-white bg-brand-accent rounded-lg hover:bg-indigo-700 transition duration-300 shadow-md">
+                                        <i class="fas fa-shopping-cart text-white mr-2"></i> Añadir
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+                    {% else %}
+                    <div class="text-center py-10 bg-gray-50 rounded-lg">
+                        <p class="text-xl text-gray-500">No se encontraron productos en la tienda.</p>
+                    </div>
+                    {% endif %}
+
+                    {% if total_productos > 18 %}
+                    <div class="mt-10 flex justify-center">
+                        <nav class="flex space-x-2">
+                            <a href="#" class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">Anterior</a>
+                            <a href="#" class="px-4 py-2 text-sm font-medium text-white bg-brand-primary border border-brand-primary rounded-lg">1</a>
+                            <a href="#" class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">2</a>
+                            <a href="#" class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">Siguiente</a>
+                        </nav>
+                    </div>
+                    {% endif %}
+
+                </section>
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="bg-white py-12 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-gray-700">
+                <div class="col-span-2 md:col-span-1">
+                    <a href="/" class="text-3xl font-outfit font-black text-gray-900 flex items-center mb-4">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2023/08/logo_150x50_blue.png" alt="Smart Books Logo" class="h-10 w-auto mr-2">
+                    </a>
+                    <p class="text-sm mb-4">Soluciones educativas bilingües y globales para tu institución.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/SmartBooksColombia/" target="_blank" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/smartbookscolombia/" target="_blank" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/smart-books-colombia/" target="_blank" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@smartbookscolombia" target="_blank" class="text-gray-600 hover:text-brand-primary transition duration-300"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Smart Books</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/quienessomos" class="text-gray-600 hover:text-brand-primary transition duration-300">Quiénes Somos</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Trabaja con Nosotros</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Nuestros Aliados</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Blog (Educación)</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Productos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/tienda" class="text-gray-600 hover:text-brand-primary transition duration-300">Tienda General</a></li>
+                        <li><a href="/aliados/castillo" class="text-gray-600 hover:text-brand-primary transition duration-300">Ediciones Castillo</a></li>
+                        <li><a href="/aliados/macmillan" class="text-gray-600 hover:text-brand-primary transition duration-300">MacMillan Education</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Plataformas Digitales</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Nuestro Servicio</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Ayuda y Soporte</a></li>
+                        <li><a href="/preguntasfrecuentes" class="text-gray-600 hover:text-brand-primary transition duration-300">Preguntas Frecuentes – FAQ</a></li>
+                        <li><a href="/terminosycondiciones" class="text-gray-600 hover:text-brand-primary transition duration-300">Términos y Condiciones</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-brand-primary transition duration-300">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-100 text-sm text-gray-500 text-center">
+                <p>&copy; 2024 Smart Books. Todos los derechos reservados. | Diseñado con ❤️</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
