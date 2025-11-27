@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS GENERALES --- */
+        /* ESTILOS GLOBALES */
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-instrument { font-family: 'Instrument Sans', sans-serif; }
         .bg-brand-primary { background-color: #143c6c; }
@@ -21,7 +21,7 @@
         .hover\:bg-brand-primary:hover { background-color: #143c6c; }
         .hover\:text-brand-primary:hover { color: #143c6c; }
 
-        /* Menú y Dropdowns */
+        /* MENÚ */
         .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
         
@@ -33,7 +33,7 @@
         }
         .menu-item:hover, .menu-item.active { color: #143c6c; border-bottom-color: #143c6c; }
 
-        /* Buscador Header */
+        /* BUSCADOR */
         .search-container { position: relative; width: 100%; max-width: 550px; }
         .search-input { 
             width: 100%; padding: 0.75rem 1.5rem; padding-right: 3.5rem;
@@ -49,7 +49,7 @@
         .search-button:hover { background-color: #0f2e52; transform: translateY(-50%) scale(1.05); }
         .icon-white { filter: brightness(0) invert(1); width: 16px; height: 16px; }
 
-        /* Animación Botón Amarillo */
+        /* ANIMACIONES */
         @keyframes super-pulse {
             0% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7); transform: scale(1); }
             50% { box-shadow: 0 0 0 10px rgba(252, 211, 77, 0); transform: scale(1.03); }
@@ -57,11 +57,10 @@
         }
         .animate-super-pulse { animation: super-pulse 2s infinite; }
 
-        /* Scroll Reveal */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Marquee Editoriales */
+        /* MARQUEE */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; padding: 2rem 0; }
         .marquee-track { display: flex; align-items: center; gap: 6rem; animation: scroll 35s linear infinite; width: max-content; }
         .marquee-track:hover { animation-play-state: paused; }
@@ -69,18 +68,18 @@
         .editorial-logo { height: 55px; width: auto; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: all 0.4s ease; }
         .editorial-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
 
-        /* Carrusel Hero */
+        /* CARRUSEL */
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
 
-        /* Carrito Drawer */
+        /* CARRITO DRAWER */
         #cart-drawer { transition: transform 0.3s ease-in-out; }
         #cart-drawer.open { transform: translateX(0); }
         #cart-overlay { transition: opacity 0.3s ease-in-out; }
         #cart-overlay.open { opacity: 1; pointer-events: auto; }
 
-        /* WhatsApp */
+        /* WHATSAPP */
         .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
     </style>
@@ -146,7 +145,7 @@
                     </div>
                 </div>
 
-                <a href="#" onclick="loadPage('Tienda.html')" class="menu-item">Tienda</a>
+                <a href="#" onclick="loadPage('tienda_productos.html')" class="menu-item">Tienda</a>
                 <a href="#" onclick="loadPage('Colegios.html')" class="menu-item">Colegios</a>
                 <a href="#" onclick="loadPage('Blog.html')" class="menu-item">Blog</a>
                 <a href="#" onclick="loadPage('Contacto.html')" class="menu-item">Contáctanos</a>
@@ -198,8 +197,8 @@
                     <div class="flex justify-start lg:justify-end gap-3 mb-8">
                         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-facebook-f text-lg"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-instagram text-lg"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-linkedin-in text-lg"></i></a>
                         <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-whatsapp text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-linkedin-in text-lg"></i></a>
                     </div>
 
                     <h3 class="font-outfit font-bold text-sm text-white mb-3 uppercase tracking-wider opacity-80">Enlaces Rápidos</h3>
@@ -227,7 +226,6 @@
             <h2 class="font-outfit text-xl font-bold flex items-center"><i class="fas fa-shopping-cart mr-2"></i> Mi Carrito</h2>
             <button onclick="toggleCart()" class="text-white hover:text-gray-300 transition"><i class="fas fa-times text-xl"></i></button>
         </div>
-        
         <div id="cart-items" class="flex-grow overflow-y-auto p-5 space-y-4 bg-gray-50">
             <div class="text-center text-gray-400 mt-20 flex flex-col items-center">
                 <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mb-4 text-gray-400">
@@ -236,7 +234,6 @@
                 <p class="font-outfit font-bold text-lg text-gray-600">Tu carrito está vacío</p>
             </div>
         </div>
-
         <div class="p-6 border-t border-gray-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
             <div class="flex justify-between items-center mb-6">
                 <span class="font-bold text-gray-600 uppercase text-sm">Subtotal</span>
@@ -268,12 +265,8 @@
                     Proveemos alternativas formativas integrales, contenido pedagógico físico y digital de clase mundial.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 animate-scroll-reveal">
-                    <a href="#" onclick="loadPage('Tienda.html')" class="bg-[#fcd34d] text-[#143c6c] px-8 py-4 rounded-full font-bold hover:bg-white transition shadow-xl uppercase tracking-wide text-sm text-center">
-                        Ir a la Tienda
-                    </a>
-                    <a href="#" onclick="loadPage('Colegios.html')" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition uppercase tracking-wide text-sm text-center">
-                        Buscar mi Colegio
-                    </a>
+                    <a href="#" onclick="loadPage('tienda_productos.html')" class="bg-[#fcd34d] text-[#143c6c] px-8 py-4 rounded-full font-bold hover:bg-white transition shadow-xl uppercase tracking-wide text-sm text-center">Ir a la Tienda</a>
+                    <a href="#" onclick="loadPage('Colegios.html')" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition uppercase tracking-wide text-sm text-center">Buscar mi Colegio</a>
                 </div>
             </div>
         </section>
@@ -287,6 +280,7 @@
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestro Propósito</h3>
                         <p class="text-gray-600 font-instrument text-base leading-relaxed mb-6">Innovamos y creamos soluciones que potencien la enseñanza.</p>
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="text-[#143c6c] font-bold text-sm uppercase border-b-2 border-transparent hover:border-[#143c6c] transition pb-1">Conocer más</a>
                     </div>
                     <div class="p-8 rounded-3xl hover:shadow-2xl transition duration-500 animate-scroll-reveal delay-100 group bg-white border border-gray-50 hover:border-gray-100">
                         <div class="w-24 h-24 mx-auto mb-8 transition-transform group-hover:scale-110 drop-shadow-md">
@@ -294,6 +288,7 @@
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestros Productos</h3>
                         <p class="text-gray-600 font-instrument text-base leading-relaxed mb-6">La mayor selección de títulos educativos de talla mundial.</p>
+                        <a href="#" onclick="loadPage('tienda_productos.html')" class="text-[#143c6c] font-bold text-sm uppercase border-b-2 border-transparent hover:border-[#143c6c] transition pb-1">Ver Catálogo</a>
                     </div>
                     <div class="p-8 rounded-3xl hover:shadow-2xl transition duration-500 animate-scroll-reveal delay-200 group bg-white border border-gray-50 hover:border-gray-100">
                         <div class="w-24 h-24 mx-auto mb-8 transition-transform group-hover:scale-110 drop-shadow-md">
@@ -301,31 +296,7 @@
                         </div>
                         <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestra Garantía</h3>
                         <p class="text-gray-600 font-instrument text-base leading-relaxed mb-6">Respaldo directo de las principales casas editoriales.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                    <div class="animate-scroll-reveal">
-                        <div class="relative rounded-2xl overflow-hidden shadow-2xl mb-8 group">
-                            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="w-full h-80 object-cover transform group-hover:scale-105 transition duration-700">
-                            <div class="absolute bottom-6 left-6 text-white"><span class="bg-yellow-400 text-[#143c6c] text-xs font-bold px-3 py-1 rounded uppercase">Plan Lector</span></div>
-                        </div>
-                        <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-4">¡La escuela se transforma!</h2>
-                        <p class="text-gray-600 font-instrument text-lg mb-6">Conoce y decide por el proyecto didáctico que apoye a tus alumnos.</p>
-                        <a href="#" onclick="loadPage('Tienda.html')" class="inline-block text-[#143c6c] font-bold border-2 border-[#143c6c] px-8 py-3 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Ver Catálogo</a>
-                    </div>
-                    <div class="animate-scroll-reveal delay-100">
-                        <div class="relative rounded-2xl overflow-hidden shadow-2xl mb-8 group">
-                            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" class="w-full h-80 object-cover transform group-hover:scale-105 transition duration-700">
-                            <div class="absolute bottom-6 left-6 text-white"><span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded uppercase">Sostenibilidad</span></div>
-                        </div>
-                        <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-4">ADVANCING FUTURES</h2>
-                        <p class="text-gray-600 font-instrument text-lg mb-6">Programa de ciudadanía global y sostenibilidad.</p>
-                        <a href="#" onclick="loadPage('Contacto.html')" class="inline-block text-[#143c6c] font-bold border-2 border-[#143c6c] px-8 py-3 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="text-[#143c6c] font-bold text-sm uppercase border-b-2 border-transparent hover:border-[#143c6c] transition pb-1">Leer condiciones</a>
                     </div>
                 </div>
             </div>
@@ -344,7 +315,7 @@
                         </div>
                         <h3 class="font-bold text-gray-800 text-base uppercase mb-4 font-outfit leading-tight">Paquete de inglés Cosmo – 2°</h3>
                         <button onclick="addToCart({id: 'HM1', name: 'Paquete Cosmo 2°', price: '$255.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                     <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-100 flex flex-col">
@@ -353,7 +324,7 @@
                         </div>
                         <h3 class="font-bold text-gray-800 text-base uppercase mb-4 font-outfit leading-tight">Paquete de inglés Cosmo – 1°</h3>
                         <button onclick="addToCart({id: 'HM2', name: 'Paquete Cosmo 1°', price: '$245.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                     <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-200 flex flex-col">
@@ -362,7 +333,7 @@
                         </div>
                         <h3 class="font-bold text-gray-800 text-base uppercase mb-4 font-outfit leading-tight">El pan de la guerra</h3>
                         <button onclick="addToCart({id: 'HM3', name: 'El pan de la guerra', price: '$45.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                     <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-300 flex flex-col">
@@ -371,15 +342,11 @@
                         </div>
                         <h3 class="font-bold text-gray-800 text-base uppercase mb-4 font-outfit leading-tight">La Gaceta de Landry</h3>
                         <button onclick="addToCart({id: 'HM4', name: 'La Gaceta de Landry', price: '$38.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="w-full animate-scroll-reveal">
-            <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial MacMillan" class="w-full h-auto object-cover shadow-2xl">
         </section>
 
         <section class="py-20 bg-white overflow-hidden border-t border-gray-100">
