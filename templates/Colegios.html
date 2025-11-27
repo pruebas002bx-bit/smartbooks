@@ -1,78 +1,78 @@
-<section class="relative bg-[#143c6c] pt-28 pb-48 overflow-hidden text-center animate-scroll-reveal">
+<section class="relative bg-[#143c6c] pt-24 pb-40 md:pt-28 md:pb-48 overflow-hidden text-center animate-scroll-reveal">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
-    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+    <div class="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
     <div class="relative z-10 px-4">
-        <span class="inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white/10 text-yellow-300 text-xs font-bold uppercase tracking-widest mb-6 border border-white/10 backdrop-blur-md shadow-lg">
+        <span class="inline-flex items-center gap-2 py-1.5 px-4 md:px-5 rounded-full bg-white/10 text-yellow-300 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 border border-white/10 backdrop-blur-md shadow-lg">
             <i class="fas fa-school"></i> Zona Escolar Oficial
         </span>
-        <h1 class="font-outfit text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
+        <h1 class="font-outfit text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-tight tracking-tight">
             Tu Lista Escolar,<br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">Lista en un Clic</span>
         </h1>
-        <p class="text-blue-100 font-instrument text-lg max-w-2xl mx-auto leading-relaxed">
+        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
             Hemos digitalizado las listas de útiles de las mejores instituciones. Selecciona tu colegio y grado para acceder al kit oficial aprobado.
         </p>
     </div>
 </section>
 
-<section class="relative bg-gray-50 pb-24 min-h-[800px]">
+<section class="relative bg-gray-50 pb-20 md:pb-24 min-h-[800px]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="relative -mt-32 z-30 bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 md:p-12 animate-scroll-reveal delay-100">
+        <div class="relative -mt-28 md:-mt-32 z-30 bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl border border-gray-100 p-6 md:p-12 animate-scroll-reveal delay-100">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start relative">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start relative">
                 
                 <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent"></div>
 
                 <div class="relative z-50">
-                    <div class="flex items-center justify-between mb-4">
-                        <label class="text-sm font-bold text-[#143c6c] font-outfit uppercase tracking-wider flex items-center gap-2">
+                    <div class="flex items-center justify-between mb-3 md:mb-4">
+                        <label class="text-xs md:text-sm font-bold text-[#143c6c] font-outfit uppercase tracking-wider flex items-center gap-2">
                             <span class="bg-[#143c6c] text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-md">1</span> Institución
                         </label>
                         <span class="bg-blue-50 text-[#143c6c] text-[10px] font-bold px-2 py-0.5 rounded border border-blue-100">REQUERIDO</span>
                     </div>
                     
                     <div id="school-dropdown-container" class="relative group">
-                        <button id="school-select-button" class="w-full bg-white border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between transition-all duration-300 hover:border-[#143c6c] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-50 group-hover:-translate-y-0.5 relative z-20">
-                            <span class="text-gray-500 font-medium text-lg truncate flex items-center gap-2">
-                                <i class="fas fa-search text-gray-300"></i> Buscar colegio...
+                        <button id="school-select-button" class="w-full bg-white border-2 border-gray-200 text-left py-4 px-4 md:py-4 md:px-5 rounded-xl flex items-center justify-between transition-all duration-300 hover:border-[#143c6c] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-50 active:scale-[0.98]">
+                            <span class="text-gray-500 font-medium text-base md:text-lg truncate flex items-center gap-2">
+                                <i class="fas fa-search text-gray-300"></i> <span class="truncate">Buscar colegio...</span>
                             </span>
-                            <div class="bg-gray-100 rounded-lg p-2 text-gray-400 group-hover:bg-[#143c6c] group-hover:text-white transition">
+                            <div class="bg-gray-100 rounded-lg p-2 text-gray-400 group-hover:bg-[#143c6c] group-hover:text-white transition shrink-0">
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </div>
                         </button>
 
-                        <div id="school-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-2 overflow-hidden transform origin-top transition-all duration-200 z-[60] ring-1 ring-black/5">
+                        <div id="school-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl md:rounded-xl shadow-2xl mt-2 md:mt-3 overflow-hidden transform origin-top transition-all duration-200 z-[60] ring-1 ring-black/5">
                             <div class="p-3 bg-gray-50 border-b border-gray-100">
-                                <input type="text" id="school-search-input" placeholder="Escribe para filtrar..." class="w-full bg-white border border-gray-200 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c]">
+                                <input type="text" id="school-search-input" placeholder="Filtrar por nombre..." class="w-full bg-white border border-gray-200 rounded-lg py-2 px-4 text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c]">
                             </div>
-                            <div id="school-list" class="max-h-64 overflow-y-auto custom-scrollbar bg-white">
+                            <div id="school-list" class="max-h-60 overflow-y-auto custom-scrollbar bg-white p-1">
                                 </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="relative z-40">
-                    <div class="flex items-center justify-between mb-4">
-                        <label class="text-sm font-bold text-gray-400 font-outfit uppercase tracking-wider flex items-center gap-2" id="label-grade">
+                    <div class="flex items-center justify-between mb-3 md:mb-4">
+                        <label class="text-xs md:text-sm font-bold text-gray-400 font-outfit uppercase tracking-wider flex items-center gap-2" id="label-grade">
                             <span class="bg-gray-200 text-gray-500 w-6 h-6 rounded-full flex items-center justify-center text-xs transition-colors" id="badge-number-2">2</span> Grado Escolar
                         </label>
                         <span class="bg-gray-100 text-gray-400 text-[10px] font-bold px-2 py-0.5 rounded border border-gray-200 transition-colors" id="badge-status-2">PENDIENTE</span>
                     </div>
 
-                    <div id="course-dropdown-container" class="relative transition-all duration-300">
-                        <button id="course-select-button" class="w-full bg-gray-50 border-2 border-gray-200 text-left py-4 px-5 rounded-xl flex items-center justify-between cursor-not-allowed opacity-60 grayscale relative z-20">
-                            <span class="text-gray-400 font-medium text-lg flex items-center gap-2">
-                                <i class="fas fa-layer-group text-gray-300"></i> Selecciona primero el colegio
+                    <div id="course-dropdown-container" class="relative opacity-50 pointer-events-none transition-all duration-300 grayscale">
+                        <button id="course-select-button" class="w-full bg-gray-50 border-2 border-gray-200 text-left py-4 px-4 md:py-4 md:px-5 rounded-xl flex items-center justify-between cursor-not-allowed">
+                            <span class="text-gray-400 font-medium text-base md:text-lg flex items-center gap-2 truncate">
+                                <i class="fas fa-layer-group text-gray-300"></i> <span class="truncate">Primero el colegio</span>
                             </span>
-                            <div class="bg-gray-200 rounded-lg p-2 text-gray-400">
+                            <div class="bg-gray-200 rounded-lg p-2 text-gray-400 shrink-0">
                                 <i class="fas fa-lock text-xs"></i>
                             </div>
                         </button>
 
-                        <div id="course-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl shadow-2xl mt-2 overflow-hidden z-[60] ring-1 ring-black/5">
-                            <div id="course-list" class="max-h-64 overflow-y-auto custom-scrollbar p-1 bg-white">
+                        <div id="course-dropdown-menu" class="hidden absolute top-full left-0 w-full bg-white border border-gray-100 rounded-xl md:rounded-xl shadow-2xl mt-2 md:mt-3 overflow-hidden z-[60] ring-1 ring-black/5">
+                            <div id="course-list" class="max-h-60 overflow-y-auto custom-scrollbar p-1 bg-white">
                                 </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div id="results-area" class="mt-16 min-h-[300px] relative z-10">
+        <div id="results-area" class="mt-12 md:mt-16 min-h-[300px] relative z-10">
             
             <div id="search-loading" class="hidden flex-col items-center justify-center py-12 animate-pulse">
                 <div class="relative">
@@ -90,89 +90,89 @@
                         <i class="fas fa-book text-[#143c6c] text-xl"></i>
                     </div>
                 </div>
-                <p class="text-gray-500 font-instrument text-lg font-medium">Consultando disponibilidad de kits...</p>
+                <p class="text-gray-500 font-instrument text-base md:text-lg font-medium">Consultando disponibilidad...</p>
             </div>
 
-            <div id="initial-state" class="text-center py-12 opacity-50 flex flex-col items-center">
-                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mb-4 text-gray-400">
-                    <i class="fas fa-search-location text-3xl"></i>
+            <div id="initial-state" class="text-center py-10 md:py-12 opacity-50 flex flex-col items-center">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-200 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                    <i class="fas fa-search-location text-2xl md:text-3xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-500 font-outfit mb-2">Esperando selección</h3>
-                <p class="text-gray-400 font-instrument max-w-md">Completa los pasos anteriores para visualizar el kit oficial.</p>
+                <h3 class="text-lg md:text-xl font-bold text-gray-500 font-outfit mb-2">Esperando selección</h3>
+                <p class="text-sm md:text-base text-gray-400 font-instrument max-w-xs md:max-w-md">Completa los pasos anteriores para visualizar el kit oficial.</p>
             </div>
 
-            <div id="package-card" class="hidden bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 animate-scroll-reveal transform transition-all hover:translate-y-[-5px] max-w-5xl mx-auto ring-1 ring-black/5">
+            <div id="package-card" class="hidden bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl overflow-hidden border border-gray-100 animate-scroll-reveal transform transition-all hover:translate-y-[-5px] max-w-5xl mx-auto ring-1 ring-black/5">
                 <div class="flex flex-col md:flex-row h-full">
                     
-                    <div class="md:w-5/12 bg-gray-50 p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-200 relative overflow-hidden group">
+                    <div class="md:w-5/12 bg-gray-50 p-6 md:p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-200 relative overflow-hidden group">
                         <div class="absolute inset-0 bg-[#143c6c] opacity-0 group-hover:opacity-10 transition duration-700"></div>
                         <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
                         
-                        <div class="relative z-10 w-44 h-44 bg-white rounded-full flex items-center justify-center shadow-xl mb-6 p-4 border-8 border-white transition transform group-hover:scale-105 duration-500">
+                        <div class="relative z-10 w-32 h-32 md:w-44 md:h-44 bg-white rounded-full flex items-center justify-center shadow-xl mb-4 md:mb-6 p-4 border-4 md:border-8 border-white transition transform group-hover:scale-105 duration-500">
                             <img id="card-imagen" src="" alt="Logo Colegio" class="w-full h-full object-contain">
                         </div>
                         
-                        <h3 id="card-colegio" class="relative z-10 font-outfit text-2xl font-black text-[#143c6c] mb-2 leading-tight px-4">Nombre Colegio</h3>
-                        <div class="relative z-10 inline-flex items-center gap-2 bg-blue-100 text-[#143c6c] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4">
+                        <h3 id="card-colegio" class="relative z-10 font-outfit text-xl md:text-2xl font-black text-[#143c6c] mb-1 md:mb-2 leading-tight px-2">Nombre Colegio</h3>
+                        <div class="relative z-10 inline-flex items-center gap-2 bg-blue-100 text-[#143c6c] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 md:mb-4">
                             <i class="fas fa-certificate text-yellow-500"></i> Aliado Oficial
                         </div>
-                        <p class="relative z-10 text-gray-500 font-medium text-sm font-instrument uppercase tracking-wide flex items-center justify-center gap-2">
+                        <p class="relative z-10 text-gray-500 font-medium text-xs md:text-sm font-instrument uppercase tracking-wide flex items-center justify-center gap-2">
                             <i class="fas fa-map-marker-alt text-red-400"></i> <span id="card-city">Ciudad</span>
                         </p>
                     </div>
 
-                    <div class="md:w-7/12 p-10 flex flex-col justify-between bg-white relative">
-                        <div class="absolute top-0 right-0 w-20 h-20 bg-yellow-400 opacity-10 rounded-bl-full"></div>
+                    <div class="md:w-7/12 p-6 md:p-10 flex flex-col justify-between bg-white relative">
+                        <div class="absolute top-0 right-0 w-16 h-16 md:w-20 md:h-20 bg-yellow-400 opacity-10 rounded-bl-full"></div>
 
                         <div>
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 pb-6 border-b border-gray-100">
-                                <div>
-                                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Kit Seleccionado para</p>
-                                    <h4 id="card-curso" class="text-3xl font-black text-gray-900 font-outfit">Grado</h4>
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 pb-4 md:pb-6 border-b border-gray-100">
+                                <div class="mb-2 sm:mb-0">
+                                    <p class="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1">Kit Seleccionado para</p>
+                                    <h4 id="card-curso" class="text-2xl md:text-3xl font-black text-gray-900 font-outfit">Grado</h4>
                                 </div>
-                                <div class="mt-4 sm:mt-0 bg-green-50 text-green-700 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide flex items-center border border-green-100 shadow-sm">
+                                <div class="mt-2 sm:mt-0 bg-green-50 text-green-700 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-wide flex items-center border border-green-100 shadow-sm w-fit">
                                     <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div> Disponible
                                 </div>
                             </div>
 
-                            <div class="space-y-4 mb-8">
-                                <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 flex items-start gap-4 transition hover:bg-blue-50/30 hover:border-blue-100 group">
-                                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#143c6c] text-xl shadow-sm border border-gray-100 group-hover:text-yellow-500 transition-colors">
+                            <div class="space-y-4 mb-6 md:mb-8">
+                                <div class="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-5 border border-gray-200 flex items-start gap-4 transition hover:bg-blue-50/50 hover:border-blue-200 group">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg md:rounded-xl flex items-center justify-center text-[#143c6c] text-lg md:text-xl shadow-sm border border-gray-100 shrink-0 group-hover:text-yellow-500 transition-colors">
                                         <i class="fas fa-layer-group"></i>
                                     </div>
                                     <div>
-                                        <h5 class="font-bold text-gray-900 font-outfit text-base mb-1" id="card-kit-name">Nombre del Kit</h5>
-                                        <p class="text-sm text-gray-500 font-instrument leading-relaxed" id="package-details">
+                                        <h5 class="font-bold text-gray-900 font-outfit text-sm md:text-base mb-1" id="card-kit-name">Nombre del Kit</h5>
+                                        <p class="text-xs md:text-sm text-gray-500 font-instrument leading-relaxed" id="package-details">
                                             Descripción del contenido...
                                         </p>
                                     </div>
                                 </div>
                                 
-                                <div class="flex gap-3">
-                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
-                                        <i class="fas fa-check-circle text-green-500 text-xl mb-2"></i>
-                                        <span class="text-xs font-bold text-gray-400 uppercase">Original</span>
+                                <div class="grid grid-cols-3 gap-2 md:gap-4 opacity-80">
+                                    <div class="bg-gray-50 rounded-lg p-2 md:p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-check-circle text-green-500 text-lg md:text-xl mb-1"></i>
+                                        <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase">Original</span>
                                     </div>
-                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
-                                        <i class="fas fa-shield-alt text-[#143c6c] text-xl mb-2"></i>
-                                        <span class="text-xs font-bold text-gray-400 uppercase">Garantía</span>
+                                    <div class="bg-gray-50 rounded-lg p-2 md:p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-shield-alt text-[#143c6c] text-lg md:text-xl mb-1"></i>
+                                        <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase">Garantía</span>
                                     </div>
-                                    <div class="flex-1 bg-gray-50 rounded-xl p-4 border border-gray-100 flex flex-col items-center justify-center text-center">
-                                        <i class="fas fa-truck text-yellow-500 text-xl mb-2"></i>
-                                        <span class="text-xs font-bold text-gray-400 uppercase">Envío</span>
+                                    <div class="bg-gray-50 rounded-lg p-2 md:p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                                        <i class="fas fa-truck text-yellow-500 text-lg md:text-xl mb-1"></i>
+                                        <span class="text-[10px] md:text-xs font-bold text-gray-400 uppercase">Envío</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-auto pt-4 border-t border-gray-100">
-                            <button id="add-kit-btn" class="w-full bg-[#fcd34d] text-[#143c6c] font-black py-4 px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-sm uppercase tracking-wider group">
+                            <button id="add-kit-btn" class="w-full bg-[#fcd34d] text-[#143c6c] font-black py-3.5 px-8 md:py-4 md:px-10 rounded-xl shadow-lg shadow-yellow-200/50 hover:bg-[#fbbf24] hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 text-xs md:text-sm uppercase tracking-wider group active:scale-[0.98]">
                                 <span>Añadir al Carrito</span>
                                 <div class="bg-white/20 rounded-full p-1.5 group-hover:bg-white/40 transition">
                                     <i class="fas fa-shopping-bag text-sm"></i>
                                 </div>
                             </button>
-                            <p class="text-center text-xs text-gray-400 mt-3 font-instrument">El precio final se calculará en el carrito de compras.</p>
+                            <p class="text-center text-[10px] md:text-xs text-gray-400 mt-3 font-instrument">El precio final se calculará en el carrito de compras.</p>
                         </div>
                     </div>
                 </div>
@@ -243,21 +243,17 @@
             schoolList: getEl('school-list'),
             schoolSearch: getEl('school-search-input'),
             schoolContainer: getEl('school-dropdown-container'),
-            
             courseBtn: getEl('course-select-button'),
             courseMenu: getEl('course-dropdown-menu'),
             courseList: getEl('course-list'),
             courseContainer: getEl('course-dropdown-container'),
-            
             labelGrade: getEl('label-grade'),
             badgeGradeNumber: getEl('badge-number-2'),
             badgeGradeStatus: getEl('badge-status-2'),
-            
             card: getEl('package-card'),
             loading: getEl('search-loading'),
             initialState: getEl('initial-state'),
             addBtn: getEl('add-kit-btn'),
-            
             cardColegio: getEl('card-colegio'),
             cardCity: getEl('card-city'),
             cardCurso: getEl('card-curso'),
@@ -280,15 +276,15 @@
             
             filtered.forEach(school => {
                 const div = document.createElement('div');
-                div.className = 'p-3 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 flex justify-between items-center group transition-colors duration-200';
+                div.className = 'p-3 md:p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 flex justify-between items-center group transition-colors duration-200';
                 div.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg bg-gray-50 border border-gray-200 p-1 flex items-center justify-center shrink-0">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gray-50 border border-gray-200 p-1 flex items-center justify-center shrink-0">
                             <img src="${school.img}" class="w-full h-full object-contain">
                         </div>
-                        <span class="font-bold text-gray-700 group-hover:text-[#143c6c] font-outfit text-sm md:text-base">${school.name}</span>
+                        <span class="font-bold text-gray-700 group-hover:text-[#143c6c] font-outfit text-sm md:text-base truncate">${school.name}</span>
                     </div>
-                    <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-bold uppercase group-hover:bg-[#143c6c] group-hover:text-white transition tracking-wide">${school.city}</span>
+                    <span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-bold uppercase group-hover:bg-[#143c6c] group-hover:text-white transition tracking-wide shrink-0 ml-2">${school.city}</span>
                 `;
                 div.onclick = (e) => { e.stopPropagation(); selectSchool(school); };
                 els.schoolList.appendChild(div);
@@ -299,35 +295,36 @@
             currentSchool = school;
             
             els.schoolBtn.innerHTML = `
-                <div class="flex items-center gap-3 overflow-hidden">
-                    <img src="${school.img}" class="w-6 h-6 object-contain">
-                    <span class="font-bold text-[#143c6c] text-lg truncate">${school.name}</span>
+                <div class="flex items-center gap-2 md:gap-3 overflow-hidden">
+                    <img src="${school.img}" class="w-6 h-6 object-contain shrink-0">
+                    <span class="font-bold text-[#143c6c] text-base md:text-lg truncate">${school.name}</span>
                 </div>
-                <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm"><i class="fas fa-check text-xs"></i></div>
+                <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm shrink-0"><i class="fas fa-check text-xs"></i></div>
             `;
-            els.schoolBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
+            els.schoolBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-4 px-4 md:py-5 md:px-6 rounded-xl md:rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
             els.schoolMenu.classList.add('hidden');
 
-            // Habilitar Paso 2 (Quitar opacidad y grayscale)
-            els.courseContainer.classList.remove('opacity-60', 'pointer-events-none', 'grayscale');
+            els.courseContainer.classList.remove('opacity-50', 'pointer-events-none', 'grayscale');
             els.courseBtn.innerHTML = `
-                <span class="text-gray-600 font-bold text-lg flex items-center gap-3">
-                    <i class="fas fa-layer-group text-[#143c6c]"></i> Selecciona el Grado
+                <span class="text-gray-600 font-bold text-base md:text-lg flex items-center gap-2 md:gap-3 truncate">
+                    <i class="fas fa-layer-group text-[#143c6c]"></i> <span class="truncate">Selecciona el Grado</span>
                 </span>
-                <div class="bg-[#143c6c] rounded-lg p-2 text-white shadow-lg hover:scale-110 transition-transform">
+                <div class="bg-[#143c6c] rounded-lg p-2 text-white shadow-lg hover:scale-110 transition-transform shrink-0">
                     <i class="fas fa-chevron-down text-xs"></i>
                 </div>
             `;
-            els.courseBtn.className = "w-full bg-white border-2 border-gray-200 text-left py-5 px-6 rounded-2xl flex items-center justify-between hover:border-[#143c6c] hover:shadow-lg transition-all duration-300 cursor-pointer group relative z-20";
+            els.courseBtn.className = "w-full bg-white border-2 border-gray-200 text-left py-4 px-4 md:py-5 md:px-6 rounded-xl md:rounded-2xl flex items-center justify-between hover:border-[#143c6c] hover:shadow-lg transition-all duration-300 cursor-pointer group relative z-20";
             
-            // Actualizar Badges
             els.labelGrade.classList.remove('text-gray-400');
             els.labelGrade.classList.add('text-[#143c6c]');
-            els.badgeGradeNumber.classList.remove('bg-gray-200', 'text-gray-500');
-            els.badgeGradeNumber.classList.add('bg-[#143c6c]', 'text-white', 'shadow-md');
-            
-            els.badgeGradeStatus.textContent = "Seleccionar";
-            els.badgeGradeStatus.className = "bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200 uppercase tracking-wide animate-pulse";
+            if(els.badgeGradeNumber) {
+                els.badgeGradeNumber.classList.remove('bg-gray-200', 'text-gray-500');
+                els.badgeGradeNumber.classList.add('bg-[#143c6c]', 'text-white', 'shadow-md');
+            }
+            if(els.badgeGradeStatus) {
+                els.badgeGradeStatus.textContent = "Seleccionar";
+                els.badgeGradeStatus.className = "bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200 uppercase tracking-wide animate-pulse";
+            }
 
             els.card.classList.add('hidden');
             els.initialState.classList.remove('hidden');
@@ -341,21 +338,21 @@
             const grades = Object.keys(currentSchool.kits);
 
             if (grades.length === 0) {
-                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles.</div>';
+                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles para este colegio.</div>';
                 return;
             }
 
             grades.forEach(gradeKey => {
-                const div = document.createElement('div');
-                div.className = 'p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 font-bold text-gray-600 hover:text-[#143c6c] transition font-outfit flex items-center gap-3 group';
-                div.innerHTML = `
-                    <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-[#143c6c] group-hover:text-white transition-colors">
+                const el = document.createElement('div');
+                el.className = 'p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 font-bold text-gray-600 hover:text-[#143c6c] transition font-outfit flex items-center gap-3 group';
+                el.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-[#143c6c] group-hover:text-white transition-colors shrink-0">
                         <i class="fas fa-graduation-cap text-sm"></i>
                     </div>
                     ${GRADES_MAP[gradeKey] || gradeKey}
                 `;
-                div.onclick = (e) => { e.stopPropagation(); selectCourse(gradeKey); };
-                els.courseList.appendChild(div);
+                el.onclick = (e) => { e.stopPropagation(); selectCourse(gradeKey); };
+                els.courseList.appendChild(el);
             });
         }
 
@@ -363,16 +360,18 @@
             const gradeName = GRADES_MAP[gradeKey] || gradeKey;
             
             els.courseBtn.innerHTML = `
-                <span class="font-bold text-[#143c6c] text-lg flex items-center gap-3">
+                <span class="font-bold text-[#143c6c] text-base md:text-lg flex items-center gap-2 md:gap-3 truncate">
                     <i class="fas fa-graduation-cap"></i> ${gradeName}
                 </span>
-                <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm"><i class="fas fa-check text-xs"></i></div>
+                <div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm shrink-0"><i class="fas fa-check text-xs"></i></div>
             `;
-            els.courseBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-5 px-6 rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
+            els.courseBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-4 px-4 md:py-5 md:px-6 rounded-xl md:rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
             els.courseMenu.classList.add('hidden');
             
-            els.badgeGradeStatus.textContent = "Completado";
-            els.badgeGradeStatus.className = "bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded border border-green-200 uppercase tracking-wide";
+            if(els.badgeGradeStatus) {
+                els.badgeGradeStatus.textContent = "Completado";
+                els.badgeGradeStatus.className = "bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded border border-green-200 uppercase tracking-wide";
+            }
 
             els.initialState.classList.add('hidden');
             els.card.classList.add('hidden');
@@ -388,14 +387,13 @@
         }
 
         function showCard(gradeName, kit) {
-            // Verificar elementos antes de asignar para evitar errores
             if (els.cardColegio) els.cardColegio.textContent = currentSchool.name;
             if (els.cardCity) els.cardCity.textContent = currentSchool.city;
             if (els.cardCurso) els.cardCurso.textContent = gradeName;
             if (els.cardImagen) els.cardImagen.src = currentSchool.img;
             
             if (els.cardKitName) els.cardKitName.textContent = kit.name || 'Kit Escolar Oficial';
-            if (els.packageDetails) els.packageDetails.textContent = `Kit completo con ${kit.count} libros oficiales, cuadernos y materiales requeridos para el año escolar.`;
+            if (els.packageDetails) els.packageDetails.textContent = `Contiene ${kit.count} libros y materiales requeridos.`;
             
             if (els.addBtn) {
                 els.addBtn.onclick = () => {
@@ -415,13 +413,12 @@
 
             els.card.classList.remove('hidden');
             
-            // Scroll suave hacia la tarjeta
-            const yOffset = -50; 
+            const yOffset = -80; 
             const y = els.card.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({top: y, behavior: 'smooth'});
         }
 
-        // Event Listeners
+        // Listeners
         if (els.schoolBtn) {
             els.schoolBtn.onclick = (e) => { 
                 e.stopPropagation(); 

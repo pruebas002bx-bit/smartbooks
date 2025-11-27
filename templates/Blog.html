@@ -1,56 +1,83 @@
-<section class="relative py-20 bg-[#143c6c] text-center animate-scroll-reveal">
+<section class="relative bg-[#143c6c] py-16 md:py-24 text-center animate-scroll-reveal">
     <div class="relative z-10 px-4">
-        <span class="inline-block py-1 px-4 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-widest mb-4 border border-white/20 backdrop-blur-md">
+        <span class="inline-block py-1 px-4 rounded-full bg-white/10 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 backdrop-blur-md">
             Blog Educativo
         </span>
-        <h1 class="font-outfit text-4xl md:text-5xl font-black text-white mb-2">Noticias y Consejos</h1>
-        <p class="text-blue-100 font-instrument text-lg max-w-2xl mx-auto">
+        <h1 class="font-outfit text-3xl md:text-5xl font-black text-white mb-2 md:mb-4 leading-tight">
+            Noticias y Consejos
+        </h1>
+        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-xl mx-auto leading-relaxed px-2">
             Recursos, estrategias pedagógicas y novedades para docentes, padres y estudiantes.
         </p>
     </div>
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
 </section>
 
-<section class="py-16 bg-gray-50 min-h-screen">
+<section class="py-12 md:py-20 bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        
+        <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mb-12 md:mb-16">
             </div>
 
-        <div class="flex justify-center items-center space-x-2 animate-scroll-reveal" id="pagination-container">
-            <button onclick="changePage('prev')" id="btn-prev" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 transition font-instrument">Anterior</button>
-            <div id="page-numbers" class="flex space-x-2"></div>
-            <button onclick="changePage('next')" id="btn-next" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 transition font-instrument">Siguiente</button>
+        <div class="flex justify-center items-center space-x-2 animate-scroll-reveal pb-8" id="pagination-container">
+            <button onclick="changePage('prev')" id="btn-prev" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm font-instrument text-sm">
+                Anterior
+            </button>
+            
+            <div id="page-numbers" class="flex space-x-1 md:space-x-2">
+                </div>
+
+            <button onclick="changePage('next')" id="btn-next" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm font-instrument text-sm">
+                Siguiente
+            </button>
         </div>
+
     </div>
 </section>
 
-<div id="article-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="display: none;">
-    <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
+<div id="article-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
+    <div class="fixed inset-0 bg-[#143c6c]/80 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
+
     <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-4xl border-t-8 border-[#143c6c]">
-            <div class="absolute top-4 right-4 z-10">
-                <button type="button" class="bg-white rounded-full p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition" onclick="closeModal()">
+        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-[95%] sm:w-full sm:max-w-4xl border-t-8 border-[#143c6c] h-[85vh] sm:h-auto flex flex-col sm:block">
+            
+            <div class="absolute top-4 right-4 z-20">
+                <button type="button" class="bg-white/80 backdrop-blur-sm rounded-full p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 transition focus:outline-none shadow-sm" onclick="closeModal()">
+                    <span class="sr-only">Cerrar</span>
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            <div class="bg-white">
-                <div class="h-64 sm:h-80 w-full overflow-hidden">
-                    <img id="modal-img" src="" class="w-full h-full object-cover">
+
+            <div class="bg-white overflow-y-auto flex-grow sm:overflow-visible">
+                <div class="h-48 sm:h-80 w-full overflow-hidden shrink-0 relative">
+                    <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent sm:hidden"></div>
                 </div>
-                <div class="px-6 py-8 sm:p-10">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <span id="modal-category" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide"></span>
-                        <span id="modal-date" class="text-sm text-gray-500 font-instrument"></span>
+                
+                <div class="px-5 py-6 sm:px-10 sm:py-10">
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span id="modal-category" class="inline-flex items-center px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide"></span>
+                        <span id="modal-date" class="text-xs sm:text-sm text-gray-500 font-instrument flex items-center"></span>
                     </div>
-                    <h2 id="modal-title" class="text-3xl sm:text-4xl font-black text-gray-900 mb-6 font-outfit leading-tight"></h2>
-                    <div id="modal-body" class="prose prose-lg max-w-none text-gray-600 font-instrument leading-relaxed"></div>
+
+                    <h2 id="modal-title" class="text-2xl sm:text-4xl font-black text-gray-900 mb-4 sm:mb-6 font-outfit leading-tight"></h2>
+
+                    <div id="modal-body" class="prose prose-sm sm:prose-lg max-w-none text-gray-600 font-instrument leading-relaxed pb-4">
+                        </div>
                 </div>
+            </div>
+            
+            <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-10 border-t border-gray-100 shrink-0">
+                <button type="button" class="inline-flex w-full justify-center rounded-lg bg-[#143c6c] px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-900 sm:mt-0 sm:w-auto transition font-outfit active:scale-95" onclick="closeModal()">
+                    Cerrar Artículo
+                </button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Datos de los artículos
+    // --- DATOS SIMULADOS ---
     var blogPosts = [
         {
             id: 1,
@@ -60,7 +87,13 @@
             color: "bg-yellow-400 text-[#143c6c]",
             image: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2070&auto=format&fit=crop",
             excerpt: "¿Sabías que la forma en que escribes puede decir mucho sobre quién eres?",
-            content: "<p>La grafología revela rasgos sorprendentes sobre si eres aventurero, detallista o sociable. Escribir inclinado hacia la derecha indica que eres abierto a nuevas experiencias.</p>"
+            content: `
+                <p>La escritura a mano es un proceso neurofisiológico complejo que involucra no solo la mano, sino también el cerebro. Según expertos en grafología, pequeños detalles como la inclinación, el tamaño y la presión pueden revelar mucho sobre tu personalidad.</p>
+                <h3 class="font-bold text-lg mt-4 text-[#143c6c]">1. Tamaño de la letra</h3>
+                <p>Si tu letra es grande, tiendes a ser extrovertido y te gusta ser el centro de atención. Si es pequeña, eres meticuloso y tímido.</p>
+                <h3 class="font-bold text-lg mt-4 text-[#143c6c]">2. Inclinación</h3>
+                <p>Escribir inclinado hacia la derecha indica que eres abierto a nuevas experiencias. Hacia la izquierda, prefieres trabajar solo.</p>
+            `
         },
         {
             id: 2,
@@ -70,7 +103,10 @@
             color: "bg-[#143c6c] text-white",
             image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
             excerpt: "Fomentar el hábito de la lectura desde temprana edad no solo mejora el vocabulario.",
-            content: "<p>Leer cuentos a los niños ayuda a desarrollar su empatía y comprensión emocional. Establece las bases para el éxito académico futuro.</p>"
+            content: `
+                <p>El Plan Lector no es solo una lista de libros obligatorios; es una puerta al mundo. En la primera infancia (0-6 años), el cerebro es extremadamente plástico.</p>
+                <p>Leer cuentos a los niños ayuda a desarrollar su empatía y comprensión emocional. Además, establece las bases para el éxito académico futuro.</p>
+            `
         },
         {
             id: 3,
@@ -80,7 +116,14 @@
             color: "bg-green-500 text-white",
             image: "https://images.unsplash.com/photo-1427504746696-ea5abd71a32f?q=80&w=2070&auto=format&fit=crop",
             excerpt: "Preparar a los estudiantes y docentes para el nuevo ciclo escolar requiere planificación.",
-            content: "<p>1. Establece Rutinas. 2. Prepara el Material. 3. Metas Claras. 4. Espacio de Estudio. 5. Actitud Positiva.</p>"
+            content: `
+                <ol class="list-decimal pl-5 space-y-2">
+                    <li><strong>Establece Rutinas:</strong> Empieza a ajustar los horarios de sueño una semana antes.</li>
+                    <li><strong>Prepara el Material:</strong> Revisar útiles escolares con anticipación reduce la ansiedad.</li>
+                    <li><strong>Metas Claras:</strong> Define objetivos académicos alcanzables para el nuevo año.</li>
+                    <li><strong>Espacio de Estudio:</strong> Organiza un lugar tranquilo y bien iluminado en casa.</li>
+                </ol>
+            `
         },
         {
             id: 4,
@@ -89,28 +132,8 @@
             category: "Innovación",
             color: "bg-purple-500 text-white",
             image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop",
-            excerpt: "La gamificación utiliza mecánicas de juego en entornos no lúdicos.",
-            content: "<p>Transformar el aprendizaje en una aventura hace que los estudiantes se comprometan más.</p>"
-        },
-        {
-            id: 5,
-            title: "¿Cómo elegir el mejor libro de texto?",
-            date: "Marzo 10, 2025",
-            category: "Recursos",
-            color: "bg-orange-500 text-white",
-            image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop",
-            excerpt: "Seleccionar el material didáctico adecuado es crucial.",
-            content: "<p>Un buen libro de texto debe estar alineado con el currículo, pero también debe ser atractivo visualmente.</p>"
-        },
-        {
-            id: 6,
-            title: "El Rol de la Tecnología en la Educación Moderna",
-            date: "Abril 05, 2025",
-            category: "Tecnología",
-            color: "bg-cyan-500 text-white",
-            image: "https://images.unsplash.com/photo-1531297420494-85689bd4130d?q=80&w=2015&auto=format&fit=crop",
-            excerpt: "La tecnología está redefiniendo cómo enseñamos y aprendemos.",
-            content: "<p>Herramientas como la IA y las plataformas LMS permiten personalizar la educación como nunca antes.</p>"
+            excerpt: "La gamificación utiliza mecánicas de juego en entornos no lúdicos para potenciar la motivación.",
+            content: "<p>Transformar el aprendizaje en una aventura hace que los estudiantes se comprometan más. Usar sistemas de puntos, insignias y tablas de clasificación fomenta una competencia sana.</p>"
         }
     ];
 
@@ -128,26 +151,26 @@
 
         postsToShow.forEach(function(post) {
             var cardHTML = `
-                <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 flex flex-col h-full animate-scroll-reveal border border-gray-100">
-                    <div class="h-52 overflow-hidden relative cursor-pointer" onclick="openModal(${post.id})">
-                        <img src="${post.image}" class="w-full h-full object-cover transition duration-700 hover:scale-110">
-                        <div class="absolute top-4 left-4 ${post.color} text-xs font-bold px-3 py-1 rounded-full uppercase shadow-sm">
+                <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 flex flex-col h-full animate-scroll-reveal border border-gray-100 group cursor-pointer" onclick="openModal(${post.id})">
+                    <div class="h-48 sm:h-56 overflow-hidden relative">
+                        <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute top-3 left-3 ${post.color} text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-sm tracking-wide">
                             ${post.category}
                         </div>
                     </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <div class="text-xs text-gray-400 mb-3 font-instrument flex items-center">
+                    <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                        <div class="text-xs text-gray-400 mb-2 font-instrument flex items-center">
                             <i class="far fa-calendar-alt mr-2"></i> ${post.date}
                         </div>
-                        <h3 class="font-outfit text-xl font-bold text-gray-900 mb-3 leading-tight hover:text-[#143c6c] transition cursor-pointer" onclick="openModal(${post.id})">
+                        <h3 class="font-outfit text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-[#143c6c] transition">
                             ${post.title}
                         </h3>
-                        <p class="text-gray-600 text-sm mb-6 font-instrument line-clamp-3 leading-relaxed flex-grow">
+                        <p class="text-gray-600 text-sm mb-4 font-instrument line-clamp-3 leading-relaxed flex-grow">
                             ${post.excerpt}
                         </p>
-                        <button onclick="openModal(${post.id})" class="inline-flex items-center text-[#143c6c] font-bold text-sm hover:underline mt-auto group font-outfit">
-                            Leer Artículo Completo <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </button>
+                        <span class="inline-flex items-center text-[#143c6c] font-bold text-xs sm:text-sm hover:underline mt-auto font-outfit">
+                            Leer Artículo <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        </span>
                     </div>
                 </article>
             `;
@@ -155,6 +178,11 @@
         });
 
         renderPagination();
+        
+        // Scroll suave al inicio del grid si no es la primera carga
+        if (page > 1) {
+            document.getElementById('blog-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     function renderPagination() {
@@ -163,7 +191,7 @@
 
         for (var i = 1; i <= totalPages; i++) {
             var isActive = i === currentPage ? 'bg-[#143c6c] text-white border-[#143c6c]' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50';
-            var btn = `<button onclick="changePage(${i})" class="w-10 h-10 rounded-lg border font-bold text-sm transition shadow-sm ${isActive}">${i}</button>`;
+            var btn = `<button onclick="changePage(${i})" class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg border font-bold text-xs sm:text-sm transition shadow-sm ${isActive}">${i}</button>`;
             container.insertAdjacentHTML('beforeend', btn);
         }
 
@@ -188,19 +216,30 @@
 
         document.getElementById('modal-img').src = post.image;
         document.getElementById('modal-category').innerText = post.category;
-        document.getElementById('modal-category').className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide " + post.color;
-        document.getElementById('modal-date').innerText = post.date;
+        document.getElementById('modal-category').className = "inline-flex items-center px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide " + post.color;
+        document.getElementById('modal-date').innerHTML = `<i class="far fa-calendar-alt mr-2"></i> ${post.date}`;
         document.getElementById('modal-title').innerText = post.title;
         document.getElementById('modal-body').innerHTML = post.content;
 
-        document.getElementById('article-modal').style.display = 'block';
-        document.getElementById('article-modal').classList.remove('hidden');
+        var modal = document.getElementById('article-modal');
+        modal.classList.remove('hidden');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
     };
 
     window.closeModal = function() {
-        document.getElementById('article-modal').style.display = 'none';
-        document.getElementById('article-modal').classList.add('hidden');
+        var modal = document.getElementById('article-modal');
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restaurar scroll
     };
+
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
 
     // Inicializar
     renderPosts(1);
