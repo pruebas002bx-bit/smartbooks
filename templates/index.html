@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         /* --- CONFIGURACIÓN DE COLORES (#143c6c) --- */
@@ -56,52 +56,22 @@
         .search-button-separate:hover { transform: scale(1.05); }
         .icon-white { filter: brightness(0) invert(1); }
 
-        /* Animaciones Generales */
+        /* Animaciones */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Carrusel Hero */
+        /* Carrusel */
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
 
-        /* --- NUEVO: Animación Marquee Editoriales --- */
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            padding: 2rem 0; /* Espacio superior e inferior */
-        }
-        .marquee-track {
-            display: flex;
-            align-items: center;
-            gap: 5rem; /* Espacio entre logos */
-            animation: scroll 35s linear infinite; /* Velocidad de la animación */
-            width: max-content; /* Asegura que el ancho sea suficiente para el contenido */
-        }
-        /* Pausar la animación al pasar el mouse */
-        .marquee-track:hover {
-            animation-play-state: paused;
-        }
-        /* Keyframes para el desplazamiento infinito */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            /* Se mueve la mitad exacta del contenido total (track + gaps) para el loop */
-            100% { transform: translateX(calc(-50% - 2.5rem)); } 
-        }
-
-        .editorial-logo {
-            height: 50px; /* Altura fija para consistencia */
-            width: auto;
-            object-fit: contain;
-            filter: grayscale(100%) opacity(0.6);
-            transition: all 0.4s ease;
-        }
-        .editorial-logo:hover {
-            filter: grayscale(0%) opacity(1);
-            transform: scale(1.1);
-        }
-        /* ----------------------------------------- */
+        /* --- Animación Marquee Editoriales (Sin saltos) --- */
+        .marquee-container { overflow: hidden; white-space: nowrap; position: relative; padding: 2rem 0; }
+        .marquee-track { display: flex; align-items: center; gap: 6rem; animation: scroll 30s linear infinite; width: max-content; }
+        .marquee-track:hover { animation-play-state: paused; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 3rem)); } }
+        .editorial-logo { height: 60px; width: auto; object-fit: contain; filter: grayscale(100%) opacity(0.7); transition: all 0.4s ease; }
+        .editorial-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
         
         /* WhatsApp */
         .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
@@ -168,6 +138,7 @@
                         <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">MacMillan</a>
                     </div>
                 </div>
+                <a href="#" onclick="loadPage('Blog.html')" class="menu-item text-brand-primary font-bold">Blog</a>
                 <a href="#" onclick="loadPage('Contacto.html')" class="menu-item">Contáctanos</a>
             </nav>
         </div>
@@ -176,76 +147,67 @@
     <main id="main-content" class="flex-grow bg-white">
         </main>
 
-    <footer class="bg-[#143c6c] text-white pt-16 pb-8">
+    <footer class="bg-[#143c6c] text-white pt-12 pb-8 border-t-4 border-yellow-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-center mb-12">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" alt="Smart Books Blanco" class="h-20 w-auto">
+            
+            <div class="w-full flex justify-center mb-10">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" alt="Smart Books Logo Blanco" class="h-24 w-auto drop-shadow-md">
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm font-instrument">
+                
                 <div>
-                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Bogotá</h4>
-                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
-                        <li>Carrera 58 No 169A-55<br>C.C Punto 170 Local 113<br><span class="text-xs italic opacity-75">(Cerrado Temporalmente)</span></li>
-                        <li class="mt-2">Calle 159A # 21A – 39<br>Barrio Magdala – Casa Blanca</li>
-                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29</li>
-                    </ul>
+                    <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Bogotá</h3>
+                    <p class="mb-2 text-gray-300">Carrera 58 No 169A-55<br>C.C Punto 170 Local 113<br><span class="italic text-gray-400">(Cerrado Temporalmente)</span></p>
+                    <p class="mb-2 text-gray-300">Calle 159A # 21A – 39<br>Barrio Magdala – Casa Blanca</p>
+                    <p class="font-bold text-white mt-3">PBX: 333 602 50 29</p>
                 </div>
 
                 <div>
-                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Tunja, Boyacá</h4>
-                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
-                        <li>Av Norte No 47a-40<br>C.C Centro Norte Local 091</li>
-                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1108</span></li>
-                        <li class="flex justify-center md:justify-start items-center space-x-2 mt-2">
-                            <i class="fab fa-whatsapp text-green-400"></i>
-                            <span>(+57) 320 300 1510</span>
-                        </li>
-                    </ul>
+                    <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Tunja, Boyacá</h3>
+                    <p class="mb-1 text-gray-300">Av Norte No 47a-40<br>C.C Centro Norte Local 091</p>
+                    <p class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1108</span></p>
+                    <div class="flex items-center mt-1 text-green-400">
+                        <i class="fab fa-whatsapp mr-1"></i> (+57) 320 300 1510
+                    </div>
+
+                    <h3 class="font-outfit font-bold text-lg text-white mt-6 mb-4 uppercase tracking-wider">Floridablanca</h3>
+                    <p class="mb-1 text-gray-300">Calle 6 #10-36, Plaza Mia<br>Centro Comercial Local 216</p>
+                    <p class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1109</span></p>
+                </div>
+
+                <div>
+                    <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Medellín, Antioquia</h3>
+                    <p class="mb-2 text-gray-300">Edificio San Sebastian de La 70<br>CQ 2 # 70 – 24 – INT 202<br>LAURELES</p>
+                    <p class="font-bold text-white mt-3">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1100</span></p>
+                </div>
+
+                <div class="text-center lg:text-right">
+                    <h3 class="font-outfit font-bold text-lg text-white mb-6 uppercase tracking-wider">Síguenos</h3>
                     
-                    <h4 class="font-outfit font-bold text-lg mt-6 mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Floridablanca</h4>
-                     <ul class="space-y-2 text-sm text-gray-300 font-instrument">
-                        <li>Calle 6 #10-36, Plaza Mia<br>Centro Comercial Local 216</li>
-                        <li class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1109</span></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-outfit font-bold text-lg mb-4 text-white uppercase tracking-wider border-b border-white/20 pb-2 inline-block md:block">Medellín, Antioquia</h4>
-                    <ul class="space-y-2 text-sm text-gray-300 font-instrument">
-                        <li>Edificio San Sebastian de La 70<br>CQ 2 # 70 – 24 – INT 202<br>LAURELES</li>
-                        <li class="mt-2 font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1100</span></li>
-                    </ul>
-                </div>
-
-                <div class="text-center">
-                    <h4 class="font-outfit font-bold text-xl mb-6 text-white uppercase">Síguenos</h4>
-                    <div class="flex justify-center space-x-6 mb-8">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                    <div class="flex justify-center lg:justify-end gap-4 mb-8">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
                             <i class="fab fa-facebook-f text-lg"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
                             <i class="fab fa-instagram text-lg"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
                             <i class="fab fa-whatsapp text-lg"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition duration-300 text-white">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
                             <i class="fab fa-linkedin-in text-lg"></i>
                         </a>
                     </div>
-                    
-                    <h5 class="font-outfit font-bold text-white mb-4">Enlaces Rápidos</h5>
-                    <ul class="text-sm space-y-2 text-gray-400">
+
+                    <h3 class="font-outfit font-bold text-md text-white mb-3 uppercase tracking-wider">Enlaces Rápidos</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
                         <li><a href="#" onclick="loadPage('QuienesSomos.html')" class="hover:text-white transition">Quiénes Somos</a></li>
                         <li><a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="hover:text-white transition">Términos y Condiciones</a></li>
                         <li><a href="#" class="hover:text-white transition">Preguntas Frecuentes</a></li>
                     </ul>
                 </div>
-            </div>
 
-            <div class="border-t border-white/10 pt-8 text-center text-xs text-gray-400 font-instrument">
-                <p>&copy; 2024 Smart Books Company SAS. Todos los derechos reservados. | Diseñado con ❤️</p>
             </div>
         </div>
     </footer>
@@ -282,7 +244,6 @@
         <section class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-                    
                     <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal group">
                         <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
                             <img src="https://cdn-icons-png.flaticon.com/512/3206/3206034.png" alt="Propósito" class="w-full h-full object-contain">
@@ -293,7 +254,6 @@
                         </p>
                         <a href="#" onclick="loadPage('QuienesSomos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
                     </div>
-
                     <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-100 group">
                         <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
                             <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Productos" class="w-full h-full object-contain">
@@ -304,7 +264,6 @@
                         </p>
                         <a href="#" onclick="loadPage('tienda_productos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
                     </div>
-
                     <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-200 group">
                         <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
                             <img src="https://cdn-icons-png.flaticon.com/512/1651/1651639.png" alt="Garantía" class="w-full h-full object-contain">
@@ -334,7 +293,6 @@
                         </div>
                         <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
                     </div>
-
                     <div class="flex flex-col animate-scroll-reveal delay-100">
                         <div class="mb-6">
                             <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
@@ -357,7 +315,6 @@
                     <h2 class="text-[#143c6c] font-outfit text-4xl font-black">Productos más vendidos</h2>
                     <div class="w-24 h-1 bg-[#143c6c] mx-auto mt-4"></div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal">
                         <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" alt="Ingles Segundo" class="w-full h-64 object-contain mb-4">
@@ -396,16 +353,14 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
                         <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+A" class="editorial-logo" alt="Placeholder A">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+B" class="editorial-logo" alt="Placeholder B">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+C" class="editorial-logo" alt="Placeholder C">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2022/11/logo_castillo.png" class="editorial-logo" alt="Ediciones Castillo">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="editorial-logo" alt="Smart Books">
 
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
                         <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+A" class="editorial-logo" alt="Placeholder A">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+B" class="editorial-logo" alt="Placeholder B">
-                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+C" class="editorial-logo" alt="Placeholder C">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2022/11/logo_castillo.png" class="editorial-logo" alt="Ediciones Castillo">
+                        <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="editorial-logo" alt="Smart Books">
                     </div>
                 </div>
             </div>
