@@ -56,14 +56,52 @@
         .search-button-separate:hover { transform: scale(1.05); }
         .icon-white { filter: brightness(0) invert(1); }
 
-        /* Animaciones */
+        /* Animaciones Generales */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Carrusel */
+        /* Carrusel Hero */
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
+
+        /* --- NUEVO: Animación Marquee Editoriales --- */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            padding: 2rem 0; /* Espacio superior e inferior */
+        }
+        .marquee-track {
+            display: flex;
+            align-items: center;
+            gap: 5rem; /* Espacio entre logos */
+            animation: scroll 35s linear infinite; /* Velocidad de la animación */
+            width: max-content; /* Asegura que el ancho sea suficiente para el contenido */
+        }
+        /* Pausar la animación al pasar el mouse */
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        /* Keyframes para el desplazamiento infinito */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            /* Se mueve la mitad exacta del contenido total (track + gaps) para el loop */
+            100% { transform: translateX(calc(-50% - 2.5rem)); } 
+        }
+
+        .editorial-logo {
+            height: 50px; /* Altura fija para consistencia */
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.6);
+            transition: all 0.4s ease;
+        }
+        .editorial-logo:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
+        }
+        /* ----------------------------------------- */
         
         /* WhatsApp */
         .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
@@ -141,7 +179,7 @@
     <footer class="bg-[#143c6c] text-white pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-center mb-12">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Smart-Books-Blanco.png" alt="Smart Books Blanco" class="h-16 w-auto opacity-90">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" alt="Smart Books Blanco" class="h-20 w-auto">
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
@@ -345,17 +383,30 @@
             </div>
         </section>
 
-        <section class="w-full">
+        <section class="w-full animate-scroll-reveal">
             <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial" class="w-full h-auto object-cover">
         </section>
 
-        <section class="py-16 bg-white">
-            <div class="max-w-7xl mx-auto px-4 text-center">
-                <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10">Nuestras Editoriales</h2>
-                <div class="flex flex-wrap justify-center items-center gap-12 grayscale hover:grayscale-0 transition-all duration-500">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="h-8 md:h-10 object-contain opacity-70 hover:opacity-100 transition">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition">
-                    <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="h-10 md:h-14 object-contain opacity-70 hover:opacity-100 transition">
+        <section class="py-16 bg-white overflow-hidden">
+            <div class="max-w-full mx-auto px-4 text-center">
+                <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10 animate-scroll-reveal">Nuestras Editoriales Aliadas</h2>
+                
+                <div class="marquee-container">
+                    <div class="marquee-track">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
+                        <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+A" class="editorial-logo" alt="Placeholder A">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+B" class="editorial-logo" alt="Placeholder B">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+C" class="editorial-logo" alt="Placeholder C">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
+                        <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+A" class="editorial-logo" alt="Placeholder A">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+B" class="editorial-logo" alt="Placeholder B">
+                        <img src="https://placehold.co/200x80/e2e8f0/143c6c?text=Editorial+C" class="editorial-logo" alt="Placeholder C">
+                    </div>
                 </div>
             </div>
         </section>
