@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         .font-outfit { font-family: 'Outfit', sans-serif; }
@@ -17,6 +17,7 @@
         .bg-brand-primary { background-color: #143c6c; }
         .text-brand-primary { color: #143c6c; }
         .border-brand-primary { border-color: #143c6c; }
+        
         .hover\:bg-brand-primary:hover { background-color: #143c6c; }
         .hover\:text-brand-primary:hover { color: #143c6c; }
 
@@ -24,7 +25,7 @@
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
         
         .menu-item {
-            padding: 0 1.5rem;
+            padding: 0 1.2rem;
             display: flex;
             align-items: center;
             height: 100%;
@@ -34,7 +35,7 @@
             color: #4b5563;
             font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 0.05em;
         }
         .menu-item:hover, .menu-item.active {
@@ -43,30 +44,30 @@
             font-weight: 700;
         }
 
-        .search-container { position: relative; width: 100%; max-width: 600px; }
+        .search-container { position: relative; width: 100%; max-width: 500px; }
         .search-input { 
-            width: 100%; padding: 0.85rem 1.5rem; padding-right: 3.5rem;
+            width: 100%; padding: 0.7rem 1.5rem; padding-right: 3.5rem;
             border: 1px solid #e2e8f0; border-radius: 9999px; outline: none; 
             transition: all 0.3s; font-family: 'Instrument Sans', sans-serif; background-color: #f8fafc;
         }
         .search-input:focus { border-color: #143c6c; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(20, 60, 108, 0.1); }
         
         .search-button { 
-            position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
-            width: 42px; height: 42px; background-color: #143c6c; border-radius: 50%; 
+            position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+            width: 36px; height: 36px; background-color: #143c6c; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
             transition: transform 0.2s, background-color 0.2s; cursor: pointer; border: none;
         }
         .search-button:hover { transform: translateY(-50%) scale(1.05); background-color: #0f2e52; }
-        .icon-white { filter: brightness(0) invert(1); width: 18px; height: 18px; }
+        .icon-white { filter: brightness(0) invert(1); width: 16px; height: 16px; }
 
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Animación Pulso para el botón del Kit */
+        /* Animación Pulso Botón Amarillo */
         @keyframes super-pulse {
             0% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7); transform: scale(1); }
-            50% { box-shadow: 0 0 0 10px rgba(252, 211, 77, 0); transform: scale(1.02); }
+            50% { box-shadow: 0 0 0 10px rgba(252, 211, 77, 0); transform: scale(1.03); }
             100% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0); transform: scale(1); }
         }
         .animate-super-pulse { animation: super-pulse 2s infinite; }
@@ -101,12 +102,12 @@
     </div>
 
     <header class="bg-white sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center gap-8">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center gap-4">
             <a href="#" onclick="loadHome()" class="flex-shrink-0">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books Logo" class="h-14 w-auto">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books Logo" class="h-12 md:h-14 w-auto">
             </a>
             
-            <div class="hidden lg:flex flex-grow justify-center">
+            <div class="hidden lg:flex flex-grow justify-center px-4">
                 <div class="search-container">
                     <input type="text" placeholder="Buscar libros, colegios..." class="search-input text-gray-700 text-sm">
                     <button class="search-button">
@@ -115,9 +116,9 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-6">
-                <a href="#" onclick="loadPage('Colegios.html')" class="hidden xl:flex items-center justify-center bg-[#fcd34d] text-[#143c6c] font-outfit font-extrabold px-6 py-3 rounded-lg shadow-md hover:bg-[#fbbf24] transition transform duration-300 animate-super-pulse text-sm tracking-wide uppercase">
-                    <i class="fas fa-book-open mr-2"></i> Compra tu Kit Educativo AQUÍ
+            <div class="flex items-center space-x-4">
+                <a href="#" onclick="loadPage('Colegios.html')" class="hidden lg:flex items-center justify-center bg-[#fcd34d] text-[#143c6c] font-outfit font-extrabold px-5 py-2.5 rounded-lg shadow-md hover:bg-[#fbbf24] transition transform hover:scale-105 animate-super-pulse text-xs md:text-sm tracking-wide uppercase whitespace-nowrap">
+                    <i class="fas fa-book-reader mr-2"></i> Compra tu Kit AQUÍ
                 </a>
 
                 <a href="#" class="relative group p-2">
@@ -133,15 +134,15 @@
             </div>
         </div>
 
-        <div class="bg-white border-t border-gray-100 hidden lg:block h-16 shadow-md z-40 relative">
+        <div class="bg-white border-t border-gray-100 hidden lg:block h-14 shadow-md z-40 relative">
             <nav class="max-w-7xl mx-auto px-6 flex justify-center space-x-2 font-outfit h-full items-center">
                 <a href="#" onclick="loadHome()" class="menu-item active">Inicio</a>
                 
                 <div class="dropdown relative h-full flex items-center">
                     <span class="menu-item">Nosotros <i class="fas fa-chevron-down text-[10px] ml-2 opacity-50"></i></span>
                     <div class="dropdown-menu absolute bg-white shadow-2xl rounded-b-lg w-64 border-t-4 border-brand-primary top-full left-0 py-2">
-                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300 border-b border-gray-50">Quiénes Somos</a>
-                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300">Términos y Condiciones</a>
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300 border-b border-gray-50 text-sm">Quiénes Somos</a>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300 text-sm">Términos y Condiciones</a>
                     </div>
                 </div>
 
@@ -278,72 +279,6 @@
             </div>
         </section>
 
-        <section class="py-16 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div class="flex flex-col animate-scroll-reveal">
-                        <div class="mb-6">
-                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                                ¡La escuela se transforma y la manera de elegir también!
-                            </h2>
-                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                                Conoce y decide es el espacio seguro para revisar y decidir por el proyecto didáctico que apoye a tus alumnos. Desde casa, conoce nuestro catálogo de Plan Lector.
-                            </p>
-                            <a href="#" onclick="loadPage('Contacto.html')" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
-                    </div>
-                    <div class="flex flex-col animate-scroll-reveal delay-100">
-                        <div class="mb-6">
-                            <h2 class="text-[#143c6c] font-outfit text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                                ¡Nuevo Programa Académico! para la Educación
-                            </h2>
-                            <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">
-                                <strong class="text-gray-800">ADVANCING FUTURES</strong> es un programa integral diseñado para introducir los temas de ciudadanía global, sostenibilidad, diversidad, equidad e inclusión.
-                            </p>
-                            <a href="#" class="inline-block text-[#143c6c] font-bold border border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-xs uppercase mb-6">Más Información</a>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop" class="rounded-xl shadow-lg w-full h-64 object-cover">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 animate-scroll-reveal">
-                    <h2 class="text-[#143c6c] font-outfit text-4xl font-black">Productos más vendidos</h2>
-                    <div class="w-24 h-1 bg-[#143c6c] mx-auto mt-4"></div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" alt="Ingles Segundo" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 2°</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-100">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg" alt="Ingles Primero" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">Paquete de inglés Cosmo – 1°</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-200">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg" alt="Pan de la guerra" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">El pan de la guerra</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-lg shadow hover:shadow-xl transition p-4 animate-scroll-reveal delay-300">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg" alt="Gaceta Landry" class="w-full h-64 object-contain mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm uppercase mb-2">La Gaceta de Landry</h3>
-                        <a href="#" class="block text-center text-orange-500 font-bold text-xs uppercase tracking-wide hover:underline"><i class="fas fa-shopping-cart mr-1"></i> Comprar Ahora</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="w-full animate-scroll-reveal">
-            <img src="https://sbooks.com.co/wp-content/uploads/2022/11/Banner-Macmillan.jpg" alt="Novedades Editorial" class="w-full h-auto object-cover">
-        </section>
-
         <section class="py-16 bg-white overflow-hidden">
             <div class="max-w-full mx-auto px-4 text-center">
                 <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10 animate-scroll-reveal">Nuestras Editoriales Aliadas</h2>
@@ -386,7 +321,6 @@
                 initScrollReveal();
                 window.scrollTo(0, 0);
                 
-                // Ejecutar scripts encontrados dentro del HTML cargado
                 const scripts = Array.from(main.getElementsByTagName('script'));
                 for (let i = 0; i < scripts.length; i++) {
                     const script = document.createElement('script');
