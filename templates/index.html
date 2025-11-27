@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Books | Holding Educativo Global</title>
+    <title>Smart Books | Expertos en Transformación Educativa</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -12,21 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS GLOBALES ACTUALIZADOS (#143c6c) --- */
+        /* --- CONFIGURACIÓN DE COLORES (#143c6c) --- */
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-instrument { font-family: 'Instrument Sans', sans-serif; }
 
-        /* Color Principal: #143c6c */
+        /* Color Principal Smart Books */
         .bg-brand-primary { background-color: #143c6c; }
         .text-brand-primary { color: #143c6c; }
         .border-brand-primary { border-color: #143c6c; }
         
-        /* Acentos (Mismo color para consistencia) */
-        .bg-brand-accent { background-color: #143c6c; }
-        .text-brand-accent { color: #143c6c; }
-        .text-active { color: #143c6c; }
+        .hover\:bg-brand-primary:hover { background-color: #143c6c; }
+        .hover\:text-brand-primary:hover { color: #143c6c; }
 
-        /* Menú y Dropdown */
+        /* Menú Interactivo */
         .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
         
@@ -35,25 +33,27 @@
             display: flex;
             align-items: center;
             height: 100%;
-            border-bottom: 4px solid transparent;
+            border-bottom: 3px solid transparent;
             transition: all 0.2s ease-in-out;
             cursor: pointer;
+            color: #4b5563; /* Gris oscuro base */
         }
         .menu-item:hover, .menu-item.active {
-            color: #143c6c; /* Color actualizado */
-            border-bottom-color: #143c6c; /* Color actualizado */
+            color: #143c6c;
+            border-bottom-color: #143c6c;
+            font-weight: 700;
         }
 
-        /* Buscador */
-        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #d1d5db; border-radius: 9999px; outline: none; transition: border-color 0.3s; }
-        .search-input:focus { border-color: #143c6c; }
+        /* Buscador Redondo */
+        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #e5e7eb; border-radius: 9999px; outline: none; transition: border-color 0.3s; }
+        .search-input:focus { border-color: #143c6c; ring: 2px solid #143c6c; }
         
         .search-button-separate { 
-            width: 52px; height: 52px; margin-left: 12px; 
-            background-color: #143c6c; /* Color actualizado */
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background-color 0.3s;
+            width: 50px; height: 50px; margin-left: 10px; 
+            background-color: #143c6c; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.2s;
         }
-        .search-button-separate:hover { background-color: #0f2e52; } /* Un poco más oscuro para hover */
+        .search-button-separate:hover { transform: scale(1.05); }
         .icon-white { filter: brightness(0) invert(1); }
 
         /* Animaciones */
@@ -61,96 +61,140 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Carrusel */
-        #banner-carousel { position: relative; }
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
-        .carousel-item img { transform: scale(1.15); transition: transform 5s linear; }
-        .carousel-item.active img { transform: scale(1); }
+        .carousel-item img { object-position: center; }
         
         /* WhatsApp */
-        .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 
 <body class="font-instrument text-gray-700 bg-white antialiased flex flex-col min-h-screen">
 
-    <div class="bg-gray-100 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 py-2 text-sm flex justify-between items-center">
-            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold tracking-wider">
-                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares
+    <div class="bg-gray-100 border-b border-gray-200 hidden sm:block">
+        <div class="max-w-7xl mx-auto px-4 py-2 text-xs font-medium flex justify-between items-center text-gray-500">
+            <span><i class="fas fa-envelope mr-2"></i> contacto@smartbooks.com.co</span>
+            <div class="space-x-4">
+                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-brand-primary transition"><i class="fab fa-linkedin-in"></i></a>
             </div>
         </div>
     </div>
 
-    <header class="bg-white sticky top-0 z-50 shadow-md">
+    <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#" onclick="loadHome()" class="flex-shrink-0">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-20 w-auto">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books Logo" class="h-16 w-auto">
             </a>
             
-            <div class="hidden lg:flex items-center flex-grow justify-end space-x-6">
-                <div class="flex items-center max-w-md w-full">
-                    <input type="text" placeholder="Buscar..." class="search-input text-gray-700">
-                    <button class="search-button-separate"><img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="w-6 h-6 icon-white"></button>
+            <div class="hidden lg:flex items-center flex-grow justify-end space-x-8">
+                <div class="flex items-center max-w-md w-full relative">
+                    <input type="text" placeholder="Buscar libros, colegios..." class="search-input text-gray-700 text-sm">
+                    <button class="search-button-separate shadow-lg"><img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="w-5 h-5 icon-white"></button>
                 </div>
-                <div class="flex items-center space-x-4 text-xl text-gray-800">
-                    <a href="#" class="p-2 hover:text-brand-primary"><i class="fas fa-shopping-cart"></i></a>
+                <div class="flex items-center space-x-6 text-xl text-gray-700">
+                    <a href="#" class="relative hover:text-brand-primary transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                    </a>
+                    <a href="#" class="hover:text-brand-primary transition"><i class="fas fa-user-circle"></i></a>
                 </div>
             </div>
-            <button class="lg:hidden p-2 text-gray-800 hover:text-brand-primary">
-                <i class="fas fa-bars text-2xl"></i>
+            
+            <button class="lg:hidden text-gray-800 text-2xl hover:text-brand-primary">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
 
-        <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-14">
-            <nav class="flex justify-center space-x-10 font-outfit text-gray-800 font-semibold text-base h-full items-center">
+        <div class="bg-white border-t border-gray-100 hidden lg:block h-14 shadow-md z-40 relative">
+            <nav class="flex justify-center space-x-8 font-outfit text-gray-700 font-medium text-sm h-full items-center tracking-wide uppercase">
                 <a href="#" onclick="loadHome()" class="menu-item active">Inicio</a>
                 
                 <div class="dropdown relative h-full flex items-center">
-                    <span class="menu-item">Nosotros <i class="fas fa-chevron-down text-xs ml-1"></i></span>
-                    <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-primary top-full left-0">
-                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-5 py-3 hover:bg-gray-100 hover:text-brand-primary text-sm">Quienes Somos</a>
-                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-5 py-3 hover:bg-gray-100 hover:text-brand-primary text-sm">Términos y Condiciones</a>
+                    <span class="menu-item">Nosotros <i class="fas fa-chevron-down text-[10px] ml-2 opacity-50"></i></span>
+                    <div class="dropdown-menu absolute bg-white shadow-2xl rounded-b-lg w-64 border-t-4 border-brand-primary top-full left-0 py-2">
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300 border-b border-gray-50">Quiénes Somos</a>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary hover:pl-8 transition-all duration-300">Términos y Condiciones</a>
                     </div>
                 </div>
 
                 <a href="#" onclick="loadPage('tienda_productos.html')" class="menu-item">Tienda</a>
                 <a href="#" onclick="loadPage('Colegios.html')" class="menu-item">Colegios</a>
+                <div class="dropdown relative h-full flex items-center">
+                    <span class="menu-item">Aliados <i class="fas fa-chevron-down text-[10px] ml-2 opacity-50"></i></span>
+                    <div class="dropdown-menu absolute bg-white shadow-2xl rounded-b-lg w-48 border-t-4 border-brand-primary top-full left-0 py-2">
+                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">Castillo</a>
+                        <a href="#" class="block px-6 py-3 hover:bg-gray-50 hover:text-brand-primary transition-all">MacMillan</a>
+                    </div>
+                </div>
                 <a href="#contactanos" class="menu-item">Contáctanos</a>
             </nav>
         </div>
     </header>
 
-    <main id="main-content" class="flex-grow">
+    <main id="main-content" class="flex-grow bg-gray-50">
         </main>
 
-    <footer class="bg-white py-12 border-t border-gray-100 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo" class="h-10 mx-auto mb-4">
-            <p class="text-gray-500 text-sm">© 2024 Smart Books. Todos los derechos reservados.</p>
+    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Smart Books" class="h-12 mb-6">
+                    <p class="text-gray-500 mb-6 max-w-sm">Expertos en acompañar procesos de transformación en la educación con respaldo editorial internacional.</p>
+                </div>
+                <div>
+                    <h4 class="font-outfit font-bold text-gray-900 mb-4">Información</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#" onclick="loadPage('QuienesSomos.html')" class="hover:text-brand-primary transition">Quiénes Somos</a></li>
+                        <li><a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="hover:text-brand-primary transition">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover:text-brand-primary transition">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-outfit font-bold text-gray-900 mb-4">Contacto</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><i class="fas fa-map-marker-alt w-5 text-brand-primary"></i> Bogotá, Colombia</li>
+                        <li><i class="fas fa-envelope w-5 text-brand-primary"></i> contacto@smartbooks.com.co</li>
+                        <li><i class="fas fa-phone w-5 text-brand-primary"></i> 333 602 50 29</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
+                <p>&copy; 2024 Smart Books Company SAS. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
     
-    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <template id="home-template">
-        <section class="max-w-full mx-auto overflow-hidden relative shadow-lg" style="height: 75vh; min-height: 550px;">
-            <div id="banner-carousel" class="w-full h-full">
+        <section class="relative h-[600px] overflow-hidden bg-gray-900">
+            <div class="absolute inset-0 z-10 bg-gradient-to-r from-[#143c6c]/90 to-[#143c6c]/40"></div>
+            <div id="banner-carousel" class="absolute inset-0">
                 <div class="carousel-item active w-full h-full">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover">
                 </div>
                 <div class="carousel-item w-full h-full">
-                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover">
                 </div>
             </div>
-        </section>
-        <section class="py-16 text-center">
-            <h2 class="text-4xl font-black text-gray-900 mb-4 animate-scroll-reveal">
-                Somos un <span class="text-brand-primary">Holding Educativo</span>
-            </h2>
-            <p class="text-lg text-gray-600 animate-scroll-reveal">Transformando la educación en América Latina.</p>
+            <div class="relative z-20 h-full max-w-7xl mx-auto px-4 flex flex-col justify-center">
+                <h1 class="font-outfit text-5xl md:text-7xl font-black text-white mb-6 leading-tight animate-scroll-reveal">
+                    Transformamos la <br><span class="text-yellow-400">Educación</span>
+                </h1>
+                <p class="text-white/90 text-xl max-w-xl mb-8 font-light animate-scroll-reveal">
+                    Alternativas formativas integrales basadas en servicios exclusivos de contenido pedagógico físico y digital.
+                </p>
+                <div class="flex space-x-4 animate-scroll-reveal">
+                    <a href="#" onclick="loadPage('tienda_productos.html')" class="bg-white text-[#143c6c] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">Ver Tienda</a>
+                    <a href="#" onclick="loadPage('QuienesSomos.html')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition">Conócenos</a>
+                </div>
+            </div>
         </section>
     </template>
 
@@ -166,17 +210,17 @@
 
         async function loadPage(url) {
             const main = document.getElementById('main-content');
-            main.innerHTML = '<div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-4xl text-brand-primary"></i></div>';
+            main.innerHTML = '<div class="flex justify-center items-center h-96"><i class="fas fa-circle-notch fa-spin text-5xl text-[#143c6c]"></i></div>';
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`Error ${response.status}`);
+                if (!response.ok) throw new Error('Error de carga');
                 const html = await response.text();
                 main.innerHTML = html;
                 initScrollReveal();
                 window.scrollTo(0, 0);
             } catch (error) {
                 console.error(error);
-                main.innerHTML = `<div class="text-center py-20 bg-red-50 text-red-600 font-bold">Error cargando contenido: ${error.message}</div>`;
+                main.innerHTML = `<div class="text-center py-32 text-gray-500">Contenido no disponible por el momento.</div>`;
             }
         }
 
@@ -201,7 +245,7 @@
                 items[current].classList.remove('active');
                 current = (current + 1) % items.length;
                 items[current].classList.add('active');
-            }, 5000);
+            }, 6000);
         }
 
         document.addEventListener('DOMContentLoaded', loadHome);
