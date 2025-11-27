@@ -1,13 +1,13 @@
 <section class="relative bg-[#143c6c] py-16 md:py-24 text-center animate-scroll-reveal">
     <div class="relative z-10 px-4">
         <span class="inline-block py-1 px-4 rounded-full bg-white/10 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 backdrop-blur-md">
-            Blog Educativo
+            Actualidad Educativa
         </span>
         <h1 class="font-outfit text-3xl md:text-5xl font-black text-white mb-2 md:mb-4 leading-tight">
             Noticias y Consejos
         </h1>
-        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-xl mx-auto leading-relaxed px-2">
-            Recursos, estrategias pedagógicas y novedades para docentes, padres y estudiantes.
+        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+            Explora nuestra colección completa de recursos, estrategias pedagógicas y novedades para transformar la educación.
         </p>
     </div>
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
@@ -16,59 +16,68 @@
 <section class="py-12 md:py-20 bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mb-12 md:mb-16">
+        <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-12">
             </div>
 
-        <div class="flex justify-center items-center space-x-2 animate-scroll-reveal pb-8" id="pagination-container">
-            <button onclick="changePage('prev')" id="btn-prev" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm font-instrument text-sm">
-                Anterior
-            </button>
-            
-            <div id="page-numbers" class="flex space-x-1 md:space-x-2">
-                </div>
-
-            <button onclick="changePage('next')" id="btn-next" class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm font-instrument text-sm">
-                Siguiente
-            </button>
+        <div class="text-center mt-16 pt-8 border-t border-gray-200">
+            <p class="text-gray-400 text-sm font-instrument italic">Has llegado al final de las noticias recientes.</p>
         </div>
 
     </div>
 </section>
 
 <div id="article-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
-    <div class="fixed inset-0 bg-[#143c6c]/80 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="fixed inset-0 bg-[#143c6c]/90 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
 
     <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-[95%] sm:w-full sm:max-w-4xl border-t-8 border-[#143c6c] h-[85vh] sm:h-auto flex flex-col sm:block">
+        <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-[95%] sm:w-full sm:max-w-4xl border-t-8 border-[#143c6c] h-[90vh] flex flex-col">
             
             <div class="absolute top-4 right-4 z-20">
-                <button type="button" class="bg-white/80 backdrop-blur-sm rounded-full p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 transition focus:outline-none shadow-sm" onclick="closeModal()">
+                <button type="button" class="bg-white/90 backdrop-blur-sm rounded-full p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 transition focus:outline-none shadow-md group" onclick="closeModal()">
                     <span class="sr-only">Cerrar</span>
-                    <i class="fas fa-times text-xl"></i>
+                    <i class="fas fa-times text-xl group-hover:rotate-90 transition-transform"></i>
                 </button>
             </div>
 
-            <div class="bg-white overflow-y-auto flex-grow sm:overflow-visible">
-                <div class="h-48 sm:h-80 w-full overflow-hidden shrink-0 relative">
-                    <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent sm:hidden"></div>
+            <div class="bg-white overflow-y-auto flex-grow custom-scrollbar">
+                
+                <div class="h-56 md:h-96 w-full overflow-hidden shrink-0 relative group">
+                    <img id="modal-img" src="" alt="" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-6 md:hidden text-white">
+                        <span id="modal-category-mobile" class="inline-block px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide mb-2"></span>
+                        <h2 id="modal-title-mobile" class="text-2xl font-black font-outfit leading-tight drop-shadow-md"></h2>
+                    </div>
                 </div>
                 
-                <div class="px-5 py-6 sm:px-10 sm:py-10">
-                    <div class="flex flex-wrap items-center gap-3 mb-4">
-                        <span id="modal-category" class="inline-flex items-center px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide"></span>
-                        <span id="modal-date" class="text-xs sm:text-sm text-gray-500 font-instrument flex items-center"></span>
+                <div class="px-6 py-8 md:px-12 md:py-12">
+                    <div class="hidden md:block mb-8 border-b border-gray-100 pb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span id="modal-category" class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm"></span>
+                            <span id="modal-date" class="text-sm text-gray-500 font-instrument flex items-center font-medium"></span>
+                        </div>
+                        <h2 id="modal-title" class="text-4xl lg:text-5xl font-black text-gray-900 font-outfit leading-tight"></h2>
                     </div>
 
-                    <h2 id="modal-title" class="text-2xl sm:text-4xl font-black text-gray-900 mb-4 sm:mb-6 font-outfit leading-tight"></h2>
-
-                    <div id="modal-body" class="prose prose-sm sm:prose-lg max-w-none text-gray-600 font-instrument leading-relaxed pb-4">
+                    <div id="modal-body" class="prose prose-lg max-w-none text-gray-600 font-instrument leading-loose">
                         </div>
+                    
+                    <div class="mt-12 pt-8 border-t border-gray-200 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900 font-outfit">Equipo Editorial Smart Books</p>
+                            <p class="text-xs text-gray-500">Expertos en Educación</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-10 border-t border-gray-100 shrink-0">
-                <button type="button" class="inline-flex w-full justify-center rounded-lg bg-[#143c6c] px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-blue-900 sm:mt-0 sm:w-auto transition font-outfit active:scale-95" onclick="closeModal()">
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 shrink-0 flex justify-between items-center">
+                <span class="text-xs text-gray-400 font-bold uppercase tracking-wider hidden md:inline-block">Compartir conocimiento</span>
+                <button type="button" class="w-full md:w-auto inline-flex justify-center items-center gap-2 rounded-xl bg-[#143c6c] px-8 py-3 text-sm font-bold text-white shadow-lg hover:bg-blue-900 transition font-outfit transform hover:-translate-y-0.5" onclick="closeModal()">
                     Cerrar Artículo
                 </button>
             </div>
@@ -76,8 +85,18 @@
     </div>
 </div>
 
+<style>
+    /* Estilos para el contenido del blog dentro del modal */
+    .prose h3 { color: #143c6c; font-family: 'Outfit', sans-serif; font-weight: 800; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.5rem; }
+    .prose p { margin-bottom: 1.5rem; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose strong { color: #1f2937; font-weight: 700; }
+    .prose blockquote { border-left: 4px solid #fcd34d; padding-left: 1rem; font-style: italic; color: #4b5563; background: #fffbeb; padding: 1.5rem; border-radius: 0 1rem 1rem 0; margin-bottom: 2rem; }
+</style>
+
 <script>
-    // --- DATOS SIMULADOS ---
+    // --- 9 ARTÍCULOS COMPLETOS ---
     var blogPosts = [
         {
             id: 1,
@@ -86,13 +105,26 @@
             category: "Curiosidades",
             color: "bg-yellow-400 text-[#143c6c]",
             image: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2070&auto=format&fit=crop",
-            excerpt: "¿Sabías que la forma en que escribes puede decir mucho sobre quién eres?",
+            excerpt: "¿Sabías que la forma en que escribes puede decir mucho sobre quién eres? La grafología revela rasgos sorprendentes sobre si eres aventurero o detallista.",
             content: `
-                <p>La escritura a mano es un proceso neurofisiológico complejo que involucra no solo la mano, sino también el cerebro. Según expertos en grafología, pequeños detalles como la inclinación, el tamaño y la presión pueden revelar mucho sobre tu personalidad.</p>
-                <h3 class="font-bold text-lg mt-4 text-[#143c6c]">1. Tamaño de la letra</h3>
-                <p>Si tu letra es grande, tiendes a ser extrovertido y te gusta ser el centro de atención. Si es pequeña, eres meticuloso y tímido.</p>
-                <h3 class="font-bold text-lg mt-4 text-[#143c6c]">2. Inclinación</h3>
-                <p>Escribir inclinado hacia la derecha indica que eres abierto a nuevas experiencias. Hacia la izquierda, prefieres trabajar solo.</p>
+                <p class="font-bold text-lg">La escritura a mano es un proceso neurofisiológico complejo que involucra no solo la mano, sino también el cerebro y el sistema nervioso central.</p>
+                <p>Según expertos en grafología, pequeños detalles como la inclinación, el tamaño, la presión y la forma de las letras pueden revelar mucho sobre tu personalidad, estado de ánimo e incluso tu salud mental. A continuación, desglosamos algunos de los rasgos más comunes:</p>
+                
+                <h3>1. El Tamaño de la Letra Importa</h3>
+                <p>Si tu letra es grande, tiendes a ser una persona extrovertida, segura de sí misma y a la que le gusta ser el centro de atención. Por el contrario, si tu letra es pequeña, eres meticuloso, tímido y tienes una gran capacidad de concentración en los detalles.</p>
+                
+                <h3>2. La Inclinación Revela tus Emociones</h3>
+                <ul>
+                    <li><strong>Hacia la derecha:</strong> Eres abierto a nuevas experiencias y te gusta socializar.</li>
+                    <li><strong>Hacia la izquierda:</strong> Prefieres trabajar solo y tiendes a ser reservado o introspectivo.</li>
+                    <li><strong>Recta:</strong> Eres lógico, práctico y no dejas que tus emociones dominen tus decisiones.</li>
+                </ul>
+
+                <blockquote>"La escritura es el espejo del alma, reflejando lo que las palabras a veces callan."</blockquote>
+
+                <h3>3. La Presión al Escribir</h3>
+                <p>Una escritura fuerte con mucha presión indica compromiso, energía y seriedad, pero también puede ser señal de tensión. Una escritura suave y ligera sugiere sensibilidad y empatía, aunque a veces falta de vitalidad física.</p>
+                <p>¡Intenta analizar tu propia escritura hoy mismo y descubre qué dice sobre ti!</p>
             `
         },
         {
@@ -102,10 +134,21 @@
             category: "Pedagogía",
             color: "bg-[#143c6c] text-white",
             image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
-            excerpt: "Fomentar el hábito de la lectura desde temprana edad no solo mejora el vocabulario.",
+            excerpt: "Fomentar el hábito de la lectura desde temprana edad no solo mejora el vocabulario, sino que estimula la imaginación y el pensamiento crítico.",
             content: `
-                <p>El Plan Lector no es solo una lista de libros obligatorios; es una puerta al mundo. En la primera infancia (0-6 años), el cerebro es extremadamente plástico.</p>
-                <p>Leer cuentos a los niños ayuda a desarrollar su empatía y comprensión emocional. Además, establece las bases para el éxito académico futuro.</p>
+                <p>El Plan Lector no es solo una lista de libros obligatorios para cumplir con el currículo escolar; es una puerta al mundo para los más pequeños. En la primera infancia (0-6 años), el cerebro es extremadamente plástico y receptivo.</p>
+                
+                <h3>Beneficios Cognitivos y Emocionales</h3>
+                <p>Leer cuentos a los niños ayuda a desarrollar su empatía y comprensión emocional al ponerse en el lugar de los personajes. Además, establece las bases neurológicas para el éxito académico futuro, mejorando la capacidad de atención y la memoria.</p>
+                
+                <h3>Cómo Fomentarlo en Casa</h3>
+                <ul>
+                    <li><strong>Rutina Nocturna:</strong> Leer 15 minutos antes de dormir crea un vínculo seguro.</li>
+                    <li><strong>Ejemplo:</strong> Que los niños vean a sus padres leyendo es el mejor incentivo.</li>
+                    <li><strong>Variedad:</strong> Ofrecer libros con texturas, sonidos e imágenes vibrantes.</li>
+                </ul>
+                
+                <p>En Smart Books, seleccionamos cuidadosamente títulos que no solo eduquen, sino que enamoren a los primeros lectores.</p>
             `
         },
         {
@@ -115,14 +158,20 @@
             category: "Tips",
             color: "bg-green-500 text-white",
             image: "https://images.unsplash.com/photo-1427504746696-ea5abd71a32f?q=80&w=2070&auto=format&fit=crop",
-            excerpt: "Preparar a los estudiantes y docentes para el nuevo ciclo escolar requiere planificación.",
+            excerpt: "Preparar a los estudiantes y docentes para el nuevo ciclo escolar requiere planificación. Aquí te dejamos 5 tips esenciales para arrancar con energía.",
             content: `
-                <ol class="list-decimal pl-5 space-y-2">
-                    <li><strong>Establece Rutinas:</strong> Empieza a ajustar los horarios de sueño una semana antes.</li>
-                    <li><strong>Prepara el Material:</strong> Revisar útiles escolares con anticipación reduce la ansiedad.</li>
-                    <li><strong>Metas Claras:</strong> Define objetivos académicos alcanzables para el nuevo año.</li>
-                    <li><strong>Espacio de Estudio:</strong> Organiza un lugar tranquilo y bien iluminado en casa.</li>
-                </ol>
+                <p>El regreso a clases puede generar ansiedad tanto en padres como en alumnos. Sin embargo, con la preparación adecuada, puede convertirse en una experiencia emocionante y positiva.</p>
+                
+                <h3>1. Restablece los Horarios de Sueño</h3>
+                <p>Una semana antes de entrar, empieza a adelantar la hora de dormir y despertar 15 minutos cada día. El cerebro necesita ajustarse al nuevo ritmo circadiano.</p>
+                
+                <h3>2. Organiza el Espacio de Estudio</h3>
+                <p>Un escritorio limpio, con buena iluminación y libre de distracciones (como celulares o televisores) aumenta la productividad en un 40%.</p>
+                
+                <h3>3. Planifica las Metas</h3>
+                <p>Siéntate con tus hijos y definan qué quieren lograr este año: ¿Mejorar en matemáticas? ¿Aprender un instrumento? Tener objetivos claros motiva el esfuerzo diario.</p>
+                
+                <blockquote>"La educación es el arma más poderosa que puedes usar para cambiar el mundo." - Nelson Mandela</blockquote>
             `
         },
         {
@@ -132,43 +181,136 @@
             category: "Innovación",
             color: "bg-purple-500 text-white",
             image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071&auto=format&fit=crop",
-            excerpt: "La gamificación utiliza mecánicas de juego en entornos no lúdicos para potenciar la motivación.",
-            content: "<p>Transformar el aprendizaje en una aventura hace que los estudiantes se comprometan más. Usar sistemas de puntos, insignias y tablas de clasificación fomenta una competencia sana.</p>"
+            excerpt: "La gamificación utiliza mecánicas de juego en entornos no lúdicos para potenciar la motivación, la concentración y el esfuerzo.",
+            content: `
+                <p>La gamificación no se trata solo de jugar videojuegos en clase. Se trata de aplicar las mecánicas que hacen que los juegos sean adictivos (puntos, niveles, desafíos, recompensas) al proceso de aprendizaje.</p>
+                
+                <h3>¿Por qué funciona?</h3>
+                <p>Al recibir recompensas inmediatas (feedback positivo), el cerebro libera dopamina, lo que refuerza el comportamiento de aprendizaje. Transforma tareas aburridas en misiones épicas.</p>
+                
+                <h3>Ejemplos Prácticos</h3>
+                <ul>
+                    <li><strong>Kahoot!:</strong> Para evaluaciones rápidas y divertidas.</li>
+                    <li><strong>ClassDojo:</strong> Para gestionar el comportamiento y la participación.</li>
+                    <li><strong>Escape Rooms Educativos:</strong> Resolver problemas matemáticos para "salir" del aula.</li>
+                </ul>
+            `
+        },
+        {
+            id: 5,
+            title: "¿Cómo elegir el mejor libro de texto?",
+            date: "Marzo 10, 2025",
+            category: "Recursos",
+            color: "bg-orange-500 text-white",
+            image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop",
+            excerpt: "Seleccionar el material didáctico adecuado es crucial. Analizamos criterios como la actualización de contenidos y la metodología.",
+            content: `
+                <p>Un libro de texto es más que papel y tinta; es la hoja de ruta del aprendizaje durante todo un año. Elegir el incorrecto puede desmotivar a los estudiantes.</p>
+                
+                <h3>Criterios de Selección</h3>
+                <p><strong>1. Actualización:</strong> El mundo cambia rápido. Un libro de ciencias de hace 5 años ya puede estar obsoleto.</p>
+                <p><strong>2. Metodología:</strong> ¿Fomenta el pensamiento crítico o solo la memorización? Buscamos textos que hagan preguntas, no solo que den respuestas.</p>
+                <p><strong>3. Soporte Digital:</strong> Hoy en día, un buen libro debe venir acompañado de una plataforma interactiva para reforzar el conocimiento en casa.</p>
+            `
+        },
+        {
+            id: 6,
+            title: "El Rol de la Tecnología en la Educación Moderna",
+            date: "Abril 05, 2025",
+            category: "Tecnología",
+            color: "bg-cyan-500 text-white",
+            image: "https://images.unsplash.com/photo-1531297420494-85689bd4130d?q=80&w=2015&auto=format&fit=crop",
+            excerpt: "Desde pizarras digitales hasta realidad aumentada, la tecnología está redefiniendo cómo enseñamos y aprendemos en el siglo XXI.",
+            content: `
+                <p>La tecnología no llegó para reemplazar al maestro, sino para darle superpoderes. La Inteligencia Artificial, la Realidad Aumentada y el Big Data están personalizando la educación.</p>
+                
+                <h3>Personalización del Aprendizaje</h3>
+                <p>Con software adaptativo, cada estudiante puede avanzar a su propio ritmo. Si un alumno no entiende una lección, el sistema se la explica de otra manera, mientras que los avanzados reciben retos más complejos.</p>
+                
+                <h3>Acceso Global</h3>
+                <p>Gracias a internet, un estudiante en una zona rural puede acceder a la misma información que uno en una gran ciudad, democratizando el conocimiento.</p>
+            `
+        },
+        {
+            id: 7,
+            title: "Inteligencia Emocional en el Colegio",
+            date: "Mayo 20, 2025",
+            category: "Psicología",
+            color: "bg-pink-500 text-white",
+            image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1972&auto=format&fit=crop",
+            excerpt: "Educar la mente sin educar el corazón no es educar en absoluto. Descubre cómo implementar programas de inteligencia emocional.",
+            content: `
+                <p>Saber resolver una ecuación es útil, pero saber resolver un conflicto con un compañero es vital. La inteligencia emocional (IE) predice el éxito en la vida mejor que el coeficiente intelectual.</p>
+                
+                <h3>Pilares de la IE en la Escuela</h3>
+                <ul>
+                    <li><strong>Autoconocimiento:</strong> Entender qué siento y por qué.</li>
+                    <li><strong>Autocontrol:</strong> Gestionar el enojo o la frustración antes de actuar.</li>
+                    <li><strong>Empatía:</strong> Entender los sentimientos de los demás.</li>
+                </ul>
+                <p>Las escuelas que implementan programas de IE reportan menos casos de bullying y un mejor clima escolar.</p>
+            `
+        },
+        {
+            id: 8,
+            title: "Neuroeducación: Cómo aprende el cerebro",
+            date: "Junio 15, 2025",
+            category: "Ciencia",
+            color: "bg-indigo-500 text-white",
+            image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?q=80&w=2031&auto=format&fit=crop",
+            excerpt: "La neurociencia aplicada al aula nos enseña que sin emoción no hay aprendizaje. Descubre los secretos del cerebro.",
+            content: `
+                <p>La neuroeducación es la disciplina que estudia cómo funciona el cerebro durante el proceso de aprendizaje. Ha derribado mitos como que 'solo usamos el 10% del cerebro'.</p>
+                
+                <h3>Principios Clave</h3>
+                <p><strong>La emoción es el pegamento de la memoria.</strong> Recordamos lo que nos emociona. Un profesor monótono difícilmente logrará que sus alumnos retengan información a largo plazo.</p>
+                <p><strong>El cerebro es social.</strong> Aprendemos mejor interactuando con otros que estudiando en aislamiento absoluto. El trabajo colaborativo estimula redes neuronales complejas.</p>
+            `
+        },
+        {
+            id: 9,
+            title: "Hábitos de Estudio para Adolescentes",
+            date: "Julio 01, 2025",
+            category: "Estudiantes",
+            color: "bg-teal-500 text-white",
+            image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop",
+            excerpt: "La adolescencia es una etapa de cambios, y los métodos de estudio deben adaptarse. Técnicas como Pomodoro pueden ser la clave.",
+            content: `
+                <p>Estudiar tres horas seguidas la noche anterior al examen ya no funciona. El cerebro adolescente necesita estructura y descansos.</p>
+                
+                <h3>Técnica Pomodoro</h3>
+                <p>Estudiar 25 minutos intensamente y descansar 5. Esto mantiene el cerebro fresco y maximiza la concentración.</p>
+                
+                <h3>Mapas Mentales</h3>
+                <p>En lugar de resumir textos linealmente, usar colores y diagramas ayuda a visualizar las conexiones entre ideas, facilitando la comprensión profunda.</p>
+            `
         }
     ];
 
-    var itemsPerPage = 3;
-    var currentPage = 1;
-    var totalPages = Math.ceil(blogPosts.length / itemsPerPage);
-
-    function renderPosts(page) {
+    function renderPosts() {
         var grid = document.getElementById('blog-grid');
         grid.innerHTML = "";
         
-        var start = (page - 1) * itemsPerPage;
-        var end = start + itemsPerPage;
-        var postsToShow = blogPosts.slice(start, end);
-
-        postsToShow.forEach(function(post) {
+        blogPosts.forEach(function(post) {
             var cardHTML = `
-                <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 flex flex-col h-full animate-scroll-reveal border border-gray-100 group cursor-pointer" onclick="openModal(${post.id})">
-                    <div class="h-48 sm:h-56 overflow-hidden relative">
+                <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 flex flex-col h-full animate-scroll-reveal border border-gray-100 group cursor-pointer" onclick="openModal(${post.id})">
+                    <div class="h-52 overflow-hidden relative">
                         <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute top-3 left-3 ${post.color} text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-sm tracking-wide">
+                        <div class="absolute top-4 left-4 ${post.color} text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-md tracking-wide">
                             ${post.category}
                         </div>
                     </div>
-                    <div class="p-5 sm:p-6 flex-grow flex flex-col">
-                        <div class="text-xs text-gray-400 mb-2 font-instrument flex items-center">
-                            <i class="far fa-calendar-alt mr-2"></i> ${post.date}
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-xs text-gray-400 mb-3 font-instrument flex items-center font-medium">
+                            <i class="far fa-calendar-alt mr-2 text-[#143c6c]"></i> ${post.date}
                         </div>
-                        <h3 class="font-outfit text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-[#143c6c] transition">
+                        <h3 class="font-outfit text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-[#143c6c] transition">
                             ${post.title}
                         </h3>
-                        <p class="text-gray-600 text-sm mb-4 font-instrument line-clamp-3 leading-relaxed flex-grow">
+                        <p class="text-gray-600 text-sm mb-6 font-instrument line-clamp-3 leading-relaxed flex-grow">
                             ${post.excerpt}
                         </p>
-                        <span class="inline-flex items-center text-[#143c6c] font-bold text-xs sm:text-sm hover:underline mt-auto font-outfit">
+                        <span class="inline-flex items-center text-[#143c6c] font-bold text-sm hover:underline mt-auto font-outfit uppercase tracking-wide">
                             Leer Artículo <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                         </span>
                     </div>
@@ -176,50 +318,31 @@
             `;
             grid.insertAdjacentHTML('beforeend', cardHTML);
         });
-
-        renderPagination();
         
-        // Scroll suave al inicio del grid si no es la primera carga
-        if (page > 1) {
-            document.getElementById('blog-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // Efecto visual de entrada
+        if(typeof initScrollReveal === 'function') initScrollReveal();
     }
-
-    function renderPagination() {
-        var container = document.getElementById('page-numbers');
-        container.innerHTML = "";
-
-        for (var i = 1; i <= totalPages; i++) {
-            var isActive = i === currentPage ? 'bg-[#143c6c] text-white border-[#143c6c]' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50';
-            var btn = `<button onclick="changePage(${i})" class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg border font-bold text-xs sm:text-sm transition shadow-sm ${isActive}">${i}</button>`;
-            container.insertAdjacentHTML('beforeend', btn);
-        }
-
-        document.getElementById('btn-prev').disabled = currentPage === 1;
-        document.getElementById('btn-next').disabled = currentPage === totalPages;
-    }
-
-    window.changePage = function(page) {
-        if (page === 'prev' && currentPage > 1) {
-            currentPage--;
-        } else if (page === 'next' && currentPage < totalPages) {
-            currentPage++;
-        } else if (typeof page === 'number') {
-            currentPage = page;
-        }
-        renderPosts(currentPage);
-    };
 
     window.openModal = function(id) {
         var post = blogPosts.find(function(p) { return p.id === id; });
         if (!post) return;
 
+        // Desktop Elements
         document.getElementById('modal-img').src = post.image;
         document.getElementById('modal-category').innerText = post.category;
-        document.getElementById('modal-category').className = "inline-flex items-center px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide " + post.color;
+        document.getElementById('modal-category').className = "inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm " + post.color;
         document.getElementById('modal-date').innerHTML = `<i class="far fa-calendar-alt mr-2"></i> ${post.date}`;
         document.getElementById('modal-title').innerText = post.title;
         document.getElementById('modal-body').innerHTML = post.content;
+
+        // Mobile Elements
+        var mobileCat = document.getElementById('modal-category-mobile');
+        var mobileTitle = document.getElementById('modal-title-mobile');
+        if(mobileCat) {
+            mobileCat.innerText = post.category;
+            mobileCat.className = "inline-block px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide mb-2 " + post.color;
+        }
+        if(mobileTitle) mobileTitle.innerText = post.title;
 
         var modal = document.getElementById('article-modal');
         modal.classList.remove('hidden');
@@ -241,6 +364,6 @@
         }
     });
 
-    // Inicializar
-    renderPosts(1);
+    // Renderizar al cargar
+    renderPosts();
 </script>
