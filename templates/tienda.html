@@ -1,0 +1,205 @@
+<section class="bg-[#143c6c] py-16 text-center animate-scroll-reveal">
+    <div class="px-4">
+        <h1 class="font-outfit text-4xl font-black text-white mb-2">Tienda Escolar</h1>
+        <p class="text-blue-100 font-instrument">Encuentra todos los libros y recursos educativos.</p>
+    </div>
+</section>
+
+<section class="py-12 bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <aside class="lg:w-1/4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-gray-800 font-outfit uppercase tracking-wide">Filtros</h3>
+                        <button onclick="resetFilters()" class="text-xs text-[#143c6c] hover:underline">Limpiar</button>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
+                            <input type="text" id="store-search" placeholder="Buscar título..." class="w-full pl-9 p-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#143c6c]">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="font-bold text-sm text-gray-700 mb-3">Editorial</h4>
+                        <div class="space-y-2 text-sm text-gray-600 font-instrument">
+                            <label class="flex items-center"><input type="checkbox" class="mr-2 filter-cb" value="Macmillan"> Macmillan</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2 filter-cb" value="Castillo"> Castillo</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2 filter-cb" value="Scholastic"> Scholastic</label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="lg:w-3/4">
+                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                <div id="no-results" class="hidden text-center py-20 text-gray-400">
+                    <i class="fas fa-search text-4xl mb-4"></i>
+                    <p>No encontramos libros con esos criterios.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div id="product-modal" class="fixed inset-0 z-50 hidden" style="display: none;">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeProductModal()"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row h-auto max-h-[90vh]">
+        
+        <div class="md:w-1/2 bg-gray-100 p-8 flex items-center justify-center relative">
+            <button class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 md:hidden" onclick="closeProductModal()"><i class="fas fa-arrow-left"></i></button>
+            <img id="modal-p-img" src="" class="max-h-80 w-auto object-contain shadow-lg">
+        </div>
+
+        <div class="md:w-1/2 p-8 overflow-y-auto">
+            <button class="absolute top-4 right-4 text-gray-400 hover:text-red-500 hidden md:block" onclick="closeProductModal()">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <span id="modal-p-editorial" class="text-xs font-bold text-[#143c6c] bg-blue-50 px-2 py-1 rounded uppercase tracking-wide">Editorial</span>
+            <h2 id="modal-p-title" class="text-3xl font-black text-gray-900 mt-2 mb-4 font-outfit leading-tight">Título Libro</h2>
+            
+            <p id="modal-p-desc" class="text-gray-600 text-sm font-instrument mb-6 leading-relaxed">Descripción...</p>
+
+            <div class="mb-8">
+                <span class="block text-xs text-gray-400 uppercase font-bold">Precio</span>
+                <span id="modal-p-price" class="text-4xl font-black text-[#143c6c] font-outfit">$0</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="flex items-center border border-gray-300 rounded-lg">
+                    <button onclick="updateQty(-1)" class="px-3 py-2 text-gray-500 hover:bg-gray-100">-</button>
+                    <input id="modal-p-qty" type="text" value="1" readonly class="w-10 text-center text-sm font-bold border-none outline-none">
+                    <button onclick="updateQty(1)" class="px-3 py-2 text-gray-500 hover:bg-gray-100">+</button>
+                </div>
+
+                <button id="modal-add-btn" class="flex-grow bg-[#fcd34d] text-[#143c6c] font-bold py-3 rounded-lg shadow hover:bg-[#fbbf24] transition uppercase text-sm tracking-wide">
+                    Añadir al Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- DATOS PRODUCTOS ---
+    const PRODUCTS = [
+        { id: 'B01', title: 'English Path Level 1', editorial: 'Macmillan', price: '$85.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg', desc: 'Libro de texto para aprendizaje de inglés nivel A1. Incluye acceso a plataforma digital.' },
+        { id: 'B02', title: 'El Pan de la Guerra', editorial: 'Castillo', price: '$45.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg', desc: 'Una novela conmovedora sobre la supervivencia en tiempos de conflicto.' },
+        { id: 'B03', title: 'Global Explorer 2', editorial: 'Macmillan', price: '$92.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg', desc: 'Explora el mundo a través del inglés con este texto interactivo.' },
+        { id: 'B04', title: 'La Gaceta de Landry', editorial: 'Castillo', price: '$38.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg', desc: 'Historia cautivadora para lectores jóvenes. Fomenta el pensamiento crítico.' },
+        { id: 'B05', title: 'Science World 4', editorial: 'Scholastic', price: '$110.000', img: 'https://placehold.co/300x400?text=Science', desc: 'Descubre las maravillas de la ciencia con experimentos prácticos.' },
+        { id: 'B06', title: 'Math in Focus', editorial: 'Scholastic', price: '$105.000', img: 'https://placehold.co/300x400?text=Math', desc: 'Método Singapur para el aprendizaje efectivo de las matemáticas.' }
+    ];
+
+    let currentQty = 1;
+    let currentProduct = null;
+
+    function renderStore(filterText = '', editorials = []) {
+        const grid = document.getElementById('products-grid');
+        const noResults = document.getElementById('no-results');
+        grid.innerHTML = '';
+
+        const filtered = PRODUCTS.filter(p => {
+            const matchesText = p.title.toLowerCase().includes(filterText.toLowerCase());
+            const matchesEdit = editorials.length === 0 || editorials.includes(p.editorial);
+            return matchesText && matchesEdit;
+        });
+
+        if (filtered.length === 0) {
+            noResults.classList.remove('hidden');
+        } else {
+            noResults.classList.add('hidden');
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition group cursor-pointer animate-scroll-reveal';
+                card.innerHTML = `
+                    <div class="h-64 overflow-hidden relative bg-gray-50 p-4 flex items-center justify-center">
+                        <img src="${p.img}" class="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-105">
+                        <button class="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow text-[#143c6c] hover:bg-[#143c6c] hover:text-white transition">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-xs text-gray-400 uppercase font-bold">${p.editorial}</span>
+                        <h3 class="font-bold text-gray-800 text-lg mb-2 line-clamp-1 group-hover:text-[#143c6c] transition">${p.title}</h3>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="font-black text-xl text-[#143c6c] font-outfit">${p.price}</span>
+                            <span class="text-xs text-gray-500 underline decoration-dotted">Ver detalles</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => openProductModal(p);
+                grid.appendChild(card);
+            });
+        }
+        
+        // Reiniciar animaciones
+        if(typeof initScrollReveal === 'function') initScrollReveal();
+    }
+
+    // Modal Logic
+    function openProductModal(product) {
+        currentProduct = product;
+        currentQty = 1;
+        
+        document.getElementById('modal-p-img').src = product.img;
+        document.getElementById('modal-p-title').innerText = product.title;
+        document.getElementById('modal-p-editorial').innerText = product.editorial;
+        document.getElementById('modal-p-desc').innerText = product.desc;
+        document.getElementById('modal-p-price').innerText = product.price;
+        document.getElementById('modal-p-qty').value = 1;
+
+        // Botón Añadir
+        document.getElementById('modal-add-btn').onclick = () => {
+            window.addToCart({ ...product, qty: currentQty }); // Añadir cantidad seleccionada
+            closeProductModal();
+        };
+
+        const modal = document.getElementById('product-modal');
+        modal.classList.remove('hidden');
+        modal.style.display = 'block'; // Asegurar display block
+    }
+
+    function closeProductModal() {
+        const modal = document.getElementById('product-modal');
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+    }
+
+    function updateQty(change) {
+        const newQty = currentQty + change;
+        if (newQty >= 1) {
+            currentQty = newQty;
+            document.getElementById('modal-p-qty').value = currentQty;
+        }
+    }
+
+    // Filtros
+    const searchInput = document.getElementById('store-search');
+    const checkboxes = document.querySelectorAll('.filter-cb');
+
+    function applyFilters() {
+        const text = searchInput.value;
+        const selectedEditorials = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+        renderStore(text, selectedEditorials);
+    }
+
+    searchInput.addEventListener('keyup', applyFilters);
+    checkboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+
+    window.resetFilters = function() {
+        searchInput.value = '';
+        checkboxes.forEach(cb => cb.checked = false);
+        renderStore();
+    };
+
+    // Inicializar
+    renderStore();
+</script>

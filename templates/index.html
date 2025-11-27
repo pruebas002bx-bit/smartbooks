@@ -64,7 +64,6 @@
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Animación Pulso Botón Amarillo */
         @keyframes super-pulse {
             0% { box-shadow: 0 0 0 0 rgba(252, 211, 77, 0.7); transform: scale(1); }
             50% { box-shadow: 0 0 0 10px rgba(252, 211, 77, 0); transform: scale(1.03); }
@@ -85,6 +84,12 @@
         
         .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
+
+        /* Estilos del Carrito Lateral (Drawer) */
+        #cart-drawer { transition: transform 0.3s ease-in-out; }
+        #cart-drawer.open { transform: translateX(0); }
+        #cart-overlay { transition: opacity 0.3s ease-in-out; }
+        #cart-overlay.open { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 
@@ -121,12 +126,12 @@
                     <i class="fas fa-book-reader mr-2"></i> Compra tu Kit AQUÍ
                 </a>
 
-                <a href="#" class="relative group p-2">
+                <button onclick="toggleCart()" class="relative group p-2 focus:outline-none">
                     <div class="relative">
                         <i class="fas fa-shopping-cart text-2xl text-gray-700 group-hover:text-[#143c6c] transition"></i>
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">0</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white transform scale-0 transition-transform duration-200">0</span>
                     </div>
-                </a>
+                </button>
                 
                 <button class="lg:hidden text-gray-800 text-2xl hover:text-[#143c6c]">
                     <i class="fas fa-bars"></i>
@@ -146,7 +151,7 @@
                     </div>
                 </div>
 
-                <a href="#" onclick="loadPage('tienda_productos.html')" class="menu-item">Tienda</a>
+                <a href="#" onclick="loadPage('Tienda.html')" class="menu-item">Tienda</a>
                 <a href="#" onclick="loadPage('Colegios.html')" class="menu-item">Colegios</a>
                 <a href="#" onclick="loadPage('Blog.html')" class="menu-item">Blog</a>
                 <a href="#" onclick="loadPage('Contacto.html')" class="menu-item">Contáctanos</a>
@@ -162,7 +167,6 @@
             <div class="w-full flex justify-center mb-10">
                 <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Mesa-de-trabajo-6@4x.png" alt="Smart Books Logo Blanco" class="h-24 w-auto drop-shadow-md">
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm font-instrument">
                 <div>
                     <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Bogotá</h3>
@@ -170,44 +174,28 @@
                     <p class="mb-2 text-gray-300">Calle 159A # 21A – 39<br>Barrio Magdala – Casa Blanca</p>
                     <p class="font-bold text-white mt-3">PBX: 333 602 50 29</p>
                 </div>
-
                 <div>
                     <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Tunja, Boyacá</h3>
                     <p class="mb-1 text-gray-300">Av Norte No 47a-40<br>C.C Centro Norte Local 091</p>
                     <p class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1108</span></p>
-                    <div class="flex items-center mt-1 text-green-400">
-                        <i class="fab fa-whatsapp mr-1"></i> (+57) 320 300 1510
-                    </div>
-
+                    <div class="flex items-center mt-1 text-green-400"><i class="fab fa-whatsapp mr-1"></i> (+57) 320 300 1510</div>
                     <h3 class="font-outfit font-bold text-lg text-white mt-6 mb-4 uppercase tracking-wider">Floridablanca</h3>
                     <p class="mb-1 text-gray-300">Calle 6 #10-36, Plaza Mia<br>Centro Comercial Local 216</p>
                     <p class="font-bold text-white">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1109</span></p>
                 </div>
-
                 <div>
                     <h3 class="font-outfit font-bold text-lg text-white mb-4 uppercase tracking-wider">Medellín, Antioquia</h3>
                     <p class="mb-2 text-gray-300">Edificio San Sebastian de La 70<br>CQ 2 # 70 – 24 – INT 202<br>LAURELES</p>
                     <p class="font-bold text-white mt-3">PBX: 333 602 50 29 <span class="font-normal text-gray-300">EXT: 1100</span></p>
                 </div>
-
                 <div class="text-center lg:text-right">
                     <h3 class="font-outfit font-bold text-lg text-white mb-6 uppercase tracking-wider">Síguenos</h3>
-                    
                     <div class="flex justify-center lg:justify-end gap-4 mb-8">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
-                            <i class="fab fa-facebook-f text-lg"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
-                            <i class="fab fa-instagram text-lg"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
-                            <i class="fab fa-whatsapp text-lg"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300">
-                            <i class="fab fa-linkedin-in text-lg"></i>
-                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-facebook-f text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-instagram text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-whatsapp text-lg"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#143c6c] transition-all duration-300"><i class="fab fa-linkedin-in text-lg"></i></a>
                     </div>
-
                     <h3 class="font-outfit font-bold text-md text-white mb-3 uppercase tracking-wider">Enlaces Rápidos</h3>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li><a href="#" onclick="loadPage('QuienesSomos.html')" class="hover:text-white transition">Quiénes Somos</a></li>
@@ -219,6 +207,31 @@
         </div>
     </footer>
     
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none" onclick="toggleCart()"></div>
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-[70] transform translate-x-full flex flex-col">
+        <div class="p-5 bg-[#143c6c] text-white flex justify-between items-center shadow-md">
+            <h2 class="font-outfit text-xl font-bold flex items-center"><i class="fas fa-shopping-cart mr-2"></i> Mi Carrito</h2>
+            <button onclick="toggleCart()" class="text-white hover:text-gray-300 transition"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div id="cart-items" class="flex-grow overflow-y-auto p-5 space-y-4">
+            <div class="text-center text-gray-400 mt-10">
+                <i class="fas fa-shopping-basket text-4xl mb-3"></i>
+                <p>Tu carrito está vacío</p>
+            </div>
+        </div>
+
+        <div class="p-5 border-t border-gray-100 bg-gray-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-gray-600">Subtotal:</span>
+                <span id="cart-total" class="font-outfit text-2xl font-black text-[#143c6c]">$0</span>
+            </div>
+            <button class="w-full bg-[#fcd34d] text-[#143c6c] font-bold py-3 rounded-xl shadow hover:bg-[#fbbf24] transition uppercase tracking-wide text-sm">
+                Finalizar Compra
+            </button>
+        </div>
+    </div>
+
     <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float shadow-2xl hover:scale-110 transition-transform">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -242,69 +255,96 @@
                     Alternativas formativas integrales basadas en servicios exclusivos de contenido pedagógico físico y digital.
                 </p>
                 <div class="flex space-x-4 animate-scroll-reveal">
-                    <a href="#" onclick="loadPage('tienda_productos.html')" class="bg-yellow-400 text-[#143c6c] px-8 py-3 rounded-full font-bold hover:bg-white transition shadow-lg uppercase tracking-wide text-sm">Ver Tienda</a>
+                    <a href="#" onclick="loadPage('Tienda.html')" class="bg-yellow-400 text-[#143c6c] px-8 py-3 rounded-full font-bold hover:bg-white transition shadow-lg uppercase tracking-wide text-sm">Ver Tienda</a>
                     <a href="#" onclick="loadPage('QuienesSomos.html')" class="border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-[#143c6c] transition uppercase tracking-wide text-sm">Conócenos</a>
                 </div>
             </div>
         </section>
-
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal group">
-                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3206/3206034.png" alt="Propósito" class="w-full h-full object-contain">
-                        </div>
-                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestro Propósito</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">En Smart Books no solo vendemos libros, utilizamos nuestra pasión por comprender cómo ocurre el aprendizaje para innovar y crear soluciones.</p>
-                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
-                    </div>
-                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-100 group">
-                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
-                            <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Productos" class="w-full h-full object-contain">
-                        </div>
-                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestros Productos</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">De la mano de todas nuestras editoriales aliadas, hemos logrado traer la mayor selección de títulos y recursos no solo educativos sino profesionales.</p>
-                        <a href="#" onclick="loadPage('tienda_productos.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
-                    </div>
-                    <div class="p-6 rounded-2xl hover:shadow-xl transition duration-300 animate-scroll-reveal delay-200 group">
-                        <div class="w-24 h-24 mx-auto mb-6 transition-transform group-hover:scale-110">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1651/1651639.png" alt="Garantía" class="w-full h-full object-contain">
-                        </div>
-                        <h3 class="text-[#143c6c] font-outfit text-2xl font-bold mb-4">Nuestra Garantía</h3>
-                        <p class="text-gray-600 font-instrument text-sm leading-relaxed mb-6">Solo nosotros podemos ofrecerte la verdadera certificación y respaldo de las principales casas editoriales del país e internacionales.</p>
-                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="text-[#143c6c] font-bold border-2 border-[#143c6c] px-6 py-2 rounded-full hover:bg-[#143c6c] hover:text-white transition text-sm uppercase">Más Información</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-16 bg-white overflow-hidden">
-            <div class="max-w-full mx-auto px-4 text-center">
-                <h2 class="text-[#143c6c] font-outfit text-3xl font-bold mb-10 animate-scroll-reveal">Nuestras Editoriales Aliadas</h2>
-                <div class="marquee-container">
-                    <div class="marquee-track">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
-                        <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2022/11/logo_castillo.png" class="editorial-logo" alt="Ediciones Castillo">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="editorial-logo" alt="Smart Books">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Scholastic_logo.svg/2560px-Scholastic_logo.svg.png" class="editorial-logo" alt="Scholastic">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Macmillan_Education_logo.svg/1200px-Macmillan_Education_logo.svg.png" class="editorial-logo" alt="MacMillan">
-                        <img src="https://alphapublishing.com/wp-content/uploads/2018/10/Alpha-Publishing-Logo.png" class="editorial-logo" alt="Alpha Publishing">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2022/11/logo_castillo.png" class="editorial-logo" alt="Ediciones Castillo">
-                        <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" class="editorial-logo" alt="Smart Books">
-                    </div>
-                </div>
-            </div>
-        </section>
-    </template>
+        </template>
 
     <script>
+        // --- LÓGICA DEL CARRITO GLOBAL ---
+        let cart = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('open');
+            renderCart();
+        }
+
+        function addToCart(product) {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartCount();
+            toggleCart(); // Abrir carrito al agregar
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            const badge = document.getElementById('cart-count');
+            badge.textContent = count;
+            badge.classList.toggle('scale-100', count > 0);
+            badge.classList.toggle('scale-0', count === 0);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            renderCart();
+            updateCartCount();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-400 mt-10">
+                        <i class="fas fa-shopping-basket text-4xl mb-3"></i>
+                        <p>Tu carrito está vacío</p>
+                    </div>`;
+                totalEl.textContent = '$0';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const price = parseInt(item.price.replace(/[$.]/g, ''));
+                total += price * item.qty;
+                html += `
+                    <div class="flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                        <div class="w-16 h-16 bg-gray-50 rounded flex items-center justify-center flex-shrink-0">
+                            <img src="${item.img}" class="h-12 w-auto object-contain">
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-sm text-gray-800 line-clamp-1">${item.name}</h4>
+                            <p class="text-xs text-gray-500">${item.price}</p>
+                        </div>
+                        <div class="flex flex-col items-end gap-1">
+                            <span class="text-xs font-bold bg-gray-100 px-2 py-1 rounded">x${item.qty}</span>
+                            <button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-600 text-xs"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalEl.textContent = '$' + total.toLocaleString('es-CO');
+        }
+
+        // --- SISTEMA DE NAVEGACIÓN ---
         function loadHome() {
             const main = document.getElementById('main-content');
             const template = document.getElementById('home-template');
-            main.innerHTML = template.innerHTML;
+            if (template) main.innerHTML = template.innerHTML;
             initCarousel();
             initScrollReveal();
             window.scrollTo(0, 0);
@@ -315,7 +355,7 @@
             main.innerHTML = '<div class="flex justify-center items-center h-96"><i class="fas fa-circle-notch fa-spin text-5xl text-[#143c6c]"></i></div>';
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error('Error de carga');
+                if (!response.ok) throw new Error('Error');
                 const html = await response.text();
                 main.innerHTML = html;
                 initScrollReveal();
@@ -327,10 +367,9 @@
                     script.text = scripts[i].text;
                     main.appendChild(script);
                 }
-
             } catch (error) {
                 console.error(error);
-                main.innerHTML = `<div class="text-center py-32 text-gray-500">Contenido no disponible por el momento.</div>`;
+                main.innerHTML = `<div class="text-center py-32 text-gray-500">Error cargando contenido.</div>`;
             }
         }
 
@@ -350,8 +389,7 @@
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
             let current = 0;
-            if (window.carouselInterval) clearInterval(window.carouselInterval);
-            window.carouselInterval = setInterval(() => {
+            setInterval(() => {
                 items[current].classList.remove('active');
                 current = (current + 1) % items.length;
                 items[current].classList.add('active');
