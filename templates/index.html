@@ -12,293 +12,190 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS GLOBALES (Se aplican a todas las sub-páginas) --- */
+        /* ESTILOS GLOBALES */
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-instrument { font-family: 'Instrument Sans', sans-serif; }
-
         .bg-brand-primary { background-color: #163D6A; }
         .text-brand-primary { color: #163D6A; }
         .bg-brand-accent { background-color: #163d6a; }
-        .text-brand-accent { color: #163D6A; }
         .text-active { color: #163D6A; }
 
-        /* Dropdown y Menú */
+        /* MENÚ */
         .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
-        
-        .menu-item {
-            padding: 0 1.25rem;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            border-bottom: 4px solid transparent;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer; /* Importante para la UX */
-        }
-        .menu-item:hover, .menu-item.active {
-            color: #163d6a;
-            border-bottom-color: #163D6A;
-        }
+        .menu-item { padding: 0 1.25rem; display: flex; align-items: center; height: 100%; border-bottom: 4px solid transparent; transition: all 0.2s ease-in-out; cursor: pointer; }
+        .menu-item:hover, .menu-item.active { color: #163d6a; border-bottom-color: #163D6A; }
 
-        /* Buscador */
-        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #d1d5db; border-radius: 9999px; outline: none; transition: border-color 0.3s; }
+        /* UTILIDADES */
+        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #d1d5db; border-radius: 9999px; outline: none; }
         .search-input:focus { border-color: #163d6a; }
-        .search-button-separate { width: 52px; height: 52px; margin-left: 12px; background-color: #163d6a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .search-button-separate { width: 52px; height: 52px; margin-left: 12px; background-color: #163d6a; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .icon-white { filter: brightness(0) invert(1); }
-
-        /* Animaciones */
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Animación Pulso Botón */
-        @keyframes super-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.7); transform: scale(1); }
-            50% { box-shadow: 0 0 0 15px rgba(253, 224, 71, 0); transform: scale(1.05); }
-            100% { box-shadow: 0 0 0 0 rgba(253, 224, 71, 0); transform: scale(1); }
-        }
-        .animate-super-pulse { animation: super-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-
-        /* Estilos específicos para Carrusel (Home) */
+        /* CARRUSEL */
         #banner-carousel { position: relative; }
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { transform: scale(1.15); transition: transform 5s linear; }
         .carousel-item.active img { transform: scale(1); }
-
-        /* WhatsApp */
-        .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; text-align: center; font-size: 28px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; animation: pulse 1.5s infinite; }
+        
+        /* WHATSAPP */
+        .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     </style>
 </head>
 
 <body class="font-instrument text-gray-700 bg-white antialiased flex flex-col min-h-screen">
 
     <div class="bg-gray-100 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 text-sm flex justify-between items-center">
-            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold text-sm sm:text-base tracking-wider">
-                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares de las mejores casas editoriales
-            </div>
-            <div class="flex space-x-3 items-center text-gray-500 flex-shrink-0">
-                <a href="https://www.facebook.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-facebook-f text-lg"></i></a>
-                <a href="https://www.instagram.com/smartbookscol" target="_blank" class="hover:text-brand-primary"><i class="fab fa-instagram text-lg"></i></a>
-                <a href="https://www.linkedin.com/company/smartbookscol/" target="_blank" class="hover:text-brand-primary"><i class="fab fa-linkedin-in text-lg"></i></a>
+        <div class="max-w-7xl mx-auto px-4 py-2 text-sm flex justify-between items-center">
+            <div class="flex-grow text-center text-gray-700 font-outfit font-semibold tracking-wider">
+                Encuentra <span class="font-black text-gray-800">AQUÍ</span> los textos escolares
             </div>
         </div>
     </div>
 
     <header class="bg-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex-shrink-0" onclick="loadPage('home_content.html', event)">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-20 w-auto"> 
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" onclick="loadHome()" class="flex-shrink-0">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo" class="h-20 w-auto">
             </a>
-
-            <form action="#" class="relative max-w-xl flex-grow mx-10 hidden lg:block">
-                <div class="flex items-center">
-                    <input type="text" placeholder="Buscar por palabra clave..." class="search-input text-gray-700 text-lg"> 
-                    <button type="submit" class="search-button-separate" title="Buscar">
-                        <img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" alt="Lupa" class="w-7 h-7 icon-white"> 
-                    </button>
+            
+            <div class="hidden lg:flex items-center flex-grow justify-end space-x-6">
+                <div class="flex items-center max-w-md w-full">
+                    <input type="text" placeholder="Buscar..." class="search-input text-gray-700">
+                    <button class="search-button-separate"><img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="w-6 h-6 icon-white"></button>
                 </div>
-            </form>
-
-            <div class="flex space-x-6 items-center"> 
-                <a href="#" class="hidden xl:flex items-center justify-center bg-yellow-400 text-gray-900 font-outfit font-bold px-5 py-3 rounded-lg shadow-lg hover:bg-yellow-500 transition transform duration-300 animate-super-pulse">
-                    <span class="text-base">Compra tu Kit Educativo AQUÍ</span>
-                </a>
-                
-                <div class="flex space-x-4 items-center text-gray-800 text-xl">
-                    <a href="#" class="p-2 hover:text-brand-primary transition duration-300 relative flex items-center justify-center" title="Carrito de Compras">
-                        <img src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="Carrito" class="w-8 h-8"> 
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-brand-accent rounded-full">0</span>
-                    </a>
+                <div class="flex items-center space-x-4 text-xl text-gray-800">
+                    <a href="#" class="p-2"><i class="fas fa-shopping-cart"></i></a>
                 </div>
-                <button class="lg:hidden p-2 text-gray-800 hover:text-brand-primary transition duration-300">
-                    <i class="fas fa-bars text-2xl"></i> 
-                </button>
             </div>
         </div>
 
-        <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-14"> 
-            <div class="max-w-7xl mx-auto px-4 h-full">
-                <nav class="flex justify-center space-x-10 font-outfit text-gray-800 font-semibold text-base h-full"> 
-                    
-                    <a href="index.html" class="menu-item active" onclick="loadPage('home_content.html', event)" data-target="home">Inicio</a>
-                    
-                    <div class="dropdown relative h-full">
-                        <a href="#" class="menu-item flex items-center">
-                            Nosotros <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
-                        </a>
-                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-accent top-full">
-                            <a href="QuienesSomos.html" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm" onclick="loadPage('QuienesSomos.html', event)">Quienes Somos</a>
-                            <a href="TerminosYCondiciones.html" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm" onclick="loadPage('TerminosYCondiciones.html', event)">Términos y Condiciones</a>
-                            <a href="PreguntasFrecuentes.html" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm" onclick="loadPage('PreguntasFrecuentes.html', event)">Preguntas Frecuentes – FAQ</a>
-                        </div>
+        <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-14">
+            <nav class="flex justify-center space-x-10 font-outfit text-gray-800 font-semibold text-base h-full items-center">
+                <a href="#" onclick="loadHome()" class="menu-item active">Inicio</a>
+                
+                <div class="dropdown relative h-full flex items-center">
+                    <span class="menu-item">Nosotros <i class="fas fa-chevron-down text-xs ml-1"></i></span>
+                    <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-accent top-full left-0">
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-5 py-3 hover:bg-gray-100 text-sm">Quienes Somos</a>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-5 py-3 hover:bg-gray-100 text-sm">Términos y Condiciones</a>
                     </div>
-                    
-                    <div class="dropdown relative h-full">
-                        <a href="#" class="menu-item flex items-center">
-                            Aliados <i class="fas fa-chevron-down text-xs ml-1 transition-transform transform group-hover:rotate-180"></i>
-                        </a>
-                        <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-40 border-t-2 border-brand-accent top-full">
-                            <a href="Castillo.html" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm" onclick="loadPage('Castillo.html', event)">Castillo</a>
-                            <a href="aliados_macmillan.html" class="block px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-active transition duration-300 text-sm" onclick="loadPage('aliados_macmillan.html', event)">MacMillan</a>
-                        </div>
-                    </div>
+                </div>
 
-                    <a href="tienda_productos.html" class="menu-item" onclick="loadPage('tienda_productos.html', event)">Tienda</a>
-                    <a href="Colegios.html" class="menu-item" onclick="loadPage('Colegios.html', event)">Colegios</a>
-                    <a href="#contactanos" class="menu-item">Contáctanos</a>
-                    <a href="#intranet" class="menu-item">Intranet</a>
-
-                </nav>
-            </div>
+                <a href="#" onclick="loadPage('tienda_productos.html')" class="menu-item">Tienda</a>
+                <a href="#" onclick="loadPage('Colegios.html')" class="menu-item">Colegios</a>
+                <a href="#contactanos" class="menu-item">Contáctanos</a>
+            </nav>
         </div>
     </header>
 
-    <main id="main-container" class="flex-grow min-h-[60vh]">
-        <section class="max-w-full mx-auto overflow-hidden relative shadow-lg animate-scroll-reveal" style="height: 75vh; min-height: 550px;">
-            <div id="banner-carousel" class="w-full h-full">
-                <div class="carousel-item active w-full h-full">
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop" alt="Banner 1" class="w-full h-full object-cover">
-                </div>
-                <div class="carousel-item w-full h-full">
-                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" alt="Banner 2" class="w-full h-full object-cover">
-                </div>
-            </div>
-            <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-3 z-30">
-                <div class="dot w-4 h-4 bg-brand-primary rounded-full opacity-100 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="0"></div>
-                <div class="dot w-4 h-4 bg-white rounded-full opacity-70 cursor-pointer transition duration-300 transform hover:scale-125" data-slide="1"></div>
-            </div>
-        </section>
-        
-        <section class="py-16 md:py-24 text-center">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 animate-scroll-reveal delay-300">
-                <h2 class="text-xs font-outfit uppercase tracking-widest text-brand-accent mb-3">Nuestra Misión</h2>
-                <p class="font-outfit text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-snug mb-6">
-                    Somos un <span class="text-brand-primary">Holding Educativo</span> Global
-                </p>
-                <p class="text-lg text-gray-600 mb-8 font-instrument">
-                    Transformando la educación en América Latina con soluciones pedagógicas integrales.
-                </p>
-            </div>
-        </section>
-    </main>
+    <main id="main-content" class="flex-grow">
+        </main>
 
     <footer class="bg-white py-12 border-t border-gray-100 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="flex flex-col items-start">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books" class="h-10 mb-4">
-                <p class="text-sm text-gray-600 mb-2">¿Tienes preguntas? ¡Llámanos!</p>
-                <a href="tel:+573336025029" class="text-brand-accent font-outfit text-2xl font-bold mb-4 hover:text-red-700 transition duration-300">+57 (333) 602 50 29</a>
-            </div>
-            <div>
-                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Información de Contacto</h4>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li><p>Calle 159A # 21A – 39 – Bogotá</p></li>
-                    <li><a href="mailto:contacto@smartbooks.com.co" class="text-brand-primary hover:underline">contacto@smartbooks.com.co</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-outfit text-lg font-semibold text-gray-900 mb-4">Explorar</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" onclick="loadPage('QuienesSomos.html', event)" class="text-gray-600 hover:text-brand-primary transition duration-300">Quienes Somos</a></li>
-                    <li><a href="#" onclick="loadPage('tienda_productos.html', event)" class="text-gray-600 hover:text-brand-primary transition duration-300">Tienda</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-100 text-sm text-gray-500 text-center">
-            <p>&copy; 2024 Smart Books. Todos los derechos reservados.</p>
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo" class="h-10 mx-auto mb-4">
+            <p class="text-gray-500 text-sm">© 2024 Smart Books. Todos los derechos reservados.</p>
         </div>
     </footer>
-    
-    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+
+    <template id="home-template">
+        <section class="max-w-full mx-auto overflow-hidden relative shadow-lg" style="height: 75vh; min-height: 550px;">
+            <div id="banner-carousel" class="w-full h-full">
+                <div class="carousel-item active w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-item w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+        <section class="py-16 text-center">
+            <h2 class="text-4xl font-black text-gray-900 mb-4 animate-scroll-reveal">Somos un <span class="text-brand-primary">Holding Educativo</span></h2>
+            <p class="text-lg text-gray-600 animate-scroll-reveal">Transformando la educación en América Latina.</p>
+        </section>
+    </template>
 
     <script>
-        // Función principal para cargar contenido
-        async function loadPage(pageUrl, event) {
-            if(event) event.preventDefault(); // Evita que el navegador cambie de página completamente
-
-            // Si es 'index.html' o 'home', recargamos la página completa o mostramos el contenido inicial
-            if (pageUrl === 'index.html' || pageUrl === 'home_content.html') {
-                window.location.href = 'index.html';
-                return;
-            }
-
-            const container = document.getElementById('main-container');
+        // Función para cargar el Home desde el template interno
+        function loadHome() {
+            const main = document.getElementById('main-content');
+            const template = document.getElementById('home-template');
+            main.innerHTML = template.innerHTML;
             
-            // Efecto visual de carga
-            container.style.opacity = '0.5';
+            // Reiniciar carrusel
+            initCarousel();
+            initScrollReveal();
+            window.scrollTo(0, 0);
+        }
+
+        // Función para cargar páginas externas (AJAX)
+        async function loadPage(url) {
+            const main = document.getElementById('main-content');
+            
+            // Feedback visual de carga
+            main.innerHTML = '<div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-4xl text-brand-primary"></i></div>';
 
             try {
-                const response = await fetch(pageUrl);
-                if (!response.ok) throw new Error('Página no encontrada');
+                // Intentamos cargar el archivo
+                const response = await fetch(url);
                 
-                const htmlText = await response.text();
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: No se pudo cargar ${url}`);
+                }
+
+                const html = await response.text();
+                main.innerHTML = html;
                 
-                // INYECTAR EL HTML EN EL MAIN
-                container.innerHTML = htmlText;
-                
-                // Actualizar la URL en el navegador sin recargar (Historial)
-                window.history.pushState({path: pageUrl}, '', pageUrl);
-                
-                // Reactivar Scripts (Importante: El Scroll Reveal y otros scripts deben reiniciarse)
+                // Reiniciar animaciones
                 initScrollReveal();
-                
-                // Hacer scroll al inicio del main
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo(0, 0);
 
             } catch (error) {
-                console.error('Error cargando la página:', error);
-                container.innerHTML = `<div class="text-center py-20"><h2 class="text-2xl font-bold text-red-500">Error al cargar contenido</h2><p>Verifica que estás usando un servidor local (Live Server).</p></div>`;
-            } finally {
-                container.style.opacity = '1';
+                console.error(error);
+                main.innerHTML = `
+                    <div class="text-center py-20 bg-red-50">
+                        <h2 class="text-2xl font-bold text-red-600 mb-2">Error al cargar la página</h2>
+                        <p class="text-gray-700">${error.message}</p>
+                        <p class="text-sm text-gray-500 mt-4">Asegúrate de que el archivo <strong>${url}</strong> existe en la misma carpeta y estás usando Live Server.</p>
+                    </div>`;
             }
         }
 
-        // Función para reiniciar animaciones
+        // Animación de aparición
         function initScrollReveal() {
-            const revealElements = document.querySelectorAll('.animate-scroll-reveal');
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = 1;
                         entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
-
-            revealElements.forEach(element => {
-                element.style.opacity = '0'; // Resetear opacidad
-                if (!element.style.animationDelay) element.style.animationDelay = '0s';
-                observer.observe(element);
             });
+            document.querySelectorAll('.animate-scroll-reveal').forEach(el => observer.observe(el));
         }
 
-        // Manejar el botón "Atrás" del navegador
-        window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.path) {
-                loadPage(event.state.path, null);
-            } else {
-                window.location.reload(); // Si es el inicio, recargar
-            }
-        });
-
-        // Iniciar scripts al cargar por primera vez
-        document.addEventListener('DOMContentLoaded', () => {
-            initScrollReveal();
-            // Iniciar carrusel del home si existe
+        // Lógica del Carrusel
+        function initCarousel() {
             const items = document.querySelectorAll('.carousel-item');
-            if(items.length > 0) {
-                let currentIndex = 0;
-                setInterval(() => {
-                    items.forEach(item => item.classList.remove('active'));
-                    currentIndex = (currentIndex + 1) % items.length;
-                    items[currentIndex].classList.add('active');
-                }, 5000);
-            }
-        });
+            if (items.length === 0) return;
+            let current = 0;
+            
+            // Limpiar intervalos previos si existen
+            if (window.carouselInterval) clearInterval(window.carouselInterval);
+
+            window.carouselInterval = setInterval(() => {
+                items[current].classList.remove('active');
+                current = (current + 1) % items.length;
+                items[current].classList.add('active');
+            }, 5000);
+        }
+
+        // Cargar Home al inicio
+        document.addEventListener('DOMContentLoaded', loadHome);
     </script>
 </body>
 </html>
