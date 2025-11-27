@@ -12,19 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CONFIGURACIÓN DE COLORES (#143c6c) --- */
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-instrument { font-family: 'Instrument Sans', sans-serif; }
-
-        /* Color Principal Smart Books */
         .bg-brand-primary { background-color: #143c6c; }
         .text-brand-primary { color: #143c6c; }
         .border-brand-primary { border-color: #143c6c; }
-        
         .hover\:bg-brand-primary:hover { background-color: #143c6c; }
         .hover\:text-brand-primary:hover { color: #143c6c; }
 
-        /* Menú Interactivo */
         .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
         
@@ -48,61 +43,30 @@
             font-weight: 700;
         }
 
-        /* Buscador Mejorado */
-        .search-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-        }
+        .search-container { position: relative; width: 100%; max-width: 600px; }
         .search-input { 
-            width: 100%; 
-            padding: 0.85rem 1.5rem; 
-            padding-right: 3.5rem;
-            border: 1px solid #e2e8f0; 
-            border-radius: 9999px; 
-            outline: none; 
-            transition: all 0.3s;
-            font-family: 'Instrument Sans', sans-serif;
-            background-color: #f8fafc;
+            width: 100%; padding: 0.85rem 1.5rem; padding-right: 3.5rem;
+            border: 1px solid #e2e8f0; border-radius: 9999px; outline: none; 
+            transition: all 0.3s; font-family: 'Instrument Sans', sans-serif; background-color: #f8fafc;
         }
-        .search-input:focus { 
-            border-color: #143c6c; 
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(20, 60, 108, 0.1); 
-        }
+        .search-input:focus { border-color: #143c6c; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(20, 60, 108, 0.1); }
         
         .search-button { 
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 42px; 
-            height: 42px; 
-            background-color: #143c6c; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: transform 0.2s, background-color 0.2s;
-            cursor: pointer;
-            border: none;
+            position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+            width: 42px; height: 42px; background-color: #143c6c; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: transform 0.2s, background-color 0.2s; cursor: pointer; border: none;
         }
-        .search-button:hover { 
-            transform: translateY(-50%) scale(1.05);
-            background-color: #0f2e52;
-        }
+        .search-button:hover { transform: translateY(-50%) scale(1.05); background-color: #0f2e52; }
         .icon-white { filter: brightness(0) invert(1); width: 18px; height: 18px; }
 
-        /* Animaciones */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Carrusel */
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { object-position: center; }
 
-        /* Marquee */
         .marquee-container { overflow: hidden; white-space: nowrap; position: relative; padding: 2rem 0; }
         .marquee-track { display: flex; align-items: center; gap: 6rem; animation: scroll 30s linear infinite; width: max-content; }
         .marquee-track:hover { animation-play-state: paused; }
@@ -110,7 +74,6 @@
         .editorial-logo { height: 60px; width: auto; object-fit: contain; filter: grayscale(100%) opacity(0.7); transition: all 0.4s ease; }
         .editorial-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
         
-        /* WhatsApp */
         .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
     </style>
@@ -345,9 +308,9 @@
                 initScrollReveal();
                 window.scrollTo(0, 0);
                 
-                // *** CORRECCIÓN CLAVE ***
-                // Ejecutar scripts encontrados dentro del HTML cargado
-                const scripts = main.getElementsByTagName('script');
+                // --- SOLUCIÓN AL BLOQUEO (CRÍTICO) ---
+                // Convertimos a array para evitar el bucle infinito de live collection
+                const scripts = Array.from(main.getElementsByTagName('script'));
                 for (let i = 0; i < scripts.length; i++) {
                     const script = document.createElement('script');
                     script.text = scripts[i].text;
