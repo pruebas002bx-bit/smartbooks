@@ -12,36 +12,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;700&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ESTILOS GLOBALES */
+        /* --- ESTILOS GLOBALES ACTUALIZADOS (#143c6c) --- */
         .font-outfit { font-family: 'Outfit', sans-serif; }
         .font-instrument { font-family: 'Instrument Sans', sans-serif; }
-        .bg-brand-primary { background-color: #163D6A; }
-        .text-brand-primary { color: #163D6A; }
-        .bg-brand-accent { background-color: #163d6a; }
-        .text-active { color: #163D6A; }
 
-        /* MENÚ */
+        /* Color Principal: #143c6c */
+        .bg-brand-primary { background-color: #143c6c; }
+        .text-brand-primary { color: #143c6c; }
+        .border-brand-primary { border-color: #143c6c; }
+        
+        /* Acentos (Mismo color para consistencia) */
+        .bg-brand-accent { background-color: #143c6c; }
+        .text-brand-accent { color: #143c6c; }
+        .text-active { color: #143c6c; }
+
+        /* Menú y Dropdown */
         .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); visibility: visible; }
         .dropdown-menu { display: none; opacity: 0; visibility: hidden; transition: all 0.3s ease-out; transform: translateY(10px); z-index: 50; min-width: 14rem; }
-        .menu-item { padding: 0 1.25rem; display: flex; align-items: center; height: 100%; border-bottom: 4px solid transparent; transition: all 0.2s ease-in-out; cursor: pointer; }
-        .menu-item:hover, .menu-item.active { color: #163d6a; border-bottom-color: #163D6A; }
+        
+        .menu-item {
+            padding: 0 1.25rem;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            border-bottom: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .menu-item:hover, .menu-item.active {
+            color: #143c6c; /* Color actualizado */
+            border-bottom-color: #143c6c; /* Color actualizado */
+        }
 
-        /* UTILIDADES */
-        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #d1d5db; border-radius: 9999px; outline: none; }
-        .search-input:focus { border-color: #163d6a; }
-        .search-button-separate { width: 52px; height: 52px; margin-left: 12px; background-color: #163d6a; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        /* Buscador */
+        .search-input { width: 100%; padding: 0.75rem 1.75rem; border: 1px solid #d1d5db; border-radius: 9999px; outline: none; transition: border-color 0.3s; }
+        .search-input:focus { border-color: #143c6c; }
+        
+        .search-button-separate { 
+            width: 52px; height: 52px; margin-left: 12px; 
+            background-color: #143c6c; /* Color actualizado */
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background-color 0.3s;
+        }
+        .search-button-separate:hover { background-color: #0f2e52; } /* Un poco más oscuro para hover */
         .icon-white { filter: brightness(0) invert(1); }
+
+        /* Animaciones */
         .animate-scroll-reveal { opacity: 0; animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* CARRUSEL */
+        /* Carrusel */
         #banner-carousel { position: relative; }
         .carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 10; }
         .carousel-item.active { opacity: 1; z-index: 20; }
         .carousel-item img { transform: scale(1.15); transition: transform 5s linear; }
         .carousel-item.active img { transform: scale(1); }
         
-        /* WHATSAPP */
+        /* WhatsApp */
         .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     </style>
 </head>
@@ -59,7 +85,7 @@
     <header class="bg-white sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#" onclick="loadHome()" class="flex-shrink-0">
-                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo" class="h-20 w-auto">
+                <img src="https://sbooks.com.co/wp-content/uploads/2022/10/Logo-Azul-2048x1078.png" alt="Logo Smart Books Holding" class="h-20 w-auto">
             </a>
             
             <div class="hidden lg:flex items-center flex-grow justify-end space-x-6">
@@ -68,9 +94,12 @@
                     <button class="search-button-separate"><img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" class="w-6 h-6 icon-white"></button>
                 </div>
                 <div class="flex items-center space-x-4 text-xl text-gray-800">
-                    <a href="#" class="p-2"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="#" class="p-2 hover:text-brand-primary"><i class="fas fa-shopping-cart"></i></a>
                 </div>
             </div>
+            <button class="lg:hidden p-2 text-gray-800 hover:text-brand-primary">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
         </div>
 
         <div class="bg-white border-t border-gray-100 hidden lg:block shadow-sm h-14">
@@ -79,9 +108,9 @@
                 
                 <div class="dropdown relative h-full flex items-center">
                     <span class="menu-item">Nosotros <i class="fas fa-chevron-down text-xs ml-1"></i></span>
-                    <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-accent top-full left-0">
-                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-5 py-3 hover:bg-gray-100 text-sm">Quienes Somos</a>
-                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-5 py-3 hover:bg-gray-100 text-sm">Términos y Condiciones</a>
+                    <div class="dropdown-menu absolute bg-white shadow-xl rounded-b-md w-56 border-t-2 border-brand-primary top-full left-0">
+                        <a href="#" onclick="loadPage('QuienesSomos.html')" class="block px-5 py-3 hover:bg-gray-100 hover:text-brand-primary text-sm">Quienes Somos</a>
+                        <a href="#" onclick="loadPage('TerminosYCondiciones.html')" class="block px-5 py-3 hover:bg-gray-100 hover:text-brand-primary text-sm">Términos y Condiciones</a>
                     </div>
                 </div>
 
@@ -101,6 +130,10 @@
             <p class="text-gray-500 text-sm">© 2024 Smart Books. Todos los derechos reservados.</p>
         </div>
     </footer>
+    
+    <a href="https://api.whatsapp.com/send?phone=573115572243" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <template id="home-template">
         <section class="max-w-full mx-auto overflow-hidden relative shadow-lg" style="height: 75vh; min-height: 550px;">
@@ -114,58 +147,39 @@
             </div>
         </section>
         <section class="py-16 text-center">
-            <h2 class="text-4xl font-black text-gray-900 mb-4 animate-scroll-reveal">Somos un <span class="text-brand-primary">Holding Educativo</span></h2>
+            <h2 class="text-4xl font-black text-gray-900 mb-4 animate-scroll-reveal">
+                Somos un <span class="text-brand-primary">Holding Educativo</span>
+            </h2>
             <p class="text-lg text-gray-600 animate-scroll-reveal">Transformando la educación en América Latina.</p>
         </section>
     </template>
 
     <script>
-        // Función para cargar el Home desde el template interno
         function loadHome() {
             const main = document.getElementById('main-content');
             const template = document.getElementById('home-template');
             main.innerHTML = template.innerHTML;
-            
-            // Reiniciar carrusel
             initCarousel();
             initScrollReveal();
             window.scrollTo(0, 0);
         }
 
-        // Función para cargar páginas externas (AJAX)
         async function loadPage(url) {
             const main = document.getElementById('main-content');
-            
-            // Feedback visual de carga
             main.innerHTML = '<div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-4xl text-brand-primary"></i></div>';
-
             try {
-                // Intentamos cargar el archivo
                 const response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: No se pudo cargar ${url}`);
-                }
-
+                if (!response.ok) throw new Error(`Error ${response.status}`);
                 const html = await response.text();
                 main.innerHTML = html;
-                
-                // Reiniciar animaciones
                 initScrollReveal();
                 window.scrollTo(0, 0);
-
             } catch (error) {
                 console.error(error);
-                main.innerHTML = `
-                    <div class="text-center py-20 bg-red-50">
-                        <h2 class="text-2xl font-bold text-red-600 mb-2">Error al cargar la página</h2>
-                        <p class="text-gray-700">${error.message}</p>
-                        <p class="text-sm text-gray-500 mt-4">Asegúrate de que el archivo <strong>${url}</strong> existe en la misma carpeta y estás usando Live Server.</p>
-                    </div>`;
+                main.innerHTML = `<div class="text-center py-20 bg-red-50 text-red-600 font-bold">Error cargando contenido: ${error.message}</div>`;
             }
         }
 
-        // Animación de aparición
         function initScrollReveal() {
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
@@ -178,15 +192,11 @@
             document.querySelectorAll('.animate-scroll-reveal').forEach(el => observer.observe(el));
         }
 
-        // Lógica del Carrusel
         function initCarousel() {
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
             let current = 0;
-            
-            // Limpiar intervalos previos si existen
             if (window.carouselInterval) clearInterval(window.carouselInterval);
-
             window.carouselInterval = setInterval(() => {
                 items[current].classList.remove('active');
                 current = (current + 1) % items.length;
@@ -194,7 +204,6 @@
             }, 5000);
         }
 
-        // Cargar Home al inicio
         document.addEventListener('DOMContentLoaded', loadHome);
     </script>
 </body>
