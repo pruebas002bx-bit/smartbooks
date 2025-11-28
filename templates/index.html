@@ -454,7 +454,9 @@
         }
 
         window.removeFromCart = function(id) {
-            cart = cart.filter(item => item.id !== id);
+            // Convertimos ambos a String para asegurar que la comparación sea correcta
+            // independientemente de si el ID es número o texto
+            cart = cart.filter(item => String(item.id) !== String(id));
             renderCart();
             updateCartCount();
         };
