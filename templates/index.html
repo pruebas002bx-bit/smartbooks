@@ -400,7 +400,6 @@
 
         // --- CARGA DINÁMICA ---
         
-        // 1. HERO IMAGES (Sin texto)
         async function loadCarouselImages() {
             try {
                 const r = await fetch('/api/carousel'); 
@@ -410,7 +409,7 @@
                 if (imgs && imgs.length > 0) {
                     c.innerHTML = imgs.map((img, i) => `
                         <div class="carousel-item ${i===0?'active':''} absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${i===0?'opacity-100 z-20':'opacity-0 z-10'}">
-                            <img src="${img.image_url}" class="w-full h-full object-cover">
+                            <img src="${img.image_url}" class="w-full h-full object-fill">
                         </div>
                     `).join('');
                     initCarousel();
