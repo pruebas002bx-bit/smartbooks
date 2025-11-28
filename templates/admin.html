@@ -21,28 +21,31 @@
 </head>
 <body class="bg-gray-100 font-instrument h-screen overflow-hidden">
 
-    <div id="global-loader" class="fixed inset-0 z-[300] bg-white/80 hidden flex-col items-center justify-center backdrop-blur-sm">
+    <div id="global-loader" class="fixed inset-0 z-[300] bg-white/80 hidden flex-col items-center justify-center backdrop-blur-sm transition-opacity duration-200">
         <div class="loader mb-4"></div>
-        <p class="text-[#143c6c] font-bold animate-pulse">Procesando...</p>
+        <p class="text-[#143c6c] font-bold font-outfit animate-pulse text-lg">Procesando...</p>
     </div>
 
-    <div id="confirmation-modal" class="fixed inset-0 bg-black/60 z-[200] hidden flex items-center justify-center backdrop-blur-sm">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-96 text-center fade-in">
+    <div id="confirmation-modal" class="fixed inset-0 bg-black/60 z-[200] hidden flex items-center justify-center backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-96 text-center transform transition-all scale-100 fade-in">
+            <div class="mb-4 text-red-500 bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                <i class="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
             <h3 class="text-xl font-bold text-gray-800 font-outfit mb-2">¿Estás seguro?</h3>
             <p id="confirm-msg" class="text-gray-500 text-sm mb-6">Esta acción no se puede deshacer.</p>
             <div class="flex gap-3 justify-center">
-                <button onclick="closeConfirmation()" class="px-5 py-2 rounded-lg border">Cancelar</button>
-                <button onclick="executeConfirmAction()" class="px-5 py-2 rounded-lg bg-red-500 text-white font-bold">Sí, Eliminar</button>
+                <button onclick="closeConfirmation()" class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition">Cancelar</button>
+                <button onclick="executeConfirmAction()" class="px-5 py-2.5 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 shadow-lg shadow-red-500/30 transition">Sí, Eliminar</button>
             </div>
         </div>
     </div>
 
     <div id="login-modal" class="fixed inset-0 z-[100] bg-[#143c6c] flex items-center justify-center">
         <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center fade-in">
-            <h2 class="text-2xl font-bold text-gray-800 font-outfit mb-4">Acceso Admin</h2>
+            <h2 class="text-2xl font-bold text-gray-800 font-outfit mb-2">Acceso Administrativo</h2>
             <form onsubmit="handleLogin(event)">
-                <input type="password" id="admin-pass" placeholder="Contraseña" class="w-full p-3 border rounded-lg mb-4 outline-none">
-                <button type="submit" class="w-full bg-[#143c6c] text-white font-bold py-3 rounded-lg hover:bg-blue-900">Ingresar</button>
+                <input type="password" id="admin-pass" placeholder="Contraseña" class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-[#143c6c] outline-none">
+                <button type="submit" class="w-full bg-[#143c6c] text-white font-bold py-3 rounded-lg hover:bg-blue-900 transition">Ingresar</button>
             </form>
         </div>
     </div>
@@ -53,12 +56,18 @@
                 <h1 class="font-outfit font-bold text-xl">SMART ADMIN</h1>
             </div>
             <nav class="flex-grow p-4 space-y-2">
-                <button onclick="switchTab('products')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn active bg-white/10 font-bold" id="btn-products"><i class="fas fa-book"></i> Productos</button>
-                <button onclick="switchTab('schools')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-schools"><i class="fas fa-school"></i> Colegios</button>
-                <button onclick="switchTab('cms')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-cms"><i class="fas fa-desktop"></i> Gestión Web</button>
+                <button onclick="switchTab('products')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn active bg-white/10 font-bold" id="btn-products">
+                    <i class="fas fa-book w-5"></i> Productos
+                </button>
+                <button onclick="switchTab('schools')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-schools">
+                    <i class="fas fa-school w-5"></i> Colegios
+                </button>
+                <button onclick="switchTab('cms')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 flex items-center gap-3 transition nav-btn" id="btn-cms">
+                    <i class="fas fa-desktop w-5"></i> Gestión Web
+                </button>
             </nav>
             <div class="p-4 border-t border-blue-800">
-                <button onclick="location.reload()" class="w-full bg-red-500 hover:bg-red-600 py-2 rounded text-sm font-bold">Salir</button>
+                <button onclick="location.reload()" class="w-full bg-red-500 hover:bg-red-600 py-2 rounded text-sm font-bold transition">Salir</button>
             </div>
         </aside>
 
@@ -67,11 +76,13 @@
             <div id="tab-products" class="content-section">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800 font-outfit">Catálogo de Libros</h2>
-                    <button onclick="openProductModal()" class="bg-green-500 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-green-600"><i class="fas fa-plus mr-2"></i> Nuevo Libro</button>
+                    <button onclick="openProductModal()" class="bg-green-500 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-green-600 transition"><i class="fas fa-plus mr-2"></i> Nuevo Libro</button>
                 </div>
                 <div class="bg-white rounded-xl shadow overflow-hidden">
                     <table class="w-full text-left border-collapse">
-                        <thead class="bg-gray-50 text-gray-600 uppercase text-xs"><tr><th class="p-4">ID</th><th class="p-4">Producto</th><th class="p-4">Precio</th><th class="p-4 text-right">Acción</th></tr></thead>
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                            <tr><th class="p-4">ID</th><th class="p-4">Título</th><th class="p-4">Editorial</th><th class="p-4">Precio</th><th class="p-4 text-right">Acción</th></tr>
+                        </thead>
                         <tbody id="products-table" class="text-sm text-gray-700"></tbody>
                     </table>
                 </div>
@@ -80,20 +91,32 @@
             <div id="tab-schools" class="content-section hidden">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800 font-outfit">Colegios Aliados</h2>
-                    <button onclick="openNewSchoolModal()" class="bg-[#143c6c] text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-blue-900"><i class="fas fa-plus mr-2"></i> Nuevo Colegio</button>
+                    <button onclick="openNewSchoolModal()" class="bg-[#143c6c] text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-blue-900 transition"><i class="fas fa-plus mr-2"></i> Nuevo Colegio</button>
                 </div>
-                <div id="schools-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+                <div id="schools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
 
             <div id="tab-cms" class="content-section hidden">
                 <h2 class="text-3xl font-bold text-gray-800 font-outfit mb-8">Gestión de Contenido Web</h2>
                 
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
+                    <h3 class="text-xl font-bold text-[#143c6c] mb-2 border-b pb-2">Carrusel Principal (Imágenes Grandes)</h3>
+                    <p class="text-xs text-gray-400 mb-4">Estas imágenes aparecerán en el inicio. No llevan texto superpuesto.</p>
+                    
+                    <form onsubmit="addCarouselImage(event)" class="flex gap-2 mb-6">
+                        <input type="text" id="car-img" placeholder="URL de la Imagen Grande (Ej: https://...)" class="flex-grow border p-2 rounded text-sm outline-none focus:border-[#143c6c]" required>
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded font-bold hover:bg-blue-700 transition"><i class="fas fa-plus"></i> Añadir</button>
+                    </form>
+                    
+                    <div id="carousel-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold text-[#143c6c] mb-4 border-b pb-2">Editoriales Aliadas (Carrusel)</h3>
+                        <h3 class="text-xl font-bold text-[#143c6c] mb-4 border-b pb-2">Editoriales Aliadas (Logos)</h3>
                         <form onsubmit="addEditorial(event)" class="flex gap-2 mb-6">
-                            <input type="text" id="ed-img" placeholder="URL del Logo de la Editorial" class="flex-grow border p-2 rounded text-sm outline-none focus:border-[#143c6c]" required>
-                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-600"><i class="fas fa-plus"></i></button>
+                            <input type="text" id="ed-img" placeholder="URL del Logo" class="flex-grow border p-2 rounded text-sm outline-none focus:border-[#143c6c]" required>
+                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded font-bold hover:bg-green-600 transition"><i class="fas fa-plus"></i></button>
                         </form>
                         <div id="editorials-list" class="grid grid-cols-3 gap-4 max-h-96 overflow-y-auto custom-scroll"></div>
                     </div>
@@ -109,158 +132,218 @@
     </div>
 
     <div id="new-school-modal" class="fixed inset-0 bg-black/50 z-[150] hidden flex items-center justify-center backdrop-blur-sm">
-        <div class="bg-white rounded-xl p-6 w-96 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4 font-outfit">Nuevo Colegio</h3>
-            <form onsubmit="saveNewSchool(event)" class="space-y-3">
-                <input type="text" id="ns-name" placeholder="Nombre" class="w-full border p-2 rounded" required>
-                <input type="text" id="ns-logo" placeholder="URL Logo" class="w-full border p-2 rounded">
-                <div class="flex justify-end gap-2 mt-4"><button type="button" onclick="document.getElementById('new-school-modal').classList.add('hidden')" class="px-4 py-2 text-gray-500">Cancelar</button><button type="submit" class="px-4 py-2 bg-[#143c6c] text-white rounded font-bold">Guardar</button></div>
+        <div class="bg-white rounded-xl p-6 w-96 shadow-2xl fade-in">
+            <h3 class="text-xl font-bold mb-4 font-outfit text-[#143c6c]">Registrar Colegio</h3>
+            <form onsubmit="saveNewSchool(event)" class="space-y-4">
+                <input type="text" id="ns-name" placeholder="Nombre Institución" class="w-full border p-2.5 rounded bg-gray-50 outline-none" required>
+                <input type="text" id="ns-logo" placeholder="URL Logo" class="w-full border p-2.5 rounded bg-gray-50 outline-none">
+                <div class="flex justify-end gap-2 mt-4 pt-2 border-t">
+                    <button type="button" onclick="document.getElementById('new-school-modal').classList.add('hidden')" class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded text-sm font-bold">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-[#143c6c] text-white rounded text-sm font-bold hover:bg-blue-900">Guardar</button>
+                </div>
             </form>
         </div>
     </div>
 
     <div id="product-modal" class="fixed inset-0 bg-black/50 z-[150] hidden flex items-center justify-center backdrop-blur-sm">
-        <div class="bg-white rounded-xl p-6 w-96 shadow-2xl">
-            <h3 class="text-xl font-bold mb-4 font-outfit">Nuevo Producto</h3>
+        <div class="bg-white rounded-xl p-6 w-[500px] shadow-2xl fade-in">
+            <h3 class="text-xl font-bold mb-4 font-outfit text-gray-800">Datos del Libro</h3>
             <form onsubmit="saveProduct(event)" class="space-y-3">
-                <input type="text" id="p-title" placeholder="Título" class="w-full border p-2 rounded" required>
-                <div class="flex gap-2"><input type="text" id="p-editorial" placeholder="Editorial" class="w-1/2 border p-2 rounded"><input type="number" id="p-price" placeholder="Precio" class="w-1/2 border p-2 rounded" required></div>
-                <input type="text" id="p-img" placeholder="URL Imagen" class="w-full border p-2 rounded">
-                <textarea id="p-desc" placeholder="Descripción" class="w-full border p-2 rounded h-20"></textarea>
-                <div class="flex justify-end gap-2 mt-4"><button type="button" onclick="document.getElementById('product-modal').classList.add('hidden')" class="px-4 py-2 text-gray-500">Cancelar</button><button type="submit" class="px-4 py-2 bg-[#143c6c] text-white rounded font-bold">Guardar</button></div>
+                <input type="text" id="p-title" placeholder="Título" class="w-full border p-2 rounded bg-gray-50 outline-none" required>
+                <div class="flex gap-2">
+                    <input type="text" id="p-editorial" placeholder="Editorial" class="w-1/2 border p-2 rounded bg-gray-50 outline-none">
+                    <input type="number" id="p-price" placeholder="Precio" class="w-1/2 border p-2 rounded bg-gray-50 outline-none" required>
+                </div>
+                <input type="text" id="p-img" placeholder="URL Imagen Portada" class="w-full border p-2 rounded bg-gray-50 outline-none">
+                <textarea id="p-desc" placeholder="Sinopsis..." class="w-full border p-2 rounded bg-gray-50 h-24 resize-none outline-none"></textarea>
+                <div class="flex justify-end gap-2 mt-4 pt-4 border-t">
+                    <button type="button" onclick="document.getElementById('product-modal').classList.add('hidden')" class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded font-bold text-sm">Cancelar</button>
+                    <button type="submit" class="px-6 py-2 bg-[#143c6c] text-white rounded font-bold hover:bg-blue-900 text-sm">Guardar</button>
+                </div>
             </form>
         </div>
     </div>
 
     <div id="school-manager-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl overflow-hidden">
-             <div class="bg-[#143c6c] text-white p-4 flex justify-between"><h2 id="m-school-name" class="font-bold"></h2><button onclick="document.getElementById('school-manager-modal').classList.add('hidden')"><i class="fas fa-times"></i></button></div>
-             <div class="flex-grow flex"><div class="w-1/3 bg-gray-50 p-4 border-r"><button onclick="toggleGradeForm(true)" class="bg-[#143c6c] text-white w-full py-2 rounded mb-2">Crear Grado</button><div id="new-grade-form" class="hidden p-2 bg-blue-50 mb-2"><input id="ng-name" placeholder="Nombre" class="w-full border p-1 mb-1"><input id="ng-price" placeholder="Precio" class="w-full border p-1 mb-1"><button onclick="saveNewGrade()" class="bg-green-500 text-white w-full py-1">Guardar</button></div><div id="grades-list"></div></div><div class="w-2/3 p-4 bg-white relative"><div id="kit-content-area" class="hidden"><h3 id="current-kit-name" class="font-bold text-xl mb-4"></h3><div class="flex gap-2 mb-4"><select id="product-selector" class="border p-2 flex-grow"></select><button onclick="addProductToKit()" class="bg-green-500 text-white px-4 rounded">Agregar</button></div><div id="kit-items-table"></div></div><div id="kit-empty-state" class="text-center mt-20 text-gray-400">Selecciona un grado</div></div></div>
+        <div class="bg-white rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl overflow-hidden fade-in">
+            <div class="bg-[#143c6c] text-white p-5 flex justify-between items-center shrink-0">
+                <h2 id="m-school-name" class="text-2xl font-bold font-outfit">Nombre Colegio</h2>
+                <button onclick="document.getElementById('school-manager-modal').classList.add('hidden')" class="text-white/70 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="flex-grow flex overflow-hidden">
+                <div class="w-1/3 bg-gray-50 border-r border-gray-200 flex flex-col">
+                    <div class="p-4 border-b border-gray-200 bg-white flex justify-between items-center">
+                        <h3 class="font-bold text-gray-700">Grados</h3>
+                        <button onclick="toggleGradeForm(true)" class="text-xs bg-[#143c6c] text-white px-3 py-1 rounded font-bold">Crear</button>
+                    </div>
+                    <div id="new-grade-form" class="hidden p-4 bg-blue-50 border-b">
+                        <input id="ng-name" placeholder="Nombre Grado" class="w-full text-sm p-2 border rounded mb-2">
+                        <input id="ng-price" placeholder="Precio ($)" class="w-full text-sm p-2 border rounded mb-2">
+                        <button onclick="saveNewGrade()" class="w-full bg-[#143c6c] text-white text-xs py-2 rounded font-bold">Guardar</button>
+                    </div>
+                    <div id="grades-list" class="overflow-y-auto flex-grow p-3 space-y-2"></div>
+                </div>
+                <div class="w-2/3 flex flex-col bg-white relative">
+                    <div id="kit-empty-state" class="absolute inset-0 flex items-center justify-center text-gray-300">Selecciona un Grado</div>
+                    <div id="kit-content-area" class="hidden flex flex-col h-full">
+                        <div class="p-5 border-b bg-gray-50">
+                            <h3 id="current-kit-name" class="text-xl font-bold text-[#143c6c]"></h3>
+                        </div>
+                        <div class="p-4 border-b flex gap-2">
+                            <select id="product-selector" class="flex-grow border rounded p-2 text-sm"></select>
+                            <button onclick="addProductToKit()" class="bg-green-500 text-white px-4 rounded font-bold">Agregar</button>
+                        </div>
+                        <div class="flex-grow overflow-y-auto p-4">
+                            <table class="w-full text-sm"><tbody id="kit-items-table"></tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- LOGICA GENERAL Y UTILIDADES ---
+        let DATA_PRODUCTS = [], DATA_SCHOOLS = [], CURRENT_SCHOOL_ID = null, CURRENT_KIT_ID = null;
         let PENDING_ACTION = null;
-        let DATA_PRODUCTS=[], DATA_SCHOOLS=[], CURRENT_SCHOOL_ID=null, CURRENT_KIT_ID=null;
 
         function showLoader(show) { document.getElementById('global-loader').style.display = show ? 'flex' : 'none'; }
-        async function safeFetch(url, opts) {
+        
+        async function safeFetch(url, options = {}) {
             showLoader(true);
-            try { const r = await fetch(url, opts); return await r.json(); }
-            catch(e) { console.error(e); return null; }
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error('Error API');
+                return await response.json();
+            } catch (error) { console.error(error); return null; }
             finally { showLoader(false); }
         }
 
-        function showConfirmation(msg, cb) {
-            document.getElementById('confirm-msg').innerText = msg;
-            PENDING_ACTION = cb;
+        function showConfirmation(message, callback) {
+            document.getElementById('confirm-msg').innerText = message;
+            PENDING_ACTION = callback;
             document.getElementById('confirmation-modal').classList.remove('hidden');
         }
-        function closeConfirmation() { document.getElementById('confirmation-modal').classList.add('hidden'); }
-        async function executeConfirmAction() { if(PENDING_ACTION) await PENDING_ACTION(); closeConfirmation(); }
+        function closeConfirmation() { document.getElementById('confirmation-modal').classList.add('hidden'); PENDING_ACTION = null; }
+        async function executeConfirmAction() { if (PENDING_ACTION) await PENDING_ACTION(); closeConfirmation(); }
 
-        // --- AUTH & TABS ---
         async function handleLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-pass').value;
-            const res = await safeFetch('/api/admin/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pass})});
-            if(res && res.success) {
-                document.getElementById('login-modal').style.display='none';
+            const data = await safeFetch('/api/admin/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: pass}) });
+            if (data && data.success) {
+                document.getElementById('login-modal').style.display = 'none';
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 setTimeout(() => document.getElementById('admin-dashboard').classList.remove('opacity-0'), 50);
                 loadAllData();
-            } else alert('Error de credenciales');
+            } else alert('Credenciales incorrectas');
         }
 
         function switchTab(tab) {
-            document.querySelectorAll('.content-section').forEach(el=>el.classList.add('hidden'));
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('bg-white/10','font-bold'));
-            document.getElementById(`btn-${tab}`).classList.add('bg-white/10','font-bold');
-            if(tab === 'cms') loadCMSData(); // Cargar datos específicos del CMS
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-white/10', 'font-bold'));
+            document.getElementById(`btn-${tab}`).classList.add('bg-white/10', 'font-bold');
+            if(tab === 'cms') loadCMSData();
         }
 
-        // --- CARGA DE DATOS PRINCIPAL ---
         async function loadAllData() {
-            const p = await safeFetch('/api/products'); if(p) DATA_PRODUCTS=p;
-            const s = await safeFetch('/api/schools'); if(s) DATA_SCHOOLS=s;
-            renderProducts(); renderSchools();
+            const resP = await safeFetch('/api/products'); if(resP) DATA_PRODUCTS = resP;
+            const resS = await safeFetch('/api/schools'); if(resS) DATA_SCHOOLS = resS;
+            renderProductsTable();
+            renderSchoolsGrid();
         }
 
-        function renderProducts() {
-            document.getElementById('products-table').innerHTML = DATA_PRODUCTS.map(p=>`
-                <tr class="border-b hover:bg-gray-50"><td class="p-4">#${p.id}</td><td class="p-4 font-bold text-gray-800">${p.title}</td><td class="p-4 text-blue-600 font-bold">$${p.price}</td><td class="p-4 text-right"><button onclick="deleteProduct(${p.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>
+        // --- PRODUCTOS ---
+        function renderProductsTable() {
+            document.getElementById('products-table').innerHTML = DATA_PRODUCTS.map(p => `
+                <tr class="border-b hover:bg-gray-50"><td class="p-4">#${p.id}</td><td class="p-4 font-bold">${p.title}</td><td class="p-4 text-gray-500">${p.editorial||'-'}</td><td class="p-4 font-bold text-[#143c6c]">$${p.price}</td><td class="p-4 text-right"><button onclick="initDeleteProduct(${p.id})" class="text-red-500 hover:bg-red-50 p-2 rounded"><i class="fas fa-trash"></i></button></td></tr>
             `).join('');
         }
-        function openProductModal(){ document.getElementById('product-modal').classList.remove('hidden'); }
-        async function saveProduct(e){
+        function openProductModal() { document.getElementById('product-modal').classList.remove('hidden'); }
+        async function saveProduct(e) {
             e.preventDefault();
-            const body={title:document.getElementById('p-title').value, price:document.getElementById('p-price').value, editorial:document.getElementById('p-editorial').value, image_url:document.getElementById('p-img').value, description:document.getElementById('p-desc').value};
-            await safeFetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+            const body = { title: document.getElementById('p-title').value, price: document.getElementById('p-price').value, editorial: document.getElementById('p-editorial').value, image_url: document.getElementById('p-img').value, description: document.getElementById('p-desc').value };
+            await safeFetch('/api/products', {method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
             document.getElementById('product-modal').classList.add('hidden'); loadAllData();
         }
-        function deleteProduct(id){ showConfirmation('¿Borrar libro?', async()=>{ await safeFetch(`/api/products?id=${id}`,{method:'DELETE'}); loadAllData(); }); }
+        function initDeleteProduct(id) { showConfirmation('¿Eliminar libro?', async () => { await safeFetch(`/api/products?id=${id}`, {method:'DELETE'}); loadAllData(); }); }
 
-        // --- COLEGIOS Y KITS (Lógica resumida para que funcione admin.html) ---
-        function renderSchools(){ 
-            document.getElementById('schools-grid').innerHTML = DATA_SCHOOLS.map(s=>`<div class="bg-white p-4 rounded shadow text-center"><img src="${s.logo_url||''}" class="h-16 mx-auto mb-2 object-contain"><h3 class="font-bold">${s.name}</h3><button onclick="manageSchool(${s.id})" class="mt-2 text-blue-600 underline">Administrar</button> <button onclick="deleteSchool(${s.id})" class="text-red-500 ml-2"><i class="fas fa-trash"></i></button></div>`).join(''); 
+        // --- COLEGIOS ---
+        function renderSchoolsGrid() {
+            document.getElementById('schools-grid').innerHTML = DATA_SCHOOLS.map(s => `
+                <div class="bg-white p-6 rounded-xl shadow-sm border flex flex-col items-center relative group">
+                    <button onclick="initDeleteSchool(${s.id})" class="absolute top-2 right-2 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-trash"></i></button>
+                    <img src="${s.logo_url||'https://placehold.co/150'}" class="h-16 mb-2 object-contain">
+                    <h3 class="font-bold text-lg text-center mb-2">${s.name}</h3>
+                    <button onclick="openSchoolManager(${s.id})" class="text-[#143c6c] font-bold border border-[#143c6c] px-4 py-1 rounded hover:bg-[#143c6c] hover:text-white transition text-xs uppercase">Administrar</button>
+                </div>
+            `).join('');
         }
-        function openNewSchoolModal(){ document.getElementById('new-school-modal').classList.remove('hidden'); }
-        async function saveNewSchool(e){ 
-            e.preventDefault(); 
-            await safeFetch('/api/schools',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:document.getElementById('ns-name').value,logo_url:document.getElementById('ns-logo').value})}); 
-            document.getElementById('new-school-modal').classList.add('hidden'); loadAllData(); 
+        function openNewSchoolModal() { document.getElementById('new-school-modal').classList.remove('hidden'); }
+        async function saveNewSchool(e) {
+            e.preventDefault();
+            await safeFetch('/api/schools', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name: document.getElementById('ns-name').value, logo_url: document.getElementById('ns-logo').value}) });
+            document.getElementById('new-school-modal').classList.add('hidden'); loadAllData();
         }
-        function deleteSchool(id){ showConfirmation('¿Borrar colegio?', async()=>{ await safeFetch(`/api/schools?id=${id}`,{method:'DELETE'}); loadAllData(); }); }
-        
-        function manageSchool(sid){
-            CURRENT_SCHOOL_ID=sid; const s=DATA_SCHOOLS.find(x=>x.id==sid);
-            document.getElementById('m-school-name').innerText=s.name;
+        function initDeleteSchool(id) { showConfirmation('¿Eliminar colegio?', async () => { await safeFetch(`/api/schools?id=${id}`, {method: 'DELETE'}); loadAllData(); }); }
+
+        // --- MANAGER KITS ---
+        function openSchoolManager(sid) {
+            CURRENT_SCHOOL_ID = sid; const s = DATA_SCHOOLS.find(x => x.id == sid);
+            document.getElementById('m-school-name').textContent = s.name;
             document.getElementById('school-manager-modal').classList.remove('hidden');
-            renderKits(s);
-            // Populate product selector
-            const sel = document.getElementById('product-selector'); sel.innerHTML='<option value="">Seleccionar Libro...</option>';
-            DATA_PRODUCTS.forEach(p=> sel.innerHTML+=`<option value="${p.id}">${p.title}</option>`);
+            renderKitsList(s);
+            // Llenar selector
+            const sel = document.getElementById('product-selector');
+            sel.innerHTML = '<option value="">Seleccionar libro...</option>';
+            DATA_PRODUCTS.forEach(p => sel.innerHTML += `<option value="${p.id}">${p.title} - $${p.price}</option>`);
         }
-        function renderKits(s){
-            const d=document.getElementById('grades-list'); d.innerHTML='';
-            if(!s.kits) return;
-            s.kits.forEach(k=>{
-                d.innerHTML+=`<div onclick="selectKit(${k.id})" class="p-2 border-b cursor-pointer hover:bg-gray-100 flex justify-between"><span>${k.grade_name}</span> <i onclick="deleteKit(${k.id}, event)" class="fas fa-trash text-red-400"></i></div>`;
+        function renderKitsList(school) {
+            const div = document.getElementById('grades-list'); div.innerHTML = '';
+            if(school.kits) school.kits.forEach(k => {
+                div.innerHTML += `<div onclick="selectKit(${k.id})" class="p-3 border-b cursor-pointer hover:bg-gray-100 flex justify-between"><span>${k.grade_name}</span> <i onclick="initDeleteKit(${k.id}, event)" class="fas fa-trash text-gray-300 hover:text-red-500"></i></div>`;
             });
         }
-        function toggleGradeForm(show){ document.getElementById('new-grade-form').classList.toggle('hidden', !show); }
-        async function saveNewGrade(){
-            await safeFetch('/api/kits',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create_kit', school_id:CURRENT_SCHOOL_ID, grade_name:document.getElementById('ng-name').value, price:document.getElementById('ng-price').value})});
-            toggleGradeForm(false); reloadCurrentSchool();
+        function toggleGradeForm(show) { document.getElementById('new-grade-form').classList.toggle('hidden', !show); }
+        async function saveNewGrade() {
+            await safeFetch('/api/kits', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({action:'create_kit', school_id: CURRENT_SCHOOL_ID, grade_name: document.getElementById('ng-name').value, price: document.getElementById('ng-price').value}) });
+            reloadSchool(); toggleGradeForm(false);
         }
-        async function deleteKit(kid, e){ e.stopPropagation(); showConfirmation('¿Borrar kit?', async()=>{ await safeFetch(`/api/kits?id=${kid}`,{method:'DELETE'}); reloadCurrentSchool(); }); }
-        async function reloadCurrentSchool(){ const s=await safeFetch('/api/schools'); DATA_SCHOOLS=s; manageSchool(CURRENT_SCHOOL_ID); }
-        
-        function selectKit(kid){
-            CURRENT_KIT_ID=kid;
-            document.getElementById('kit-empty-state').classList.add('hidden');
-            document.getElementById('kit-content-area').classList.remove('hidden');
-            const s=DATA_SCHOOLS.find(x=>x.id==CURRENT_SCHOOL_ID);
-            const k=s.kits.find(x=>x.id==kid);
-            document.getElementById('current-kit-name').innerText = k.grade_name;
-            const t=document.getElementById('kit-items-table'); t.innerHTML='';
-            if(k.products) k.products.forEach(p=> t.innerHTML+=`<div class="flex justify-between border-b p-2"><span>${p.title}</span> <button onclick="removeItem(${p.id})" class="text-red-500"><i class="fas fa-minus"></i></button></div>`);
+        function initDeleteKit(id, e) { e.stopPropagation(); showConfirmation('¿Borrar grado?', async () => { await safeFetch(`/api/kits?id=${id}`, {method:'DELETE'}); reloadSchool(); }); }
+        async function reloadSchool() { const s = await safeFetch('/api/schools'); DATA_SCHOOLS = s; openSchoolManager(CURRENT_SCHOOL_ID); }
+        function selectKit(kid) {
+            CURRENT_KIT_ID = kid;
+            document.getElementById('kit-empty-state').classList.add('hidden'); document.getElementById('kit-content-area').classList.remove('hidden');
+            const k = DATA_SCHOOLS.find(s => s.id == CURRENT_SCHOOL_ID).kits.find(x => x.id == kid);
+            document.getElementById('current-kit-name').textContent = k.grade_name;
+            const t = document.getElementById('kit-items-table'); t.innerHTML = '';
+            if(k.products) k.products.forEach(p => t.innerHTML += `<tr class="border-b"><td class="py-2 flex items-center gap-2"><img src="${p.image_url}" class="h-8"> ${p.title}</td><td class="text-right"><button onclick="removeItem(${p.id})" class="text-red-500"><i class="fas fa-minus"></i></button></td></tr>`);
         }
-        async function addProductToKit(){
-            const pid=document.getElementById('product-selector').value; if(!pid)return;
-            await safeFetch('/api/kits',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'add_item',kit_id:CURRENT_KIT_ID,product_id:pid})});
-            reloadCurrentSchool(); setTimeout(()=>selectKit(CURRENT_KIT_ID), 500);
+        async function addProductToKit() {
+            const pid = document.getElementById('product-selector').value; if(!pid) return;
+            await safeFetch('/api/kits', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({action:'add_item', kit_id: CURRENT_KIT_ID, product_id: pid}) });
+            await reloadSchool(); selectKit(CURRENT_KIT_ID);
         }
-        async function removeItem(pid){
-            await safeFetch('/api/kits',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'remove_item',kit_id:CURRENT_KIT_ID,product_id:pid})});
-            reloadCurrentSchool(); setTimeout(()=>selectKit(CURRENT_KIT_ID), 500);
+        async function removeItem(pid) {
+            await safeFetch('/api/kits', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({action:'remove_item', kit_id: CURRENT_KIT_ID, product_id: pid}) });
+            await reloadSchool(); selectKit(CURRENT_KIT_ID);
         }
 
-        // --- CMS / GESTIÓN WEB (NUEVO) ---
+        // --- GESTIÓN WEB (CMS) ---
         async function loadCMSData() {
-            // Cargar Editoriales
+            // 1. Carrusel
+            const cars = await safeFetch('/api/carousel');
+            const carList = document.getElementById('carousel-list');
+            if(cars) {
+                carList.innerHTML = cars.map(c => `
+                    <div class="relative group bg-gray-100 rounded-lg overflow-hidden h-32 border">
+                        <img src="${c.image_url}" class="w-full h-full object-cover">
+                        <button onclick="deleteCarousel(${c.id})" class="absolute top-2 right-2 bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"><i class="fas fa-trash"></i></button>
+                    </div>
+                `).join('');
+            }
+
+            // 2. Editoriales
             const eds = await safeFetch('/api/editorials');
             const edList = document.getElementById('editorials-list');
             if(eds) {
@@ -272,7 +355,7 @@
                 `).join('');
             }
 
-            // Cargar Secciones Destacadas
+            // 3. Features
             const feats = await safeFetch('/api/features');
             const featList = document.getElementById('features-list');
             if(feats) {
@@ -283,27 +366,12 @@
                             <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Editable</span>
                         </div>
                         <form onsubmit="updateFeature(event, ${f.id})" class="space-y-3">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400">Título</label>
-                                <input type="text" id="f-title-${f.id}" value="${f.title}" class="w-full border p-2 rounded text-sm font-bold text-[#143c6c]">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400">Descripción Corta</label>
-                                <input type="text" id="f-desc-${f.id}" value="${f.description}" class="w-full border p-2 rounded text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-400">URL Imagen de Fondo</label>
-                                <input type="text" id="f-img-${f.id}" value="${f.image_url}" class="w-full border p-2 rounded text-xs text-gray-500 font-mono">
-                            </div>
+                            <div><label class="block text-xs font-bold text-gray-400">Título</label><input type="text" id="f-title-${f.id}" value="${f.title}" class="w-full border p-2 rounded text-sm font-bold text-[#143c6c]"></div>
+                            <div><label class="block text-xs font-bold text-gray-400">Descripción Corta</label><input type="text" id="f-desc-${f.id}" value="${f.description}" class="w-full border p-2 rounded text-sm"></div>
+                            <div><label class="block text-xs font-bold text-gray-400">URL Imagen Fondo</label><input type="text" id="f-img-${f.id}" value="${f.image_url}" class="w-full border p-2 rounded text-xs text-gray-500"></div>
                             <div class="flex gap-2">
-                                <div class="w-1/3">
-                                    <label class="block text-xs font-bold text-gray-400">Texto Botón</label>
-                                    <input type="text" id="f-btn-${f.id}" value="${f.button_text}" class="w-full border p-2 rounded text-sm text-center">
-                                </div>
-                                <div class="w-2/3">
-                                    <label class="block text-xs font-bold text-gray-400">Contenido Modal (Texto/HTML)</label>
-                                    <textarea id="f-modal-${f.id}" class="w-full border p-2 rounded text-xs h-10 resize-none focus:h-32 transition-all">${f.modal_content || ''}</textarea>
-                                </div>
+                                <div class="w-1/3"><label class="block text-xs font-bold text-gray-400">Botón</label><input type="text" id="f-btn-${f.id}" value="${f.button_text}" class="w-full border p-2 rounded text-sm text-center"></div>
+                                <div class="w-2/3"><label class="block text-xs font-bold text-gray-400">Contenido Modal</label><textarea id="f-modal-${f.id}" class="w-full border p-2 rounded text-xs h-10 focus:h-32 transition-all">${f.modal_content || ''}</textarea></div>
                             </div>
                             <button type="submit" class="w-full bg-[#143c6c] text-white py-2 rounded text-sm font-bold hover:bg-blue-800 transition">Actualizar Tarjeta</button>
                         </form>
@@ -312,33 +380,13 @@
             }
         }
 
-        async function addEditorial(e) {
-            e.preventDefault();
-            const url = document.getElementById('ed-img').value;
-            await safeFetch('/api/editorials', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({image_url: url})});
-            document.getElementById('ed-img').value = '';
-            loadCMSData();
-        }
+        async function addCarouselImage(e) { e.preventDefault(); const url=document.getElementById('car-img').value; await safeFetch('/api/carousel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image_url:url})}); document.getElementById('car-img').value=''; loadCMSData(); }
+        async function deleteCarousel(id) { if(!confirm('¿Eliminar?'))return; await safeFetch(`/api/carousel?id=${id}`,{method:'DELETE'}); loadCMSData(); }
+        
+        async function addEditorial(e) { e.preventDefault(); const url=document.getElementById('ed-img').value; await safeFetch('/api/editorials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image_url:url})}); document.getElementById('ed-img').value=''; loadCMSData(); }
+        async function deleteEditorial(id) { if(!confirm('¿Eliminar?'))return; await safeFetch(`/api/editorials?id=${id}`,{method:'DELETE'}); loadCMSData(); }
 
-        async function deleteEditorial(id) {
-            if(!confirm('¿Eliminar logo?')) return;
-            await safeFetch(`/api/editorials?id=${id}`, {method:'DELETE'});
-            loadCMSData();
-        }
-
-        async function updateFeature(e, id) {
-            e.preventDefault();
-            const body = {
-                id: id,
-                title: document.getElementById(`f-title-${id}`).value,
-                description: document.getElementById(`f-desc-${id}`).value,
-                image_url: document.getElementById(`f-img-${id}`).value,
-                button_text: document.getElementById(`f-btn-${id}`).value,
-                modal_content: document.getElementById(`f-modal-${id}`).value
-            };
-            await safeFetch('/api/features', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
-            alert('Sección actualizada correctamente');
-        }
+        async function updateFeature(e, id) { e.preventDefault(); const body={id, title:document.getElementById(`f-title-${id}`).value, description:document.getElementById(`f-desc-${id}`).value, image_url:document.getElementById(`f-img-${id}`).value, button_text:document.getElementById(`f-btn-${id}`).value, modal_content:document.getElementById(`f-modal-${id}`).value}; await safeFetch('/api/features',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); alert('Actualizado'); }
     </script>
 </body>
 </html>

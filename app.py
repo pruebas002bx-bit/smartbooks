@@ -198,5 +198,43 @@ def api_features():
     finally:
         conn.close()
 
+
+
+# --- NUEVA API: CARRUSEL PRINCIPAL (CMS) ---
+@app.route('/api/carousel', methods=['GET', 'POST', 'DELETE'])
+def api_carousel():
+    conn = get_db_connection()
+    if not conn: return jsonify({"error": "DB error"}), 500
+    try:
+        if request.method == 'GET':
+            cur = conn.cursor(cursor_factory=RealDictCursor)
+            cur.execute("SELECT * FROM hero_carousel ORDER BY id ASC")
+            return jsonify(cur.fetchall())
+        
+        if not session.get('admin'): return jsonify({"error": "Unauthorized"}), 401
+        
+        if request.method == 'POST':
+            data = request.json
+            cur = conn.cursor()
+            cur.execute("INSERT INTO hero_carousel (image_url) VALUES (%s)", (data['image_url'],))
+            conn.commit()
+            return jsonify({"success": True})
+            
+        if request.method == 'DELETE':
+            cid = request.args.get('id')
+            cur = conn.cursor()
+            cur.execute("DELETE FROM hero_carousel WHERE id = %s", (cid,))
+            conn.commit()
+            return jsonify({"success": True})
+    except Exception as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+
+
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
