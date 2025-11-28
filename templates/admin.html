@@ -13,9 +13,28 @@
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        /* Animación suave para modales */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
     </style>
 </head>
 <body class="bg-gray-100 font-instrument h-screen overflow-hidden">
+
+    <div id="confirmation-modal" class="fixed inset-0 bg-black/60 z-[200] hidden flex items-center justify-center backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-96 text-center transform transition-all scale-100" id="confirmation-box">
+            <div class="mb-4 text-red-500 bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                <i class="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 font-outfit mb-2">¿Estás seguro?</h3>
+            <p id="confirm-msg" class="text-gray-500 text-sm mb-6">Esta acción no se puede deshacer.</p>
+            <div class="flex gap-3 justify-center">
+                <button onclick="closeConfirmation()" class="px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition">Cancelar</button>
+                <button onclick="executeConfirmAction()" class="px-5 py-2.5 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 shadow-lg shadow-red-500/30 transition">Sí, Eliminar</button>
+            </div>
+        </div>
+    </div>
 
     <div id="login-modal" class="fixed inset-0 z-[100] bg-[#143c6c] flex items-center justify-center">
         <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center">
@@ -72,7 +91,7 @@
         </main>
     </div>
 
-    <div id="school-manager-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div id="school-manager-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl w-full max-w-4xl h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
             <div class="bg-[#143c6c] text-white p-6 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-4">
@@ -123,7 +142,7 @@
         </div>
     </div>
 
-    <div id="product-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center">
+    <div id="product-modal" class="fixed inset-0 bg-black/50 z-[60] hidden flex items-center justify-center backdrop-blur-sm">
         <div class="bg-white rounded-xl p-6 w-[500px] shadow-2xl">
             <h3 class="text-xl font-bold mb-4 font-outfit">Datos del Libro</h3>
             <form onsubmit="saveProduct(event)" class="space-y-3">
@@ -145,7 +164,29 @@
 
     <script>
         let DATA_PRODUCTS = [], DATA_SCHOOLS = [], CURRENT_SCHOOL_ID = null, CURRENT_KIT_ID = null;
+        let PENDING_ACTION = null; // Variable para almacenar la acción de borrado pendiente
 
+        // --- MANEJO DE MODAL DE CONFIRMACIÓN ---
+        function showConfirmation(message, callback) {
+            document.getElementById('confirm-msg').innerText = message;
+            PENDING_ACTION = callback;
+            document.getElementById('confirmation-modal').classList.remove('hidden');
+        }
+
+        function closeConfirmation() {
+            document.getElementById('confirmation-modal').classList.add('hidden');
+            PENDING_ACTION = null;
+        }
+
+        async function executeConfirmAction() {
+            if (PENDING_ACTION) {
+                // Ejecutamos la acción pendiente
+                await PENDING_ACTION(); 
+            }
+            closeConfirmation();
+        }
+
+        // --- SISTEMA ---
         async function handleLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-pass').value;
@@ -165,28 +206,37 @@
         function switchTab(tab) {
             document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            // Estilos de botones
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-white/10', 'font-bold'));
+            document.getElementById(`btn-${tab}`).classList.add('bg-white/10', 'font-bold');
         }
 
         async function loadAllData() {
-            const resP = await fetch('/api/products');
-            DATA_PRODUCTS = await resP.json();
-            renderProductsTable();
-            updateProductSelector();
+            try {
+                const resP = await fetch('/api/products');
+                DATA_PRODUCTS = await resP.json();
+                renderProductsTable();
+                updateProductSelector();
 
-            const resS = await fetch('/api/schools');
-            DATA_SCHOOLS = await resS.json();
-            renderSchoolsGrid();
+                const resS = await fetch('/api/schools');
+                DATA_SCHOOLS = await resS.json();
+                renderSchoolsGrid();
+            } catch (error) {
+                console.error("Error cargando datos:", error);
+            }
         }
 
         // --- PRODUCTOS ---
         function renderProductsTable() {
             document.getElementById('products-table').innerHTML = DATA_PRODUCTS.map(p => `
-                <tr class="border-b hover:bg-gray-50">
+                <tr class="border-b hover:bg-gray-50 transition">
                     <td class="p-4 text-gray-400 text-xs">#${p.id}</td>
-                    <td class="p-4 font-bold text-gray-800 flex items-center gap-3"><img src="${p.image_url}" class="w-8 h-10 object-cover rounded"> ${p.title}</td>
+                    <td class="p-4 font-bold text-gray-800 flex items-center gap-3"><img src="${p.image_url}" class="w-8 h-10 object-cover rounded shadow-sm"> ${p.title}</td>
                     <td class="p-4 text-gray-500">${p.editorial || '-'}</td>
                     <td class="p-4 text-[#143c6c] font-bold">$${p.price}</td>
-                    <td class="p-4 text-right"><button onclick="deleteProduct(${p.id})" class="text-red-400 hover:text-red-600"><i class="fas fa-trash-alt"></i></button></td>
+                    <td class="p-4 text-right">
+                        <button onclick="initDeleteProduct(${p.id})" class="bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 p-2 rounded-lg transition"><i class="fas fa-trash-alt"></i></button>
+                    </td>
                 </tr>
             `).join('');
         }
@@ -196,7 +246,7 @@
             document.getElementById('p-price').value = '';
             document.getElementById('p-editorial').value = '';
             document.getElementById('p-img').value = '';
-            document.getElementById('p-desc').value = ''; // Limpiar descripción
+            document.getElementById('p-desc').value = '';
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
@@ -207,18 +257,19 @@
                 price: document.getElementById('p-price').value,
                 editorial: document.getElementById('p-editorial').value,
                 image_url: document.getElementById('p-img').value,
-                description: document.getElementById('p-desc').value // Capturar descripción
+                description: document.getElementById('p-desc').value
             };
             await fetch('/api/products', {method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
             document.getElementById('product-modal').classList.add('hidden');
             loadAllData();
         }
 
-        async function deleteProduct(id) {
-            if(confirm('¿Eliminar libro?')) {
+        // NUEVA FUNCIÓN DE BORRADO DE PRODUCTO CON MODAL
+        function initDeleteProduct(id) {
+            showConfirmation('¿Estás seguro de eliminar este libro del catálogo?', async () => {
                 await fetch(`/api/products?id=${id}`, {method:'DELETE'});
-                loadAllData();
-            }
+                await loadAllData(); // Se recarga inmediatamente tras el await
+            });
         }
 
         // --- COLEGIOS ---
@@ -227,13 +278,13 @@
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition">
                     <div class="flex items-center gap-4 mb-4">
                         <img src="${s.logo_url}" class="w-16 h-16 object-contain rounded-full bg-gray-50 border p-2">
-                        <div><h3 class="font-bold text-lg text-gray-800">${s.name}</h3><p class="text-sm text-gray-500">${s.city}</p></div>
+                        <div><h3 class="font-bold text-lg text-gray-800">${s.name}</h3><p class="text-sm text-gray-500">${s.city || 'Ciudad no especificada'}</p></div>
                     </div>
                     <div class="flex justify-between items-center border-t pt-4">
                         <span class="text-xs font-bold bg-blue-50 text-[#143c6c] px-2 py-1 rounded">${s.kits ? s.kits.length : 0} Grados</span>
                         <div class="flex gap-2">
-                            <button onclick="deleteSchool(${s.id})" class="text-red-400 p-2"><i class="fas fa-trash"></i></button>
-                            <button onclick="openSchoolManager(${s.id})" class="bg-[#143c6c] text-white text-sm px-4 py-2 rounded-lg font-bold">Administrar</button>
+                            <button onclick="initDeleteSchool(${s.id})" class="text-red-400 hover:text-red-600 bg-red-50 p-2 rounded transition"><i class="fas fa-trash"></i></button>
+                            <button onclick="openSchoolManager(${s.id})" class="bg-[#143c6c] text-white text-sm px-4 py-2 rounded-lg font-bold hover:bg-blue-800 transition shadow">Administrar</button>
                         </div>
                     </div>
                 </div>
@@ -248,17 +299,19 @@
             loadAllData();
         }
 
-        async function deleteSchool(id) {
-            if(confirm('¿Eliminar colegio?')) {
+        // NUEVA FUNCIÓN DE BORRADO DE COLEGIO CON MODAL
+        function initDeleteSchool(id) {
+            showConfirmation('¿Eliminar colegio? Esto borrará todos sus grados asociados.', async () => {
                 await fetch(`/api/schools?id=${id}`, {method: 'DELETE'});
-                loadAllData();
-            }
+                await loadAllData();
+            });
         }
 
-        // --- KITS ---
+        // --- KITS Y GRADOS ---
         function openSchoolManager(sid) {
             CURRENT_SCHOOL_ID = sid;
             const s = DATA_SCHOOLS.find(x => x.id == sid);
+            if (!s) return;
             document.getElementById('m-school-name').textContent = s.name;
             document.getElementById('m-school-logo').src = s.logo_url;
             document.getElementById('school-manager-modal').classList.remove('hidden');
@@ -277,8 +330,12 @@
             if(!school.kits || !school.kits.length) { div.innerHTML='<p class="text-center text-xs text-gray-400 mt-4">Sin grados</p>'; return; }
             school.kits.forEach(k => {
                 const el = document.createElement('div');
-                el.className = 'p-3 rounded border border-gray-100 bg-white hover:bg-blue-50 cursor-pointer flex justify-between items-center mb-2';
-                el.innerHTML = `<div><h4 class="font-bold text-sm text-gray-700">${k.grade_name}</h4><p class="text-[10px] text-gray-400">$${k.price}</p></div><button onclick="event.stopPropagation();deleteKit(${k.id})" class="text-gray-300 hover:text-red-500"><i class="fas fa-trash-alt"></i></button>`;
+                el.className = 'p-3 rounded border border-gray-100 bg-white hover:bg-blue-50 cursor-pointer flex justify-between items-center mb-2 transition';
+                // Botón de eliminar kit actualizado
+                el.innerHTML = `
+                    <div><h4 class="font-bold text-sm text-gray-700">${k.grade_name}</h4><p class="text-[10px] text-gray-400">$${k.price}</p></div>
+                    <button onclick="event.stopPropagation(); initDeleteKit(${k.id})" class="text-gray-300 hover:text-red-500 px-2"><i class="fas fa-trash-alt"></i></button>
+                `;
                 el.onclick = () => selectKit(k);
                 div.appendChild(el);
             });
@@ -297,14 +354,24 @@
             await loadAllData();
             renderKitsList(DATA_SCHOOLS.find(s => s.id == CURRENT_SCHOOL_ID));
             toggleGradeForm(false);
+            // Limpiar inputs
+            document.getElementById('ng-name').value = '';
+            document.getElementById('ng-price').value = '';
         }
 
-        async function deleteKit(id) {
-            if(confirm('¿Borrar grado?')) {
+        // NUEVA FUNCIÓN DE BORRADO DE KIT CON MODAL
+        function initDeleteKit(id) {
+            showConfirmation('¿Eliminar este grado y su lista de libros?', async () => {
                 await fetch(`/api/kits?id=${id}`, {method:'DELETE'});
                 await loadAllData();
+                // Si el kit borrado era el seleccionado, volvemos al estado vacio
+                if(CURRENT_KIT_ID == id) {
+                    document.getElementById('kit-content-area').classList.add('hidden');
+                    document.getElementById('kit-empty-state').classList.remove('hidden');
+                    CURRENT_KIT_ID = null;
+                }
                 renderKitsList(DATA_SCHOOLS.find(s => s.id == CURRENT_SCHOOL_ID));
-            }
+            });
         }
 
         function selectKit(kit) {
@@ -317,7 +384,14 @@
             tbody.innerHTML = '';
             if(kit.products) {
                 kit.products.forEach(p => {
-                    tbody.innerHTML += `<tr class="hover:bg-gray-50"><td class="py-2"><img src="${p.image_url}" class="w-8 h-10 object-contain bg-white border rounded"></td><td class="py-2"><div class="font-bold text-xs">${p.title}</div></td><td class="py-2 text-right"><button onclick="removeItem(${p.id})" class="text-red-300 hover:text-red-500"><i class="fas fa-minus-circle"></i></button></td></tr>`;
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="py-2"><img src="${p.image_url}" class="w-8 h-10 object-contain bg-white border rounded"></td>
+                            <td class="py-2"><div class="font-bold text-xs">${p.title}</div></td>
+                            <td class="py-2 text-right">
+                                <button onclick="removeItem(${p.id})" class="text-red-300 hover:text-red-500 transition"><i class="fas fa-minus-circle"></i></button>
+                            </td>
+                        </tr>`;
                 });
             }
         }
@@ -336,6 +410,7 @@
             selectKit(DATA_SCHOOLS.find(s => s.id == CURRENT_SCHOOL_ID).kits.find(k => k.id == CURRENT_KIT_ID));
         }
 
+        // Remover item de kit (no requiere modal confirmación complejo, es una acción menor, pero se puede agregar si se desea)
         async function removeItem(pid) {
             await fetch('/api/kits', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({action:'remove_item', kit_id: CURRENT_KIT_ID, product_id: pid}) });
             await loadAllData();
