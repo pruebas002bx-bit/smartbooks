@@ -403,12 +403,21 @@
         // 1. HERO IMAGES (Sin texto)
         async function loadCarouselImages() {
             try {
-                const r = await fetch('/api/carousel'); const imgs = await r.json(); const c = document.getElementById('banner-carousel');
+                const r = await fetch('/api/carousel'); 
+                const imgs = await r.json(); 
+                const c = document.getElementById('banner-carousel');
+                
                 if (imgs && imgs.length > 0) {
-                    c.innerHTML = imgs.map((img, i) => `<div class="carousel-item ${i===0?'active':''} absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${i===0?'opacity-100 z-20':'opacity-0 z-10'}"><img src="${img.image_url}" class="w-full h-full object-cover"></div>`).join('');
+                    c.innerHTML = imgs.map((img, i) => `
+                        <div class="carousel-item ${i===0?'active':''} absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${i===0?'opacity-100 z-20':'opacity-0 z-10'} bg-gray-900 flex items-center justify-center">
+                            <img src="${img.image_url}" class="w-full h-full object-contain">
+                        </div>
+                    `).join('');
                     initCarousel();
-                } else c.innerHTML = '<div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">Sin imágenes</div>';
-            } catch (e) {}
+                } else {
+                    c.innerHTML = '<div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">Sin imágenes</div>';
+                }
+            } catch (e) { console.error(e); }
         }
 
         function initCarousel() {
