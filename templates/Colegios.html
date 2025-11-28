@@ -81,15 +81,15 @@
 
             <div id="package-card" class="hidden bg-white rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl overflow-hidden border border-gray-100 animate-scroll-reveal transform transition-all max-w-5xl mx-auto ring-1 ring-black/5">
                 <div class="flex flex-col md:flex-row h-full">
+                    
                     <div class="md:w-5/12 bg-gray-50 p-6 md:p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-gray-200 relative overflow-hidden group">
                         <div class="absolute inset-0 bg-[#143c6c] opacity-0 group-hover:opacity-5 transition duration-700"></div>
                         <div class="relative z-10 w-32 h-32 md:w-44 md:h-44 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 md:mb-6 p-4 border-4 md:border-8 border-white transition transform group-hover:scale-105 duration-500">
-                            <img id="card-imagen" src="" alt="Logo Colegio" class="w-full h-full object-contain">
+                            <img id="card-imagen" src="" onerror="this.src='https://placehold.co/150?text=S/L'" alt="Logo Colegio" class="w-full h-full object-contain">
                         </div>
                         <h3 id="card-colegio" class="relative z-10 font-outfit text-xl md:text-2xl font-black text-[#143c6c] mb-1 md:mb-2 leading-tight px-2">Nombre Colegio</h3>
                         <div class="relative z-10 inline-flex items-center gap-2 bg-blue-100 text-[#143c6c] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-2 md:mb-4"><i class="fas fa-certificate text-yellow-500"></i> Aliado Oficial</div>
-                        <p class="relative z-10 text-gray-500 font-medium text-xs md:text-sm font-instrument uppercase tracking-wide flex items-center justify-center gap-2"><i class="fas fa-map-marker-alt text-red-400"></i> <span id="card-city">Ciudad</span></p>
-                    </div>
+                        </div>
 
                     <div class="md:w-7/12 p-6 md:p-10 flex flex-col justify-between bg-white relative">
                         <div>
@@ -127,7 +127,7 @@
                 const res = await fetch('/api/schools');
                 SCHOOLS_DATA = await res.json();
                 renderSchools();
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("Error cargando colegios", e); }
         }
 
         const getEl = (id) => document.getElementById(id);
@@ -136,19 +136,35 @@
             courseBtn: getEl('course-select-button'), courseMenu: getEl('course-dropdown-menu'), courseList: getEl('course-list'), courseContainer: getEl('course-dropdown-container'),
             labelGrade: getEl('label-grade'), badgeGradeNumber: getEl('badge-number-2'), badgeGradeStatus: getEl('badge-status-2'),
             card: getEl('package-card'), loading: getEl('search-loading'), initialState: getEl('initial-state'), addBtn: getEl('add-kit-btn'),
-            cardColegio: getEl('card-colegio'), cardCity: getEl('card-city'), cardCurso: getEl('card-curso'), cardImagen: getEl('card-imagen'), cardKitName: getEl('card-kit-name'), packageDetails: getEl('package-details')
+            cardColegio: getEl('card-colegio'), cardCurso: getEl('card-curso'), cardImagen: getEl('card-imagen'), cardKitName: getEl('card-kit-name'), packageDetails: getEl('package-details')
         };
 
         function renderSchools(filter = '') {
             if (!els.schoolList) return;
             els.schoolList.innerHTML = '';
+            
+            // Filtro local
             const filtered = SCHOOLS_DATA.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()));
-            if(filtered.length === 0) { els.schoolList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No encontramos coincidencias.</div>'; return; }
+            
+            if(filtered.length === 0) { 
+                els.schoolList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No encontramos coincidencias.</div>'; 
+                return; 
+            }
             
             filtered.forEach(school => {
                 const div = document.createElement('div');
                 div.className = 'p-3 md:p-4 hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0 flex justify-between items-center group transition-colors duration-200';
-                div.innerHTML = `<div class="flex items-center gap-3 overflow-hidden"><div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gray-50 border border-gray-200 p-1 flex items-center justify-center shrink-0"><img src="${school.img}" class="w-full h-full object-contain"></div><span class="font-bold text-gray-700 group-hover:text-[#143c6c] font-outfit text-sm md:text-base truncate">${school.name}</span></div><span class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-bold uppercase group-hover:bg-[#143c6c] group-hover:text-white transition tracking-wide shrink-0 ml-2">${school.city}</span>`;
+                // IMPORTANTE: Se usa school.logo_url (nombre correcto en DB) en lugar de school.img
+                const logo = school.logo_url || 'https://placehold.co/50?text=S/L';
+                
+                div.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gray-50 border border-gray-200 p-1 flex items-center justify-center shrink-0">
+                            <img src="${logo}" class="w-full h-full object-contain">
+                        </div>
+                        <span class="font-bold text-gray-700 group-hover:text-[#143c6c] font-outfit text-sm md:text-base truncate">${school.name}</span>
+                    </div>
+                `;
                 div.onclick = (e) => { e.stopPropagation(); selectSchool(school); };
                 els.schoolList.appendChild(div);
             });
@@ -156,7 +172,9 @@
 
         function selectSchool(school) {
             currentSchool = school;
-            els.schoolBtn.innerHTML = `<div class="flex items-center gap-2 md:gap-3 overflow-hidden"><img src="${school.img}" class="w-6 h-6 object-contain shrink-0"><span class="font-bold text-[#143c6c] text-base md:text-lg truncate">${school.name}</span></div><div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm shrink-0"><i class="fas fa-check text-xs"></i></div>`;
+            const logo = school.logo_url || 'https://placehold.co/50?text=S/L';
+            
+            els.schoolBtn.innerHTML = `<div class="flex items-center gap-2 md:gap-3 overflow-hidden"><img src="${logo}" class="w-6 h-6 object-contain shrink-0"><span class="font-bold text-[#143c6c] text-base md:text-lg truncate">${school.name}</span></div><div class="bg-green-100 text-green-600 rounded-full p-1 shadow-sm shrink-0"><i class="fas fa-check text-xs"></i></div>`;
             els.schoolBtn.className = "w-full bg-blue-50/50 border-2 border-[#143c6c] text-left py-4 px-4 md:py-5 md:px-6 rounded-xl md:rounded-2xl flex items-center justify-between shadow-md transition-all relative z-20";
             els.schoolMenu.classList.add('hidden');
 
@@ -178,7 +196,7 @@
             const kits = currentSchool.kits; 
             
             if (!kits || kits.length === 0) {
-                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles.</div>';
+                els.courseList.innerHTML = '<div class="p-6 text-gray-400 text-center text-sm font-instrument">No hay kits disponibles para este colegio.</div>';
                 return;
             }
 
@@ -210,21 +228,31 @@
 
         function showCard(kit) {
             if (els.cardColegio) els.cardColegio.textContent = currentSchool.name;
-            if (els.cardCity) els.cardCity.textContent = currentSchool.city;
             if (els.cardCurso) els.cardCurso.textContent = kit.grade_name;
-            if (els.cardImagen) els.cardImagen.src = currentSchool.img;
             
-            if (els.cardKitName) els.cardKitName.textContent = kit.kit_name || 'Kit Oficial';
-            if (els.packageDetails) els.packageDetails.textContent = `Contiene ${kit.book_count} libros y materiales requeridos.`;
+            // Imagen con nombre correcto y fallback
+            if (els.cardImagen) {
+                els.cardImagen.src = currentSchool.logo_url || 'https://placehold.co/150?text=S/L';
+            }
+            
+            // Nombre del kit (o fallback al nombre del grado)
+            if (els.cardKitName) els.cardKitName.textContent = kit.grade_name + " - Kit Oficial";
+            
+            // Detalles dinámicos
+            if (els.packageDetails) {
+                const count = kit.book_count || 0;
+                const desc = kit.description ? kit.description : `Contiene ${count} libros y materiales requeridos.`;
+                els.packageDetails.textContent = desc;
+            }
             
             if (els.addBtn) {
                 els.addBtn.onclick = () => {
                     if (window.addToCart) {
                         window.addToCart({
                             id: kit.id,
-                            name: `${kit.kit_name} - ${currentSchool.name}`,
+                            name: `Kit ${kit.grade_name} - ${currentSchool.name}`,
                             price: kit.price,
-                            img: currentSchool.img,
+                            img: currentSchool.logo_url || 'https://placehold.co/50',
                             qty: 1
                         });
                     }
@@ -244,6 +272,8 @@
             els.schoolSearch.onclick = (e) => e.stopPropagation();
             els.schoolSearch.onkeyup = (e) => renderSchools(e.target.value);
             document.addEventListener('click', () => { if(els.schoolMenu) els.schoolMenu.classList.add('hidden'); if(els.courseMenu) els.courseMenu.classList.add('hidden'); });
+            
+            // Iniciar
             loadSchoolsFromDB();
         }
     })();
