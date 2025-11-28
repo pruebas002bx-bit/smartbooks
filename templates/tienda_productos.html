@@ -18,16 +18,33 @@
 
         <div class="flex flex-col lg:flex-row gap-8 lg:gap-10">
             <aside id="filters-sidebar" class="hidden lg:block lg:w-1/4 transition-all duration-300">
-                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-24">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-24 max-h-[85vh] overflow-y-auto custom-scroll">
                     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
                         <h3 class="font-bold text-gray-800 font-outfit uppercase tracking-wide text-sm flex items-center"><i class="fas fa-sliders-h mr-2 text-[#143c6c]"></i> Filtros</h3>
                         <button onclick="resetFilters()" class="text-xs text-[#143c6c] font-bold hover:underline">Limpiar Todo</button>
                     </div>
-                    <div class="mb-6 md:mb-8">
+                    
+                    <div class="mb-6">
                         <label class="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-2 block tracking-wider">Búsqueda Rápida</label>
                         <div class="relative">
                             <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-xs md:text-sm"></i>
-                            <input type="text" id="store-search" placeholder="Título, autor, ISBN..." class="w-full pl-9 p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c] bg-gray-50 transition-all">
+                            <input type="text" id="store-search" onkeyup="applyFilters()" placeholder="Título, autor, ISBN..." class="w-full pl-9 p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c] bg-gray-50 transition-all">
+                        </div>
+                    </div>
+
+                    <div class="mb-6 border-b border-gray-100 pb-6">
+                        <label class="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-3 block tracking-wider">Rango de Precio</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="min-price" placeholder="Mín" oninput="applyFilters()" class="w-1/2 p-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-[#143c6c] outline-none">
+                            <span class="text-gray-400">-</span>
+                            <input type="number" id="max-price" placeholder="Máx" oninput="applyFilters()" class="w-1/2 p-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-[#143c6c] outline-none">
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-3 block tracking-wider">Editorial / Autor</label>
+                        <div id="editorial-filters" class="space-y-2 max-h-40 overflow-y-auto custom-scroll pr-2">
+                            <p class="text-xs text-gray-400">Cargando...</p>
                         </div>
                     </div>
                 </div>
@@ -40,10 +57,12 @@
                 <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="col-span-3 text-center py-20"><i class="fas fa-circle-notch fa-spin text-4xl text-[#143c6c]"></i></div>
                 </div>
-                <div id="no-results" class="hidden flex-col items-center justify-center py-20 text-gray-400 text-center">
-                    <div class="bg-gray-100 p-6 rounded-full mb-4 animate-bounce"><i class="fas fa-search text-4xl text-gray-300"></i></div>
+                
+                <div id="no-results" class="hidden flex-col items-center justify-center py-20 text-gray-400 text-center bg-white rounded-2xl border border-dashed border-gray-200">
+                    <div class="bg-gray-50 p-6 rounded-full mb-4"><i class="fas fa-search text-4xl text-gray-300"></i></div>
                     <h3 class="text-lg font-bold text-gray-600 font-outfit">Sin resultados</h3>
-                    <p class="text-sm font-instrument max-w-xs mx-auto">No encontramos libros con esos criterios.</p>
+                    <p class="text-sm font-instrument max-w-xs mx-auto mb-4">No encontramos libros con esos criterios.</p>
+                    <button onclick="resetFilters()" class="text-[#143c6c] font-bold underline text-sm">Limpiar filtros</button>
                 </div>
             </div>
         </div>
@@ -86,56 +105,114 @@
 <style>
     @keyframes scaleIn { from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
     .animation-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 </style>
 
 <script>
     (async function() {
-        let PRODUCTS = []; // Ahora se llenará desde la DB
+        let PRODUCTS = [];
         let currentProduct = null;
 
-        // Función para cargar productos desde la API
+        // --- CARGA DE DATOS ---
         async function loadProductsFromDB() {
             try {
                 const response = await fetch('/api/products');
                 if (!response.ok) throw new Error('Error al cargar productos');
                 PRODUCTS = await response.json();
-                renderStore(); // Renderizar una vez cargados
+                
+                generateEditorialFilters(); // Crear checkboxes dinámicamente
+                applyFilters(); // Renderizar inicial
             } catch (error) {
                 console.error(error);
-                document.getElementById('products-grid').innerHTML = '<div class="col-span-3 text-center text-red-500">Error cargando catálogo</div>';
+                document.getElementById('products-grid').innerHTML = '<div class="col-span-3 text-center text-red-500 font-bold py-10">Error cargando catálogo. Intente recargar.</div>';
             }
         }
 
-        window.toggleMobileFilters = function() {
-            var sidebar = document.getElementById('filters-sidebar');
-            var arrow = document.getElementById('filter-arrow');
-            sidebar.classList.toggle('hidden');
-            arrow.style.transform = sidebar.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-        };
+        // --- FILTROS DINÁMICOS ---
+        function generateEditorialFilters() {
+            const container = document.getElementById('editorial-filters');
+            // Obtener editoriales únicas, limpiar vacías y ordenar
+            const editorials = [...new Set(PRODUCTS.map(p => p.editorial ? p.editorial.trim() : 'General'))].sort();
+            
+            if (editorials.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400">Sin categorías</p>';
+                return;
+            }
 
-        function renderStore(filterText = '') {
-            var grid = document.getElementById('products-grid');
-            var countLabel = document.getElementById('results-count');
-            var noResults = document.getElementById('no-results');
-            grid.innerHTML = '';
+            container.innerHTML = editorials.map(ed => `
+                <label class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded transition">
+                    <input type="checkbox" value="${ed}" class="editorial-checkbox w-4 h-4 text-[#143c6c] rounded border-gray-300 focus:ring-[#143c6c]" onchange="applyFilters()">
+                    <span class="text-sm text-gray-600 font-instrument truncate">${ed}</span>
+                </label>
+            `).join('');
+        }
 
-            var filtered = PRODUCTS.filter(function(p) {
-                return p.title.toLowerCase().includes(filterText.toLowerCase());
+        // --- PARSEO DE PRECIO ---
+        // Convierte "$ 45.000" o "45000" a número entero para comparaciones
+        function parsePrice(priceStr) {
+            if (!priceStr) return 0;
+            // Elimina todo lo que no sea número o punto, luego elimina puntos si es formato mil
+            // Asumimos formato local CO: puntos son miles.
+            const clean = String(priceStr).replace(/[^0-9]/g, '');
+            return parseInt(clean) || 0;
+        }
+
+        // --- LÓGICA DE FILTRADO PRINCIPAL ---
+        window.applyFilters = function() {
+            const searchText = document.getElementById('store-search').value.toLowerCase();
+            const minPrice = document.getElementById('min-price').value ? parseFloat(document.getElementById('min-price').value) : 0;
+            const maxPrice = document.getElementById('max-price').value ? parseFloat(document.getElementById('max-price').value) : Infinity;
+            
+            // Obtener editoriales seleccionadas
+            const selectedEditorials = Array.from(document.querySelectorAll('.editorial-checkbox:checked')).map(cb => cb.value);
+
+            const filtered = PRODUCTS.filter(p => {
+                // 1. Filtro Texto
+                const matchesText = p.title.toLowerCase().includes(searchText) || 
+                                    (p.editorial && p.editorial.toLowerCase().includes(searchText));
+                
+                // 2. Filtro Precio
+                const priceVal = parsePrice(p.price);
+                const matchesPrice = priceVal >= minPrice && priceVal <= maxPrice;
+
+                // 3. Filtro Editorial
+                const pEditorial = p.editorial ? p.editorial.trim() : 'General';
+                const matchesEditorial = selectedEditorials.length === 0 || selectedEditorials.includes(pEditorial);
+
+                return matchesText && matchesPrice && matchesEditorial;
             });
 
-            countLabel.innerText = filtered.length + " productos encontrados";
+            renderGrid(filtered);
+        };
 
-            if (filtered.length === 0) {
-                if(noResults) { noResults.classList.remove('hidden'); noResults.classList.add('flex'); }
+        // --- RENDERIZADO ---
+        function renderGrid(products) {
+            const grid = document.getElementById('products-grid');
+            const countLabel = document.getElementById('results-count');
+            const noResults = document.getElementById('no-results');
+            
+            grid.innerHTML = '';
+            countLabel.innerText = `${products.length} productos encontrados`;
+
+            if (products.length === 0) {
+                noResults.classList.remove('hidden');
+                noResults.classList.add('flex');
             } else {
-                if(noResults) { noResults.classList.add('hidden'); noResults.classList.remove('flex'); }
-                
-                filtered.forEach(function(p) {
-                    var card = document.createElement('div');
+                noResults.classList.add('hidden');
+                noResults.classList.remove('flex');
+
+                products.forEach(p => {
+                    const card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer animate-scroll-reveal transform hover:-translate-y-1';
+                    
+                    // Fallback imagen
+                    const img = p.image_url || 'https://placehold.co/300x400?text=Sin+Imagen';
+
                     card.innerHTML = `
                         <div class="h-60 md:h-72 overflow-hidden relative bg-gray-50 p-6 flex items-center justify-center">
-                            <img src="${p.image_url}" class="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-110 drop-shadow-md">
+                            <img src="${img}" class="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-110 drop-shadow-md">
                             <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <button class="bg-white p-2.5 rounded-full shadow-md text-[#143c6c] hover:bg-[#143c6c] hover:text-white transition transform hover:scale-110">
                                     <i class="fas fa-plus"></i>
@@ -144,9 +221,9 @@
                         </div>
                         <div class="p-5 md:p-6">
                             <div class="flex justify-between items-start mb-2">
-                                <span class="text-[10px] text-gray-400 uppercase font-black bg-gray-100 px-2 py-1 rounded tracking-wider">${p.editorial || 'General'}</span>
+                                <span class="text-[10px] text-gray-400 uppercase font-black bg-gray-100 px-2 py-1 rounded tracking-wider truncate max-w-[150px]">${p.editorial || 'General'}</span>
                             </div>
-                            <h3 class="font-bold text-gray-800 text-base md:text-lg mb-3 line-clamp-2 leading-tight mt-1 group-hover:text-[#143c6c] transition">${p.title}</h3>
+                            <h3 class="font-bold text-gray-800 text-base md:text-lg mb-3 line-clamp-2 leading-tight mt-1 group-hover:text-[#143c6c] transition h-12">${p.title}</h3>
                             <div class="flex justify-between items-end border-t border-gray-50 pt-3 mt-auto">
                                 <div>
                                     <span class="block text-[10px] text-gray-400 uppercase font-bold">Precio</span>
@@ -155,18 +232,40 @@
                                 <span class="text-xs font-bold text-yellow-500 underline decoration-dotted hover:text-yellow-600">Ver Más</span>
                             </div>
                         </div>`;
-                    card.onclick = function() { openProductModal(p); };
+                    card.onclick = () => openProductModal(p);
                     grid.appendChild(card);
                 });
             }
         }
 
+        // --- HELPERS UI ---
+        window.toggleMobileFilters = function() {
+            const sidebar = document.getElementById('filters-sidebar');
+            const arrow = document.getElementById('filter-arrow');
+            sidebar.classList.toggle('hidden');
+            arrow.style.transform = sidebar.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        };
+
+        window.resetFilters = function() {
+            document.getElementById('store-search').value = '';
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
+            
+            // Desmarcar checkboxes
+            document.querySelectorAll('.editorial-checkbox').forEach(cb => cb.checked = false);
+            
+            applyFilters();
+        };
+
+        // --- MODALES ---
         window.openProductModal = function(product) {
             currentProduct = product;
-            document.getElementById('modal-p-img').src = product.image_url;
+            const img = product.image_url || 'https://placehold.co/400x600?text=Sin+Imagen';
+            
+            document.getElementById('modal-p-img').src = img;
             document.getElementById('modal-p-title').innerText = product.title;
-            document.getElementById('modal-p-editorial').innerText = product.editorial || 'Editorial';
-            document.getElementById('modal-p-desc').innerText = product.description || 'Sin descripción disponible.';
+            document.getElementById('modal-p-editorial').innerText = product.editorial || 'General';
+            document.getElementById('modal-p-desc').innerText = product.description || 'Sin descripción disponible para este título.';
             document.getElementById('modal-p-price').innerText = product.price;
 
             document.getElementById('modal-add-btn').onclick = function() {
@@ -175,14 +274,14 @@
                         id: product.id, 
                         name: product.title, 
                         price: product.price, 
-                        img: product.image_url, 
+                        img: img, 
                         qty: 1 
                     });
                 }
                 closeProductModal();
             };
 
-            var modal = document.getElementById('product-modal');
+            const modal = document.getElementById('product-modal');
             modal.classList.remove('hidden');
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden'; 
@@ -193,18 +292,7 @@
             document.body.style.overflow = 'auto';
         };
 
-        window.resetFilters = function() {
-            var search = document.getElementById('store-search');
-            if (search) search.value = '';
-            renderStore();
-        };
-
-        var searchInput = document.getElementById('store-search');
-        if (searchInput) {
-            searchInput.addEventListener('keyup', (e) => renderStore(e.target.value));
-        }
-
-        // Iniciar carga
+        // Iniciar
         loadProductsFromDB();
     })();
 </script>
