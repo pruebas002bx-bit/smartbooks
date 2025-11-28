@@ -358,45 +358,14 @@
         <section class="py-16 md:py-24 bg-white">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-12 md:mb-16 animate-scroll-reveal">
-                    <h2 class="text-[#143c6c] font-outfit text-3xl md:text-4xl font-black mb-4">Productos Más Vendidos</h2>
+                    <h2 class="text-[#143c6c] font-outfit text-3xl md:text-4xl font-black mb-4">Productos Destacados</h2>
                     <div class="w-20 md:w-24 h-1.5 bg-yellow-400 mx-auto rounded-full"></div>
+                    <p class="text-gray-500 mt-4 text-sm font-instrument">Una selección aleatoria de nuestro catálogo disponible</p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal flex flex-col">
-                        <div class="h-48 md:h-60 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
-                            <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg" class="max-h-full object-contain">
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-sm md:text-base uppercase mb-4 font-outfit leading-tight">Paquete de inglés Cosmo – 2°</h3>
-                        <button onclick="addToCart({id: 'HM1', name: 'Paquete Cosmo 2°', price: '$255.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
-                        </button>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-100 flex flex-col">
-                        <div class="h-48 md:h-60 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
-                            <img src="https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg" class="max-h-full object-contain">
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-sm md:text-base uppercase mb-4 font-outfit leading-tight">Paquete de inglés Cosmo – 1°</h3>
-                        <button onclick="addToCart({id: 'HM2', name: 'Paquete Cosmo 1°', price: '$245.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
-                        </button>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-200 flex flex-col">
-                        <div class="h-48 md:h-60 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
-                            <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg" class="max-h-full object-contain">
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-sm md:text-base uppercase mb-4 font-outfit leading-tight">El pan de la guerra</h3>
-                        <button onclick="addToCart({id: 'HM3', name: 'El pan de la guerra', price: '$45.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
-                        </button>
-                    </div>
-                    <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal delay-300 flex flex-col">
-                        <div class="h-48 md:h-60 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
-                            <img src="https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg" class="max-h-full object-contain">
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-sm md:text-base uppercase mb-4 font-outfit leading-tight">La Gaceta de Landry</h3>
-                        <button onclick="addToCart({id: 'HM4', name: 'La Gaceta de Landry', price: '$38.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg', qty: 1})" class="mt-auto w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
-                            <i class="fas fa-cart-plus"></i> Añadir
-                        </button>
+                <div id="best-sellers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center py-10">
+                        <i class="fas fa-circle-notch fa-spin text-3xl text-[#143c6c]"></i>
+                        <p class="text-sm text-gray-400 mt-2">Cargando destacados...</p>
                     </div>
                 </div>
             </div>
@@ -454,8 +423,7 @@
         }
 
         window.removeFromCart = function(id) {
-            // Convertimos ambos a String para asegurar que la comparación sea correcta
-            // independientemente de si el ID es número o texto
+            // Fix: Compara strings para evitar error de tipos
             cart = cart.filter(item => String(item.id) !== String(id));
             renderCart();
             updateCartCount();
@@ -475,24 +443,26 @@
             let total = 0;
 
             cart.forEach(item => {
-                // --- CORRECCIÓN DE PRECIO ---
                 let price = 0;
                 let strPrice = String(item.price);
-
-                // Si tiene signo '$' (productos estáticos), asumimos formato visual (ej: $255.000 -> quitar puntos)
+                // Si viene formateado con signo peso, limpiamos; si no, parseamos directo
                 if (strPrice.includes('$')) {
                     price = parseInt(strPrice.replace(/[$.]/g, '')) || 0;
                 } else {
-                    // Si viene de la BD (ej: 125000.00), lo tratamos como número estándar
                     price = parseFloat(strPrice) || 0;
                 }
                 
                 total += price * item.qty;
                 
+                // Formateamos para mostrar en tarjeta
+                const displayPrice = '$' + price.toLocaleString('es-CO');
+
                 html += `
                     <div class="flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-100 shadow-sm relative">
-                        <div class="w-14 h-14 bg-white border rounded p-1 flex-shrink-0"><img src="${item.img}" class="h-full w-auto object-contain"></div>
-                        <div class="flex-grow min-w-0"><h4 class="font-bold text-xs text-gray-800 line-clamp-1">${item.name}</h4><p class="text-xs text-gray-500">$${price.toLocaleString('es-CO')}</p></div>
+                        <div class="w-14 h-14 bg-white border rounded p-1 flex-shrink-0">
+                            <img src="${item.img}" onerror="this.src='https://placehold.co/100?text=S/L'" class="h-full w-auto object-contain">
+                        </div>
+                        <div class="flex-grow min-w-0"><h4 class="font-bold text-xs text-gray-800 line-clamp-1">${item.name}</h4><p class="text-xs text-gray-500">${displayPrice}</p></div>
                         <div class="text-right flex-shrink-0"><span class="text-xs font-bold bg-gray-100 px-2 rounded">x${item.qty}</span><br><button onclick="removeFromCart('${item.id}')" class="text-red-400 text-xs mt-1"><i class="fas fa-trash"></i></button></div>
                     </div>`;
             });
@@ -509,8 +479,58 @@
                 main.innerHTML = template.innerHTML;
                 initCarousel();
                 initScrollReveal();
+                loadBestSellers(); // Cargar productos aleatorios
             }
             window.scrollTo(0, 0);
+        }
+
+        async function loadBestSellers() {
+            try {
+                // Consulta a la DB
+                const res = await fetch('/api/products');
+                if (!res.ok) throw new Error("Error API");
+                const allProducts = await res.json();
+
+                // Barajar (Shuffle) y tomar 4
+                const shuffled = allProducts.sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, 4);
+
+                const container = document.getElementById('best-sellers-grid');
+                if(!container) return;
+
+                if (selected.length === 0) {
+                    container.innerHTML = '<div class="col-span-4 text-center py-10 text-gray-400">No hay productos destacados por el momento.</div>';
+                    return;
+                }
+
+                container.innerHTML = selected.map(p => {
+                    // Manejo de imagen y precio
+                    const img = p.image_url || 'https://placehold.co/300x400?text=Sin+Imagen';
+                    const price = p.price ? `$${parseFloat(p.price).toLocaleString('es-CO')}` : '$0';
+                    // Escapar comillas para el onclick
+                    const safeName = p.title.replace(/'/g, "\\'");
+                    
+                    return `
+                    <div class="bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 p-6 animate-scroll-reveal flex flex-col h-full">
+                        <div class="h-48 md:h-60 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4 overflow-hidden relative group">
+                            <img src="${img}" onerror="this.src='https://placehold.co/300x400?text=Error'" class="max-h-full max-w-full object-contain transform transition duration-500 group-hover:scale-110">
+                        </div>
+                        <h3 class="font-bold text-gray-800 text-sm md:text-base uppercase mb-2 font-outfit leading-tight line-clamp-2 min-h-[2.5em]">${p.title}</h3>
+                        <div class="mt-auto w-full">
+                            <p class="text-[#143c6c] font-black text-lg mb-3">${price}</p>
+                            <button onclick="addToCart({id: ${p.id}, name: '${safeName}', price: '${p.price}', img: '${img}', qty: 1})" class="w-full text-center bg-[#143c6c] text-white py-3 rounded-lg font-bold text-xs uppercase tracking-wide hover:bg-blue-900 transition flex items-center justify-center gap-2">
+                                <i class="fas fa-cart-plus"></i> Añadir
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+
+            } catch (e) {
+                console.error("Error cargando destacados:", e);
+                const container = document.getElementById('best-sellers-grid');
+                if(container) container.innerHTML = '<div class="col-span-4 text-center py-10 text-red-300">No se pudieron cargar los productos.</div>';
+            }
         }
 
         async function loadPage(url) {
