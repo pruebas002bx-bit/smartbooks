@@ -1,19 +1,14 @@
 <section class="relative bg-[#143c6c] py-16 md:py-20 text-center animate-scroll-reveal">
     <div class="relative z-10 px-4">
-        <span class="inline-block py-1 px-4 rounded-full bg-white/10 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 backdrop-blur-md">
-            Catálogo Oficial
-        </span>
+        <span class="inline-block py-1 px-4 rounded-full bg-white/10 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 backdrop-blur-md">Catálogo Oficial</span>
         <h1 class="font-outfit text-3xl md:text-5xl font-black text-white mb-2 md:mb-4">Tienda Escolar</h1>
-        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-xl mx-auto px-2">
-            Textos, literatura y recursos educativos para todos los niveles académicos.
-        </p>
+        <p class="text-blue-100 font-instrument text-base md:text-lg max-w-xl mx-auto px-2">Textos, literatura y recursos educativos para todos los niveles académicos.</p>
     </div>
     <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
 </section>
 
 <section class="py-10 md:py-16 bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         <div class="lg:hidden mb-6">
             <button onclick="toggleMobileFilters()" class="w-full bg-white border border-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl shadow-sm flex items-center justify-between">
                 <span><i class="fas fa-filter mr-2 text-[#143c6c]"></i> Filtros y Búsqueda</span>
@@ -22,40 +17,17 @@
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8 lg:gap-10">
-            
             <aside id="filters-sidebar" class="hidden lg:block lg:w-1/4 transition-all duration-300">
                 <div class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-100 lg:sticky lg:top-24">
-                    
                     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
-                        <h3 class="font-bold text-gray-800 font-outfit uppercase tracking-wide text-sm flex items-center">
-                            <i class="fas fa-sliders-h mr-2 text-[#143c6c]"></i> Filtros
-                        </h3>
+                        <h3 class="font-bold text-gray-800 font-outfit uppercase tracking-wide text-sm flex items-center"><i class="fas fa-sliders-h mr-2 text-[#143c6c]"></i> Filtros</h3>
                         <button onclick="resetFilters()" class="text-xs text-[#143c6c] font-bold hover:underline">Limpiar Todo</button>
                     </div>
-                    
                     <div class="mb-6 md:mb-8">
                         <label class="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-2 block tracking-wider">Búsqueda Rápida</label>
                         <div class="relative">
                             <i class="fas fa-search absolute left-3 top-3 text-gray-400 text-xs md:text-sm"></i>
                             <input type="text" id="store-search" placeholder="Título, autor, ISBN..." class="w-full pl-9 p-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#143c6c] focus:ring-1 focus:ring-[#143c6c] bg-gray-50 transition-all">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="text-[10px] md:text-xs font-bold text-gray-400 uppercase mb-3 block tracking-wider">Editoriales</label>
-                        <div class="space-y-3">
-                            <label class="flex items-center cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition">
-                                <input type="checkbox" class="filter-cb w-4 h-4 text-[#143c6c] border-gray-300 rounded focus:ring-[#143c6c]" value="Macmillan">
-                                <span class="ml-3 text-sm text-gray-600 font-instrument group-hover:text-[#143c6c] transition font-medium">Macmillan Education</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition">
-                                <input type="checkbox" class="filter-cb w-4 h-4 text-[#143c6c] border-gray-300 rounded focus:ring-[#143c6c]" value="Castillo">
-                                <span class="ml-3 text-sm text-gray-600 font-instrument group-hover:text-[#143c6c] transition font-medium">Ediciones Castillo</span>
-                            </label>
-                            <label class="flex items-center cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition">
-                                <input type="checkbox" class="filter-cb w-4 h-4 text-[#143c6c] border-gray-300 rounded focus:ring-[#143c6c]" value="Scholastic">
-                                <span class="ml-3 text-sm text-gray-600 font-instrument group-hover:text-[#143c6c] transition font-medium">Scholastic</span>
-                            </label>
                         </div>
                     </div>
                 </div>
@@ -64,78 +36,44 @@
             <div class="lg:w-3/4 w-full">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                     <span id="results-count" class="text-sm font-bold text-gray-500">Cargando productos...</span>
-                    
-                    <div class="relative w-full sm:w-auto">
-                        <select class="appearance-none w-full sm:w-auto bg-white border border-gray-200 text-gray-700 py-2 pl-4 pr-10 rounded-lg focus:outline-none focus:border-[#143c6c] text-sm font-medium cursor-pointer shadow-sm">
-                            <option>Relevancia</option>
-                            <option>Precio: Menor a Mayor</option>
-                            <option>Precio: Mayor a Menor</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </div>
-                    </div>
                 </div>
-
                 <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    </div>
-                
+                    <div class="col-span-3 text-center py-20"><i class="fas fa-circle-notch fa-spin text-4xl text-[#143c6c]"></i></div>
+                </div>
                 <div id="no-results" class="hidden flex-col items-center justify-center py-20 text-gray-400 text-center">
-                    <div class="bg-gray-100 p-6 rounded-full mb-4 animate-bounce">
-                        <i class="fas fa-search text-4xl text-gray-300"></i>
-                    </div>
+                    <div class="bg-gray-100 p-6 rounded-full mb-4 animate-bounce"><i class="fas fa-search text-4xl text-gray-300"></i></div>
                     <h3 class="text-lg font-bold text-gray-600 font-outfit">Sin resultados</h3>
-                    <p class="text-sm font-instrument max-w-xs mx-auto">No encontramos libros con esos criterios. Intenta con otra búsqueda.</p>
-                    <button onclick="resetFilters()" class="mt-4 text-[#143c6c] font-bold text-sm underline">Ver todos los libros</button>
+                    <p class="text-sm font-instrument max-w-xs mx-auto">No encontramos libros con esos criterios.</p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
 <div id="product-modal" class="fixed inset-0 z-[80] hidden" style="display: none;">
     <div class="absolute inset-0 bg-[#143c6c]/90 backdrop-blur-sm transition-opacity" onclick="closeProductModal()"></div>
-    
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-5xl bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-auto md:max-h-[90vh] animation-scale-in">
-        
         <div class="h-1/3 md:h-auto md:w-1/2 bg-gray-50 p-6 md:p-10 flex items-center justify-center relative border-b md:border-b-0 md:border-r border-gray-100 shrink-0">
-            <button class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 md:hidden bg-white p-2 rounded-full shadow-sm z-10" onclick="closeProductModal()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
+            <button class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 md:hidden bg-white p-2 rounded-full shadow-sm z-10" onclick="closeProductModal()"><i class="fas fa-arrow-left"></i></button>
             <img id="modal-p-img" src="" class="max-h-full max-w-full w-auto object-contain shadow-xl rounded-lg transform transition hover:scale-105 duration-500">
         </div>
-
         <div class="h-2/3 md:h-auto md:w-1/2 p-6 md:p-10 overflow-y-auto flex flex-col relative bg-white">
-            <button class="absolute top-6 right-6 text-gray-300 hover:text-red-500 hidden md:block bg-gray-50 hover:bg-red-50 p-2 rounded-full transition" onclick="closeProductModal()">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-
+            <button class="absolute top-6 right-6 text-gray-300 hover:text-red-500 hidden md:block bg-gray-50 hover:bg-red-50 p-2 rounded-full transition" onclick="closeProductModal()"><i class="fas fa-times text-xl"></i></button>
             <div>
                 <span id="modal-p-editorial" class="inline-block text-[10px] font-black text-white bg-[#143c6c] px-3 py-1 rounded-full uppercase tracking-widest mb-3 shadow-sm">Editorial</span>
                 <h2 id="modal-p-title" class="text-2xl md:text-4xl font-black text-gray-900 mb-3 md:mb-4 font-outfit leading-tight">Título Libro</h2>
-                
                 <div class="flex flex-wrap items-center gap-3 mb-4 md:mb-6 text-xs md:text-sm text-gray-500 font-bold uppercase tracking-wide">
                     <span class="flex items-center"><i class="fas fa-book mr-1.5 text-gray-400"></i> Libro Físico</span>
                     <span class="flex items-center text-green-600 bg-green-50 px-2 py-0.5 rounded"><i class="fas fa-check-circle mr-1.5"></i> Disponible</span>
                 </div>
-
                 <p id="modal-p-desc" class="text-gray-600 text-sm md:text-base font-instrument mb-6 md:mb-8 leading-relaxed border-l-4 border-yellow-400 pl-4">Descripción...</p>
             </div>
-
             <div class="mt-auto pt-4 md:pt-6 border-t border-gray-100 sticky bottom-0 bg-white pb-2 md:pb-0">
                 <div class="flex justify-between items-end mb-4 md:mb-6">
                     <span class="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-wide">Precio Unitario</span>
                     <span id="modal-p-price" class="text-3xl md:text-4xl font-black text-[#143c6c] font-outfit tracking-tight">$0</span>
                 </div>
-
                 <div class="flex gap-3 md:gap-4 h-12 md:h-14">
-                    <div class="flex items-center border-2 border-gray-200 rounded-xl w-32 justify-between px-1 md:px-2 shrink-0">
-                        <button onclick="updateQty(-1)" class="w-8 h-full text-gray-400 hover:text-[#143c6c] text-xl font-bold transition active:scale-90">-</button>
-                        <input id="modal-p-qty" type="text" value="1" readonly class="w-8 text-center text-base md:text-lg font-bold border-none outline-none text-gray-800 bg-transparent">
-                        <button onclick="updateQty(1)" class="w-8 h-full text-gray-400 hover:text-[#143c6c] text-xl font-bold transition active:scale-90">+</button>
-                    </div>
-
                     <button id="modal-add-btn" class="flex-grow bg-[#fcd34d] text-[#143c6c] font-black text-xs md:text-sm rounded-xl shadow-lg shadow-yellow-200 hover:bg-[#fbbf24] transition transform hover:scale-[1.02] active:scale-[0.98] uppercase tracking-wide flex items-center justify-center gap-2 group">
                         <span>Añadir</span> <i class="fas fa-shopping-cart text-lg transition-transform group-hover:rotate-12"></i>
                     </button>
@@ -146,78 +84,58 @@
 </div>
 
 <style>
-    @keyframes scaleIn {
-        from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
-        to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
+    @keyframes scaleIn { from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
     .animation-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    
-    /* Scrollbar oculta en filtros móvil */
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
 <script>
-    (function() {
-        var PRODUCTS = [
-            { id: 'B01', title: 'English Path Level 1', editorial: 'Macmillan', price: '$85.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-1.jpg', desc: 'Libro de texto integral para el aprendizaje del inglés nivel A1. Incluye acceso a plataforma digital.' },
-            { id: 'B02', title: 'El Pan de la Guerra', editorial: 'Castillo', price: '$45.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189332.jpg', desc: 'Una novela conmovedora sobre la supervivencia en tiempos de conflicto.' },
-            { id: 'B03', title: 'Global Explorer 2', editorial: 'Macmillan', price: '$92.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/11/Cosmo-2.jpg', desc: 'Explora el mundo a través del inglés con este texto interactivo.' },
-            { id: 'B04', title: 'La Gaceta de Landry', editorial: 'Castillo', price: '$38.000', img: 'https://sbooks.com.co/wp-content/uploads/2023/01/9789585189356.jpg', desc: 'Historia cautivadora para lectores jóvenes.' },
-            { id: 'B05', title: 'Science World 4', editorial: 'Scholastic', price: '$110.000', img: 'https://placehold.co/300x400?text=Science', desc: 'Descubre las maravillas de la ciencia con experimentos prácticos.' },
-            { id: 'B06', title: 'Math in Focus', editorial: 'Scholastic', price: '$105.000', img: 'https://placehold.co/300x400?text=Math', desc: 'Método Singapur para el aprendizaje efectivo de las matemáticas.' }
-        ];
+    (async function() {
+        let PRODUCTS = []; // Ahora se llenará desde la DB
+        let currentProduct = null;
 
-        var currentQty = 1;
-        var currentProduct = null;
+        // Función para cargar productos desde la API
+        async function loadProductsFromDB() {
+            try {
+                const response = await fetch('/api/products');
+                if (!response.ok) throw new Error('Error al cargar productos');
+                PRODUCTS = await response.json();
+                renderStore(); // Renderizar una vez cargados
+            } catch (error) {
+                console.error(error);
+                document.getElementById('products-grid').innerHTML = '<div class="col-span-3 text-center text-red-500">Error cargando catálogo</div>';
+            }
+        }
 
-        // Función para mostrar/ocultar filtros en móvil
         window.toggleMobileFilters = function() {
             var sidebar = document.getElementById('filters-sidebar');
             var arrow = document.getElementById('filter-arrow');
             sidebar.classList.toggle('hidden');
-            
-            if (sidebar.classList.contains('hidden')) {
-                arrow.style.transform = 'rotate(0deg)';
-            } else {
-                arrow.style.transform = 'rotate(180deg)';
-            }
+            arrow.style.transform = sidebar.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
         };
 
-        function renderStore(filterText = '', editorials = []) {
+        function renderStore(filterText = '') {
             var grid = document.getElementById('products-grid');
-            if (!grid) return;
-            
-            grid.innerHTML = '';
             var countLabel = document.getElementById('results-count');
             var noResults = document.getElementById('no-results');
+            grid.innerHTML = '';
 
             var filtered = PRODUCTS.filter(function(p) {
-                var matchesText = p.title.toLowerCase().includes(filterText.toLowerCase());
-                var matchesEdit = editorials.length === 0 || editorials.includes(p.editorial);
-                return matchesText && matchesEdit;
+                return p.title.toLowerCase().includes(filterText.toLowerCase());
             });
 
-            if (countLabel) countLabel.innerText = filtered.length + " productos encontrados";
+            countLabel.innerText = filtered.length + " productos encontrados";
 
             if (filtered.length === 0) {
-                if(noResults) {
-                    noResults.classList.remove('hidden');
-                    noResults.classList.add('flex');
-                }
+                if(noResults) { noResults.classList.remove('hidden'); noResults.classList.add('flex'); }
             } else {
-                if(noResults) {
-                    noResults.classList.add('hidden');
-                    noResults.classList.remove('flex');
-                }
+                if(noResults) { noResults.classList.add('hidden'); noResults.classList.remove('flex'); }
                 
                 filtered.forEach(function(p) {
                     var card = document.createElement('div');
                     card.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer animate-scroll-reveal transform hover:-translate-y-1';
                     card.innerHTML = `
                         <div class="h-60 md:h-72 overflow-hidden relative bg-gray-50 p-6 flex items-center justify-center">
-                            <img src="${p.img}" class="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-110 drop-shadow-md">
-                            
+                            <img src="${p.image_url}" class="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-110 drop-shadow-md">
                             <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <button class="bg-white p-2.5 rounded-full shadow-md text-[#143c6c] hover:bg-[#143c6c] hover:text-white transition transform hover:scale-110">
                                     <i class="fas fa-plus"></i>
@@ -226,7 +144,7 @@
                         </div>
                         <div class="p-5 md:p-6">
                             <div class="flex justify-between items-start mb-2">
-                                <span class="text-[10px] text-gray-400 uppercase font-black bg-gray-100 px-2 py-1 rounded tracking-wider">${p.editorial}</span>
+                                <span class="text-[10px] text-gray-400 uppercase font-black bg-gray-100 px-2 py-1 rounded tracking-wider">${p.editorial || 'General'}</span>
                             </div>
                             <h3 class="font-bold text-gray-800 text-base md:text-lg mb-3 line-clamp-2 leading-tight mt-1 group-hover:text-[#143c6c] transition">${p.title}</h3>
                             <div class="flex justify-between items-end border-t border-gray-50 pt-3 mt-auto">
@@ -245,18 +163,20 @@
 
         window.openProductModal = function(product) {
             currentProduct = product;
-            currentQty = 1;
-            document.getElementById('modal-p-img').src = product.img;
+            document.getElementById('modal-p-img').src = product.image_url;
             document.getElementById('modal-p-title').innerText = product.title;
-            document.getElementById('modal-p-editorial').innerText = product.editorial;
-            document.getElementById('modal-p-desc').innerText = product.desc;
+            document.getElementById('modal-p-editorial').innerText = product.editorial || 'Editorial';
+            document.getElementById('modal-p-desc').innerText = product.description || 'Sin descripción disponible.';
             document.getElementById('modal-p-price').innerText = product.price;
-            document.getElementById('modal-p-qty').value = 1;
 
             document.getElementById('modal-add-btn').onclick = function() {
                 if (window.addToCart) {
                     window.addToCart({ 
-                        id: product.id, name: product.title, price: product.price, img: product.img, qty: currentQty 
+                        id: product.id, 
+                        name: product.title, 
+                        price: product.price, 
+                        img: product.image_url, 
+                        qty: 1 
                     });
                 }
                 closeProductModal();
@@ -265,42 +185,26 @@
             var modal = document.getElementById('product-modal');
             modal.classList.remove('hidden');
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Evitar scroll
+            document.body.style.overflow = 'hidden'; 
         };
 
         window.closeProductModal = function() {
             document.getElementById('product-modal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restaurar scroll
-        };
-
-        window.updateQty = function(change) {
-            var newQty = currentQty + change;
-            if (newQty >= 1) {
-                currentQty = newQty;
-                document.getElementById('modal-p-qty').value = currentQty;
-            }
+            document.body.style.overflow = 'auto';
         };
 
         window.resetFilters = function() {
             var search = document.getElementById('store-search');
             if (search) search.value = '';
-            var checkboxes = document.querySelectorAll('.filter-cb');
-            checkboxes.forEach(function(cb) { cb.checked = false; });
             renderStore();
         };
 
         var searchInput = document.getElementById('store-search');
         if (searchInput) {
-            var checkboxes = document.querySelectorAll('.filter-cb');
-            function applyFilters() {
-                var text = searchInput.value;
-                var selectedEditorials = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).map(function(cb) { return cb.value; });
-                renderStore(text, selectedEditorials);
-            }
-            searchInput.addEventListener('keyup', applyFilters);
-            checkboxes.forEach(function(cb) { cb.addEventListener('change', applyFilters); });
+            searchInput.addEventListener('keyup', (e) => renderStore(e.target.value));
         }
 
-        renderStore();
+        // Iniciar carga
+        loadProductsFromDB();
     })();
 </script>

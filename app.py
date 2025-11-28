@@ -7,20 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
-app.secret_key = 'smartbooks_secret_key_2025' # Clave para sesiones
-
-# --- SIMULACIÓN DE DATOS (MEMORIA) ---
-# Se usa si no hay conexión a base de datos real
-MOCK_DB = {
-    "users": [{"username": "admin", "password": "Smartbooks2025*"}],
-    "products": [
-        {"id": 1, "title": "English Path Level 1", "editorial": "Macmillan", "price": "$85.000", "image_url": "https://placehold.co/300x400", "is_bestseller": True}
-    ],
-    "schools": [
-        {"id": 1, "name": "Cosmo Schools", "city": "Medellín", "logo_url": "https://placehold.co/150x150", "kits": []}
-    ],
-    "editorials": []
-}
+app.secret_key = 'smartbooks_secret_key_2025'
 
 # --- CONEXIÓN ---
 def get_db_connection():
@@ -31,107 +18,179 @@ def get_db_connection():
     except:
         return None
 
-# --- RUTAS ---
+# --- FALLBACK MOCK DATA (Por si no hay DB) ---
+MOCK_DB = {
+    "users": [{"username": "admin", "password": "Smartbooks2025*"}],
+    "products": [],
+    "schools": [],
+    "editorials": []
+}
+
+# --- RUTAS VISTAS ---
 @app.route('/')
-def index():
-    return render_template('index.html')
+def index(): return render_template('index.html')
 
 @app.route('/<page_name>.html')
-def serve_pages(page_name):
-    return render_template(f'{page_name}.html')
+def serve_pages(page_name): return render_template(f'{page_name}.html')
 
 # --- API LOGIN ---
 @app.route('/api/admin/login', methods=['POST'])
 def login():
-    try:
-        data = request.json
-        password = data.get('password')
-        
-        # 1. Intento DB Real
-        conn = get_db_connection()
-        if conn:
-            cur = conn.cursor(cursor_factory=RealDictCursor)
-            cur.execute("SELECT * FROM admin_users WHERE username = 'admin'")
-            user = cur.fetchone()
-            conn.close()
-            if user and user['password_hash'] == password:
-                session['admin'] = True
-                return jsonify({"success": True})
-        
-        # 2. Fallback Memoria (Para que funcione SIEMPRE)
-        user = MOCK_DB['users'][0]
-        if user['password'] == password:
+    data = request.json
+    password = data.get('password')
+    conn = get_db_connection()
+    
+    if conn:
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT * FROM admin_users WHERE username = 'admin'")
+        user = cur.fetchone()
+        conn.close()
+        if user and user['password_hash'] == password:
             session['admin'] = True
             return jsonify({"success": True})
-
-        return jsonify({"success": False, "message": "Credenciales inválidas"}), 401
-
-    except Exception as e:
-        print(f"Error Login: {e}")
-        return jsonify({"success": False, "message": "Error interno"}), 500
+            
+    # Fallback
+    if MOCK_DB['users'][0]['password'] == password:
+        session['admin'] = True
+        return jsonify({"success": True})
+    return jsonify({"success": False, "message": "Credenciales inválidas"}), 401
 
 @app.route('/api/admin/logout', methods=['POST'])
 def logout():
     session.clear()
     return jsonify({"success": True})
 
-# --- API PRODUCTOS ---
+# --- API PRODUCTOS (Actualizada con DESCRIPTION) ---
 @app.route('/api/products', methods=['GET', 'POST', 'DELETE'])
 def api_products():
+    conn = get_db_connection()
+    
     if request.method == 'GET':
-        # Retorna mocks si no hay DB
+        if conn:
+            cur = conn.cursor(cursor_factory=RealDictCursor)
+            cur.execute("SELECT * FROM products ORDER BY id DESC")
+            res = cur.fetchall()
+            conn.close()
+            return jsonify(res)
         return jsonify(MOCK_DB['products'])
     
+    # --- ADMIN ONLY ---
     if not session.get('admin'): return jsonify({"error": "Unauthorized"}), 401
     
     if request.method == 'POST':
-        new_prod = request.json
-        new_prod['id'] = len(MOCK_DB['products']) + 1
-        MOCK_DB['products'].append(new_prod)
+        data = request.json
+        if conn:
+            cur = conn.cursor()
+            # AQUI SE AGREGA LA DESCRIPCIÓN AL INSERT
+            cur.execute(
+                "INSERT INTO products (title, editorial, price, image_url, description) VALUES (%s, %s, %s, %s, %s)",
+                (data['title'], data.get('editorial', ''), data['price'], data.get('image_url', ''), data.get('description', ''))
+            )
+            conn.commit()
+            conn.close()
+        else:
+            data['id'] = len(MOCK_DB['products']) + 1
+            MOCK_DB['products'].append(data)
         return jsonify({"success": True})
 
     if request.method == 'DELETE':
-        pid = int(request.args.get('id'))
-        MOCK_DB['products'] = [p for p in MOCK_DB['products'] if p['id'] != pid]
+        pid = request.args.get('id')
+        if conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM products WHERE id = %s", (pid,))
+            conn.commit()
+            conn.close()
         return jsonify({"success": True})
 
 # --- API COLEGIOS ---
 @app.route('/api/schools', methods=['GET', 'POST', 'DELETE'])
 def api_schools():
+    conn = get_db_connection()
+    
     if request.method == 'GET':
+        if conn:
+            cur = conn.cursor(cursor_factory=RealDictCursor)
+            cur.execute("SELECT * FROM schools ORDER BY id DESC")
+            schools = cur.fetchall()
+            
+            # Anidar Kits y Productos
+            for school in schools:
+                cur.execute("""
+                    SELECT k.id, k.grade_name, k.price, 
+                           (SELECT COUNT(*) FROM kit_items ki WHERE ki.kit_id = k.id) as book_count
+                    FROM school_kits k 
+                    WHERE k.school_id = %s
+                """, (school['id'],))
+                school['kits'] = cur.fetchall()
+                
+                for kit in school['kits']:
+                    cur.execute("""
+                        SELECT p.id, p.title, p.price, p.image_url 
+                        FROM products p 
+                        JOIN kit_items ki ON p.id = ki.product_id 
+                        WHERE ki.kit_id = %s
+                    """, (kit['id'],))
+                    kit['products'] = cur.fetchall()
+
+            conn.close()
+            return jsonify(schools)
         return jsonify(MOCK_DB['schools'])
     
     if not session.get('admin'): return jsonify({"error": "Unauthorized"}), 401
     
     if request.method == 'POST':
-        new_school = request.json
-        new_school['id'] = len(MOCK_DB['schools']) + 1
-        new_school['kits'] = []
-        MOCK_DB['schools'].append(new_school)
+        data = request.json
+        if conn:
+            cur = conn.cursor(cursor_factory=RealDictCursor)
+            cur.execute("INSERT INTO schools (name, city, logo_url) VALUES (%s, %s, %s) RETURNING id",
+                        (data['name'], data.get('city', 'Bogotá'), data.get('logo_url', '')))
+            new_id = cur.fetchone()['id']
+            conn.commit()
+            conn.close()
+            return jsonify({"success": True, "id": new_id})
         return jsonify({"success": True})
 
     if request.method == 'DELETE':
-        sid = int(request.args.get('id'))
-        MOCK_DB['schools'] = [s for s in MOCK_DB['schools'] if s['id'] != sid]
+        sid = request.args.get('id')
+        if conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM schools WHERE id = %s", (sid,))
+            conn.commit()
+            conn.close()
         return jsonify({"success": True})
 
-# --- API EDITORIALES ---
-@app.route('/api/editorials', methods=['GET', 'POST', 'DELETE'])
-def api_editorials():
-    if request.method == 'GET':
-        return jsonify(MOCK_DB['editorials'])
-    
+# --- API KITS ---
+@app.route('/api/kits', methods=['POST', 'DELETE'])
+def api_kits():
     if not session.get('admin'): return jsonify({"error": "Unauthorized"}), 401
+    conn = get_db_connection()
     
     if request.method == 'POST':
         data = request.json
-        data['id'] = len(MOCK_DB['editorials']) + 1
-        MOCK_DB['editorials'].append(data)
+        action = data.get('action')
+        
+        if conn:
+            cur = conn.cursor()
+            if action == 'create_kit':
+                cur.execute("INSERT INTO school_kits (school_id, grade_name, price) VALUES (%s, %s, %s)",
+                            (data['school_id'], data['grade_name'], data['price']))
+            elif action == 'add_item':
+                cur.execute("INSERT INTO kit_items (kit_id, product_id) VALUES (%s, %s)",
+                            (data['kit_id'], data['product_id']))
+            elif action == 'remove_item':
+                cur.execute("DELETE FROM kit_items WHERE kit_id = %s AND product_id = %s",
+                            (data['kit_id'], data['product_id']))
+            conn.commit()
+            conn.close()
         return jsonify({"success": True})
-
+    
     if request.method == 'DELETE':
-        eid = int(request.args.get('id'))
-        MOCK_DB['editorials'] = [e for e in MOCK_DB['editorials'] if e['id'] != eid]
+        kid = request.args.get('id')
+        if conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM school_kits WHERE id = %s", (kid,))
+            conn.commit()
+            conn.close()
         return jsonify({"success": True})
 
 if __name__ == '__main__':
